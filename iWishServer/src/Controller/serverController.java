@@ -26,6 +26,7 @@ public class serverController {
     ServerSocket server;
     String IP;
     serverUI root;
+    int i=5;
 
     serverController(Stage stage) {
         try {
