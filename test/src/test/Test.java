@@ -21,6 +21,7 @@ public class Test extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         int i=5;
+        int z=6;
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
