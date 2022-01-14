@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+//hello everyOne
 /**
  *
  * @author Youssef
@@ -26,6 +26,7 @@ public class serverController {
     ServerSocket server;
     String IP;
     serverUI root;
+    int i=5;
 
     serverController(Stage stage) {
         try {
