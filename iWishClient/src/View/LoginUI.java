@@ -1,4 +1,4 @@
-package iWishClient;
+package View;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -11,7 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class FXMLLogin extends BorderPane {
+public class LoginUI extends BorderPane {
 
     protected final AnchorPane anchorPane;
     protected final ImageView imageView;
@@ -29,7 +29,7 @@ public class FXMLLogin extends BorderPane {
     protected final Hyperlink lnkSignup;
     protected final Text text1;
 
-    public FXMLLogin() {
+    public LoginUI() {
 
         anchorPane = new AnchorPane();
         imageView = new ImageView();
@@ -179,4 +179,26 @@ public class FXMLLogin extends BorderPane {
         anchorPane0.getChildren().add(text1);
 
     }
+
+    public TextField getTxtUname() {
+        return txtUname;
+    }
+
+    public PasswordField getTxtPass() {
+        return txtPass;
+    }
+
+    public Button getBtnLogin() {
+        return btnLogin;
+    }
+
+    public Hyperlink getBtnForget() {
+        return btnForget;
+    }
+
+    public Hyperlink getLnkSignup() {
+        return lnkSignup;
+    }
+    
+    
 }
