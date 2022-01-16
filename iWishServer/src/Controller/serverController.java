@@ -14,6 +14,7 @@ import java.net.Socket;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 //hello everyOne
@@ -55,8 +56,12 @@ public class serverController {
                     Socket waiter = server.accept();
                     if (waiter.isConnected()) {
                         IP = String.valueOf(waiter.getInetAddress());
-                        root.getTxtLog().appendText(IP + " has connected " + ClientHandler.getClientsNum() + "\n");
-                        //root.getLblClients().setText(ClientHandler.getClientsNum());
+                        Platform.runLater(new Runnable() {
+                            public void run() {
+                                root.getTxtLog().appendText(IP + " has connected\n");
+                                root.getLblClients().setText(ClientHandler.getClientsNum());
+                            }
+                        });
                     }
                     ClientHandler clientHandler = new ClientHandler(waiter);
                     clientHandler.start();
