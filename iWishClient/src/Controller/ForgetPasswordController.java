@@ -25,7 +25,7 @@ public class ForgetPasswordController {
         root.getBtn_send().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ResetPasswordUI mainView = new ResetPasswordUI() {};
+                LoginUI mainView = new LoginUI() ;
                 Scene scene = new Scene(mainView);
 
                 stage.setScene(scene);
