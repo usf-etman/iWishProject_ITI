@@ -25,9 +25,9 @@ public class DAO {
         Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//iwishdb.casanqki8ga6.us-east-1.rds.amazonaws.com:1521/iwishdb","root","iwishroot");
         PreparedStatement pst = con.prepareStatement("insert into Item(Item_ID,Item_Descreption,Item_Name,Item_Price) values(Item_seq.nextval,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
          //pst.setInt(1,itm.getItem_ID());
-        pst.setString(1,itm.getItem_Descreption());
-           pst.setString(2,itm.getItem_Name());
-        pst.setInt(3, Integer.parseInt(itm.getItem_Price()));
+        pst.setString(1,itm.getDesc());
+           pst.setString(2,itm.getName());
+        pst.setInt(3, Integer.parseInt(itm.getPrice()));
      
         
         result = pst.executeUpdate();

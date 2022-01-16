@@ -11,48 +11,48 @@ package model;
  */
 public class Item {
 
-    private int Item_ID;
-    private String Item_Descreption;
-    private String Item_Name;
-    private String Item_Price;
+    private int id;
+    private String desc;
+    private String name;
+    private String price;
 
     public Item(String Item_Name, String Item_Price, String Item_Descreption) {
-        // this.Item_ID = Item_ID;
-        this.Item_Descreption = Item_Descreption;
-        this.Item_Name = Item_Name;
-        this.Item_Price = Item_Price;
+        // this.id = id;
+        this.desc = Item_Descreption;
+        this.name = Item_Name;
+        this.price = Item_Price;
     }
 
-    public int getItem_ID() {
-        return Item_ID;
+    public int getId() {
+        return id;
     }
 
-    public void setItem_ID(int Item_ID) {
-        this.Item_ID = Item_ID;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getItem_Descreption() {
-        return Item_Descreption;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setItem_Descreption(String Item_Descreption) {
-        this.Item_Descreption = Item_Descreption;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
-    public String getItem_Name() {
-        return Item_Name;
+    public String getName() {
+        return name;
     }
 
-    public void setItem_Name(String Item_Name) {
-        this.Item_Name = Item_Name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getItem_Price() {
-        return Item_Price;
+    public String getPrice() {
+        return price;
     }
 
-    public void setItem_Price(String Item_Price) {
-        this.Item_Price = Item_Price;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
 }
