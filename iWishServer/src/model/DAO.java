@@ -27,7 +27,7 @@ public class DAO {
          //pst.setInt(1,itm.getItem_ID());
         pst.setString(1,itm.getItem_Descreption());
            pst.setString(2,itm.getItem_Name());
-        pst.setInt(3, itm.getItem_Price());
+        pst.setInt(3, Integer.parseInt(itm.getItem_Price()));
      
         
         result = pst.executeUpdate();

@@ -7,21 +7,21 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.Blend;
 import javafx.scene.layout.AnchorPane;
 
-public class serverUI extends AnchorPane {
+public class ServerUI extends AnchorPane {
 
     protected final TextArea txtLog;
     protected final ToggleButton btnStart;
     protected final Blend blend;
-    protected final Button btnAdd;
+    protected final Button btnItems;
     protected final Label label;
     protected final Label lblClients;
 
-    public serverUI() {
+    public ServerUI() {
 
         txtLog = new TextArea();
         btnStart = new ToggleButton();
         blend = new Blend();
-        btnAdd = new Button();
+        btnItems = new Button();
         label = new Label();
         lblClients = new Label();
 
@@ -38,17 +38,17 @@ public class serverUI extends AnchorPane {
         txtLog.setPrefHeight(430.0);
         txtLog.setPrefWidth(663.0);
 
-        btnStart.setLayoutX(206.0);
-        btnStart.setLayoutY(452.0);
+        btnStart.setLayoutX(307.0);
+        btnStart.setLayoutY(456.0);
         btnStart.setMnemonicParsing(false);
         btnStart.setText("Start/Stop");
 
         btnStart.setEffect(blend);
 
-        btnAdd.setLayoutX(338.0);
-        btnAdd.setLayoutY(452.0);
-        btnAdd.setMnemonicParsing(false);
-        btnAdd.setText("Add items");
+        btnItems.setLayoutX(296.0);
+        btnItems.setLayoutY(491.0);
+        btnItems.setMnemonicParsing(false);
+        btnItems.setText("Manage items");
 
         label.setLayoutX(262.0);
         label.setLayoutY(532.0);
@@ -61,12 +61,12 @@ public class serverUI extends AnchorPane {
 
         getChildren().add(txtLog);
         getChildren().add(btnStart);
-        getChildren().add(btnAdd);
+        getChildren().add(btnItems);
         getChildren().add(label);
         getChildren().add(lblClients);
 
     }
-
+    
     public TextArea getTxtLog() {
         return txtLog;
     }
@@ -76,7 +76,7 @@ public class serverUI extends AnchorPane {
     }
 
     public Button getBtnAdd() {
-        return btnAdd;
+        return btnItems;
     }
 
     public Label getLblClients() {

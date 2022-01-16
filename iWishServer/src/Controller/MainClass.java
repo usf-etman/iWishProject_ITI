@@ -5,7 +5,6 @@
  */
 package Controller;
 
-import View.serverUI;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -20,8 +19,7 @@ public class MainClass extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        serverController sc = new serverController(stage);
-        DAO.AddItem(new Item("laptop2","name2",150));
+        ServerController sc = new ServerController(stage);
     }
 
     public static void main(String[] args) {

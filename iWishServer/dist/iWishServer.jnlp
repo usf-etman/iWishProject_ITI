@@ -8,8 +8,34 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="iWishServer.jar" size="9493" download="eager" />
+    <jar href="iWishServer.jar" size="20617" download="eager" />
+    <jar href="lib\commons-codec-1.11.jar" size="335042" download="eager" />
+    <jar href="lib\commons-io-2.10.0.jar" size="325983" download="eager" />
+    <jar href="lib\commons-lang3-3.12.0.jar" size="587402" download="eager" />
+    <jar href="lib\commons-logging-1.2.jar" size="61829" download="eager" />
+    <jar href="lib\commons-net-3.8.0.jar" size="307305" download="eager" />
+    <jar href="lib\commons-text-1.9.jar" size="216211" download="eager" />
+    <jar href="lib\dec-0.1.2.jar" size="98115" download="eager" />
+    <jar href="lib\htmlunit-2.56.0.jar" size="2085006" download="eager" />
+    <jar href="lib\htmlunit-core-js-2.56.0.jar" size="1334613" download="eager" />
+    <jar href="lib\htmlunit-cssparser-1.11.0.jar" size="209538" download="eager" />
+    <jar href="lib\httpclient-4.5.13.jar" size="780321" download="eager" />
+    <jar href="lib\httpcore-4.4.13.jar" size="328593" download="eager" />
+    <jar href="lib\httpmime-4.5.13.jar" size="41790" download="eager" />
+    <jar href="lib\jetty-client-9.4.44.v20210927.jar" size="325613" download="eager" />
+    <jar href="lib\jetty-http-9.4.44.v20210927.jar" size="224574" download="eager" />
+    <jar href="lib\jetty-io-9.4.44.v20210927.jar" size="178897" download="eager" />
+    <jar href="lib\jetty-util-9.4.44.v20210927.jar" size="581520" download="eager" />
+    <jar href="lib\neko-htmlunit-2.56.0.jar" size="376453" download="eager" />
     <jar href="lib\ojdbc8.jar" size="4410832" download="eager" />
+    <jar href="lib\salvation2-3.0.0.jar" size="65728" download="eager" />
+    <jar href="lib\serializer-2.7.2.jar" size="276420" download="eager" />
+    <jar href="lib\websocket-api-9.4.44.v20210927.jar" size="52178" download="eager" />
+    <jar href="lib\websocket-client-9.4.44.v20210927.jar" size="45622" download="eager" />
+    <jar href="lib\websocket-common-9.4.44.v20210927.jar" size="214390" download="eager" />
+    <jar href="lib\xalan-2.7.2.jar" size="3154938" download="eager" />
+    <jar href="lib\xercesImpl-2.12.1.jar" size="1386502" download="eager" />
+    <jar href="lib\xml-apis-1.4.01.jar" size="220536" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="iWishServer" >
     <param name="requiredFXVersion" value="8.0+"/>

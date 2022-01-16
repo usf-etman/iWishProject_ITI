@@ -10,14 +10,14 @@ package model;
  * @author JESSY
  */
 public class Item {
-    
-   private int Item_ID ;
-private String Item_Descreption   ;
-private String Item_Name  ;
- private int Item_Price  ;
 
-    public Item( String Item_Descreption, String Item_Name, int Item_Price) {
-       // this.Item_ID = Item_ID;
+    private int Item_ID;
+    private String Item_Descreption;
+    private String Item_Name;
+    private String Item_Price;
+
+    public Item(String Item_Name, String Item_Price, String Item_Descreption) {
+        // this.Item_ID = Item_ID;
         this.Item_Descreption = Item_Descreption;
         this.Item_Name = Item_Name;
         this.Item_Price = Item_Price;
@@ -47,15 +47,12 @@ private String Item_Name  ;
         this.Item_Name = Item_Name;
     }
 
-    public int getItem_Price() {
+    public String getItem_Price() {
         return Item_Price;
     }
 
-    public void setItem_Price(int Item_Price) {
+    public void setItem_Price(String Item_Price) {
         this.Item_Price = Item_Price;
     }
 
-   
-
-    
 }
