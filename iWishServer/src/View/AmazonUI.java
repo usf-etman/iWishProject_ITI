@@ -76,6 +76,8 @@ public class AmazonUI extends AnchorPane {
         getChildren().add(lblTest);
 
         tableItems.getColumns().addAll(colName, colPrice, colDesc);
+        Item item = new Item("item name", "987", "item desc");
+        tableItems.getItems().add(item);
     }
 
     public TableView getTableItems() {

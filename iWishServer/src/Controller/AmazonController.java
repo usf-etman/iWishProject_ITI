@@ -49,9 +49,9 @@ public class AmazonController {
     
     public static void fillTable(AmazonUI amznUI, Vector<Item> itemsVector){
         for(int i=0; i<itemsVector.size(); i++){
-            String itemName = itemsVector.get(i).getItem_Name();
-            String itemPrice = itemsVector.get(i).getItem_Price();
-            String itemDesc = itemsVector.get(i).getItem_Descreption();
+            String itemName = itemsVector.get(i).getName();
+            String itemPrice = itemsVector.get(i).getPrice();
+            String itemDesc = itemsVector.get(i).getDesc();
             Item item = new Item(itemName, itemPrice, itemDesc);
             Platform.runLater(new Runnable(){
                 public void run(){

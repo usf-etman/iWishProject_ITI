@@ -58,7 +58,7 @@ public class ItemScraper {
             for (int i = 0; i < prodLinks.size(); i++) {
                 page = client.getPage("https://www.amazon.eg" + prodLinks.get(i).getNodeValue());
                 client.waitForBackgroundJavaScript(10000);
-                itemsVector.add(new Item(scrapeDesc(page), scrapeName(page), scrapePrice(page)));
+                itemsVector.add(new Item(scrapeName(page), scrapePrice(page), scrapeDesc(page)));
             }
         } catch (Exception e) {
             e.printStackTrace();
