@@ -85,7 +85,7 @@ public abstract class ForgetPassUI extends BorderPane {
         imageView.setLayoutY(14.0);
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
-        imageView.setImage(new Image(getClass().getResource("../images/Logo.png").toExternalForm()));
+        imageView.setImage(new Image(getClass().getResource("images/Logo.png").toExternalForm()));
 
         txt_email.setFill(javafx.scene.paint.Color.valueOf("#34656d"));
         txt_email.setLayoutX(142.0);
@@ -132,7 +132,7 @@ public abstract class ForgetPassUI extends BorderPane {
         imageView0.setLayoutY(149.0);
         imageView0.setPickOnBounds(true);
         imageView0.setPreserveRatio(true);
-        imageView0.setImage(new Image(getClass().getResource("../images/encrypted.png").toExternalForm()));
+        imageView0.setImage(new Image(getClass().getResource("images/encrypted.png").toExternalForm()));
 
         lnk_login.setLayoutX(417.0);
         lnk_login.setLayoutY(256.0);

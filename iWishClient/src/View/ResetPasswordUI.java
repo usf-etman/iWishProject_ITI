@@ -71,7 +71,7 @@ public abstract class ResetPasswordUI extends BorderPane {
         imageView.setLayoutY(136.0);
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
-        imageView.setImage(new Image(getClass().getResource("../images/Logo.png").toExternalForm()));
+        imageView.setImage(new Image(getClass().getResource("images/Logo.png").toExternalForm()));
 
         imageView0.setFitHeight(177.0);
         imageView0.setFitWidth(224.0);
@@ -79,7 +79,7 @@ public abstract class ResetPasswordUI extends BorderPane {
         imageView0.setLayoutY(8.0);
         imageView0.setPickOnBounds(true);
         imageView0.setPreserveRatio(true);
-        imageView0.setImage(new Image(getClass().getResource("../images/iwish-.png").toExternalForm()));
+        imageView0.setImage(new Image(getClass().getResource("images/iwish-.png").toExternalForm()));
         setLeft(anchorPane);
 
         BorderPane.setAlignment(anchorPane0, javafx.geometry.Pos.CENTER);
@@ -123,7 +123,7 @@ public abstract class ResetPasswordUI extends BorderPane {
         imageView1.setLayoutY(131.0);
         imageView1.setPickOnBounds(true);
         imageView1.setPreserveRatio(true);
-        imageView1.setImage(new Image(getClass().getResource("../images/encrypted.png").toExternalForm()));
+        imageView1.setImage(new Image(getClass().getResource("images/encrypted.png").toExternalForm()));
 
         imageView2.setFitHeight(33.0);
         imageView2.setFitWidth(39.0);
@@ -131,7 +131,7 @@ public abstract class ResetPasswordUI extends BorderPane {
         imageView2.setLayoutY(203.0);
         imageView2.setPickOnBounds(true);
         imageView2.setPreserveRatio(true);
-        imageView2.setImage(new Image(getClass().getResource("../images/encrypted.png").toExternalForm()));
+        imageView2.setImage(new Image(getClass().getResource("images/encrypted.png").toExternalForm()));
 
         text.setFill(javafx.scene.paint.Color.valueOf("#34656d"));
         text.setLayoutX(120.0);
@@ -147,7 +147,7 @@ public abstract class ResetPasswordUI extends BorderPane {
         imageView3.setLayoutY(14.0);
         imageView3.setPickOnBounds(true);
         imageView3.setPreserveRatio(true);
-        imageView3.setImage(new Image(getClass().getResource("../images/iconPass.png").toExternalForm()));
+        imageView3.setImage(new Image(getClass().getResource("images/iconPass.png").toExternalForm()));
         setCenter(anchorPane0);
 
         anchorPane.getChildren().add(imageView);
