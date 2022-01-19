@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="iWishServer.jar" size="22031" download="eager" />
+    <jar href="iWishServer.jar" size="24116" download="eager" />
     <jar href="lib\commons-codec-1.11.jar" size="335042" download="eager" />
     <jar href="lib\commons-io-2.10.0.jar" size="325983" download="eager" />
     <jar href="lib\commons-lang3-3.12.0.jar" size="587402" download="eager" />
@@ -16,6 +16,7 @@
     <jar href="lib\commons-net-3.8.0.jar" size="307305" download="eager" />
     <jar href="lib\commons-text-1.9.jar" size="216211" download="eager" />
     <jar href="lib\dec-0.1.2.jar" size="98115" download="eager" />
+    <jar href="lib\gson-2.8.2.jar" size="232932" download="eager" />
     <jar href="lib\htmlunit-2.56.0.jar" size="2085006" download="eager" />
     <jar href="lib\htmlunit-core-js-2.56.0.jar" size="1334613" download="eager" />
     <jar href="lib\htmlunit-cssparser-1.11.0.jar" size="209538" download="eager" />

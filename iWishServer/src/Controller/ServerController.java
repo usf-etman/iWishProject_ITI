@@ -7,11 +7,13 @@ package Controller;
 
 import View.itemsUI;
 import View.ServerUI;
+import com.google.gson.Gson;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,12 +22,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.DAO;
+import model.User;
 
 /**
  *
  * @author Youssef
  */
-public class ServerController {
+public class ServerController{
 
     ServerSocket server;
     ServerUI root;
@@ -36,14 +40,14 @@ public class ServerController {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-            
+
             root.getTxtLog().appendText("Service started\n");
             server = new ServerSocket(5566);
             root.getTxtLog().appendText("Listening...\n");
             ServerListener serverListener = new ServerListener();
             Thread th = new Thread(serverListener);
             th.start();
-            
+
             root.getBtnAdd().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -55,8 +59,6 @@ public class ServerController {
         }
     }
 
-    
-    
     class ServerListener implements Runnable {
 
         @Override
@@ -73,7 +75,7 @@ public class ServerController {
                             }
                         });
                     }
-                    ClientHandler clientHandler = new ClientHandler(waiter);
+                    ClientHandler clientHandler = new ClientHandler(waiter, root);
                     clientHandler.start();
                 } catch (IOException ex) {
                     Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, ex);
@@ -83,17 +85,16 @@ public class ServerController {
     }
 }
 
-
-
-
 class ClientHandler extends Thread {
 
     DataInputStream dis;
     PrintStream ps;
     String msg;
+    ServerUI root;
     static Vector<ClientHandler> clientsVector = new Vector<ClientHandler>();
 
-    ClientHandler(Socket waiter) throws IOException {
+    ClientHandler(Socket waiter, ServerUI root) throws IOException {
+        this.root = root;
         dis = new DataInputStream(waiter.getInputStream());
         ps = new PrintStream(waiter.getOutputStream());
         ClientHandler.clientsVector.add(this);
@@ -104,9 +105,13 @@ class ClientHandler extends Thread {
         while (true) {
             try {
                 msg = dis.readLine();
-                if (msg.equals("closing")) {
-
-                    ClientHandler.clientsVector.remove(this);
+                root.getTxtLog().appendText(msg + "\n");
+                Gson gson = new Gson(); // Or use new GsonBuilder().create();
+                User user = gson.fromJson(msg, User.class); // deserializes json into target2
+                try {
+                    DAO.AddUser(user);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -119,6 +124,6 @@ class ClientHandler extends Thread {
     }
 
     public static String getClientsNum() {
-        return (String.valueOf(clientsVector.size() + 1));
+        return (String.valueOf(clientsVector.size()));
     }
 }

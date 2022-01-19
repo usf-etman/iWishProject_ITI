@@ -36,5 +36,22 @@ public class DAO {
     return result;
     }
     
-    
+    public static int AddUser(User user) throws SQLException{
+        
+    int result = -1;
+        DriverManager.registerDriver(new OracleDriver());
+        Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//iwishdb.casanqki8ga6.us-east-1.rds.amazonaws.com:1521/iwishdb","root","iwishroot");
+        PreparedStatement pst = con.prepareStatement("insert into User_Info(User_ID, User_Email, User_password, User_Name, User_Balance, USER_SEQ_ANSWER) "
+                + "values(Item_seq.nextval,?,?,?,0,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+        pst.setString(1,user.getEmail());
+        pst.setString(2,user.getPassword());
+        pst.setString(3,user.getUsername());
+        pst.setString(4,user.getSecurityQuestion());
+        
+        result = pst.executeUpdate();
+        pst.close();
+        con.close();
+    return result;
+    }
 }
