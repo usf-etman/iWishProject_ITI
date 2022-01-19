@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  *
  * @author Youssef
  */
-public class LoginController {
+public class LoginController extends ParentController{
 
     LoginController(Stage stage, LoginUI root) {
         root.getBtnLogin().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {

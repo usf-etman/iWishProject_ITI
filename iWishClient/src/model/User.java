@@ -14,7 +14,7 @@ public class User {
     //private byte[] hash;
     
     
-    public User(String username, String email, String password, String securityQuestion, byte[] hash) {
+    public User(String username, String email, String password, String securityQuestion, String key) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -37,5 +37,14 @@ public class User {
     public String getSecurityQuestion() {
         return securityQuestion;
     }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+    
     
 }

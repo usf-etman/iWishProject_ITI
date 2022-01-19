@@ -5,31 +5,22 @@
  */
 package Controller;
 
-import View.LoginUI;
 import View.RegisterUI;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
-import javafx.fxml.Initializable;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
+import com.google.gson.Gson;
 import javafx.stage.Stage;
+import model.User;
 
-public class RegisterController {
+public class RegisterController extends ParentController {
 
     RegisterController(Stage stage, RegisterUI root) {
         root.getBtn_signup().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 // checking for null values
-                 root.getUsernameError().setText("username must not be null!");
+                root.getUsernameError().setText("username must not be null!");
                 if (root.getTxt_user_name().getText().length() < 1) {
                     root.getUsernameError().setText("username must not be null!");
                 } else {
@@ -73,7 +64,15 @@ public class RegisterController {
                 } else {
                     root.getSignupError().setText("");
                 }
+
+                // saving user information
+                User user = new User(root.getTxt_user_name().getText(), root.getTxt_email().getText(),
+                        root.getTxt_password().getText(), root.getTxt_security().getText(), "iu");
+
+                Gson gson = new Gson(); // Or use new GsonBuilder().create();
+                String json = gson.toJson(user); // serializes target to Json
+                ps.println(json);
             }
-           });
+        });
     }
 }
