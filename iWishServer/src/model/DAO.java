@@ -5,6 +5,7 @@
  */
 package model;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,14 +17,14 @@ import oracle.jdbc.OracleDriver;
  *
  * @author JESSY
  */
-public class DAO {
+public class DAO extends ParentConnection{
     
     public static int AddItem(Item itm) throws SQLException{
         
     int result = -1;
-        DriverManager.registerDriver(new OracleDriver());
-        Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//iwishdb.casanqki8ga6.us-east-1.rds.amazonaws.com:1521/iwishdb","root","iwishroot");
-        PreparedStatement pst = con.prepareStatement("insert into Item(Item_ID,Item_Descreption,Item_Name,Item_Price) values(Item_seq.nextval,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        //DriverManager.registerDriver(new OracleDriver());
+        //Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//iwishdb.casanqki8ga6.us-east-1.rds.amazonaws.com:1521/iwishdb","root","iwishroot");
+       PreparedStatement  pst = con.prepareStatement("insert into Item(Item_ID,Item_Descreption,Item_Name,Item_Price) values(Item_seq.nextval,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
          //pst.setInt(1,itm.getItem_ID());
         pst.setString(1,itm.getDesc());
            pst.setString(2,itm.getName());
@@ -39,8 +40,8 @@ public class DAO {
     public static int AddUser(User user) throws SQLException{
         
     int result = -1;
-        DriverManager.registerDriver(new OracleDriver());
-        Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//iwishdb.casanqki8ga6.us-east-1.rds.amazonaws.com:1521/iwishdb","root","iwishroot");
+        //DriverManager.registerDriver(new OracleDriver());
+        //Connection con = DriverManager.getConnection("jdbc:oracle:thin:@//iwishdb.casanqki8ga6.us-east-1.rds.amazonaws.com:1521/iwishdb","root","iwishroot");
         PreparedStatement pst = con.prepareStatement("insert into User_Info(User_ID, User_Email, User_password, User_Name, User_Balance, USER_SEQ_ANSWER) "
                 + "values(Item_seq.nextval,?,?,?,0,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
@@ -51,7 +52,7 @@ public class DAO {
         
         result = pst.executeUpdate();
         pst.close();
-        con.close();
+        //con.close();
     return result;
     }
 }
