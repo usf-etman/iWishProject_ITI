@@ -27,12 +27,12 @@ public class DAO extends ParentConnection{
        PreparedStatement  pst = con.prepareStatement("insert into Item(Item_ID,Item_Descreption,Item_Name,Item_Price) values(Item_seq.nextval,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
          //pst.setInt(1,itm.getItem_ID());
         pst.setString(1,itm.getDesc());
-           pst.setString(2,itm.getName());
+        pst.setString(2,itm.getName());
         pst.setInt(3, Integer.parseInt(itm.getPrice()));
      
         
         result = pst.executeUpdate();
-         pst.close();
+        pst.close();
         con.close();
     return result;
     }

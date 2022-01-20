@@ -69,9 +69,9 @@ public class ItemScraper {
         return prodDesc;
     }
 
-    public static Item getItem(DomAttr itemLink) throws IOException {
+    public static Item getItem(DomAttr itemLink, int i) throws IOException {
         HtmlPage page = client.getPage("https://www.amazon.eg" + itemLink.getNodeValue());
         client.waitForBackgroundJavaScript(10000);
-        return (new Item(scrapeName(page), scrapePrice(page), scrapeDesc(page)));
+        return (new Item(i, scrapeName(page), scrapePrice(page), scrapeDesc(page)));
     }
 }
