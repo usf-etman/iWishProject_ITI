@@ -16,8 +16,8 @@ public class Item {
     private String name;
     private String price;
 
-    public Item(String Item_Name, String Item_Price, String Item_Descreption) {
-        // this.id = id;
+    public Item(int id, String Item_Name, String Item_Price, String Item_Descreption) {
+        this.id = id;
         this.desc = Item_Descreption;
         this.name = Item_Name;
         this.price = Item_Price;
