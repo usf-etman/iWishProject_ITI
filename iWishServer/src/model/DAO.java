@@ -55,7 +55,7 @@ public class DAO {
         pst.setString(1, user.getEmail());
         rs = pst.executeQuery();
         if (rs.next()) {
-            return true;
+            return false;
         } else {
             // Insert into user_info
             pst = con.prepareStatement("insert into User_Info(User_ID, User_Email, User_password, User_Name, User_Balance, USER_SEQ_ANSWER) "
@@ -66,7 +66,7 @@ public class DAO {
             pst.setString(4, user.getSecurityQuestion());
             pst.executeUpdate();
             pst.close();
-            return false;
+            return true;
         }
     }
 }

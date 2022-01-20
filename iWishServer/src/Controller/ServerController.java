@@ -115,7 +115,8 @@ class ClientHandler extends Thread {
                         User user = gson.fromJson(value, User.class); // deserializes json into target2
                         boolean registerStatus = DAO.AddUser(user);
                         root.getTxtLog().appendText(String.valueOf(registerStatus));
-                        ps.print(registerStatus);
+                        ps.println(registerStatus);
+
                 }
                 root.getTxtLog().appendText(msg + "\n");
             } catch (IOException ex) {
