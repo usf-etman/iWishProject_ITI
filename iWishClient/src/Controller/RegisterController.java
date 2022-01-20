@@ -77,11 +77,11 @@ public class RegisterController {
 
                 boolean registerStatus = ParentController.register(user);
                 root.getUsernameError().setText(String.valueOf(registerStatus));
-                if (registerStatus) {
-                    /*MainscreenUI root = new MainscreenUI();
+                if (registerStatus==true) {
+                    MainscreenUI root = new MainscreenUI();
                         Scene scene = new Scene(root);
                         stage.setScene(scene);
-                        stage.show();*/
+                        stage.show();
                 } else {
                     root.getEmailError().setText("Email already exists");
                 }

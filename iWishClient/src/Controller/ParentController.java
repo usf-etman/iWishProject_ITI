@@ -24,6 +24,7 @@ public class ParentController {
     static Socket socket;
     static DataInputStream dis;
     static PrintStream ps;
+    static String registerStatus;
 
     static {
         try {
@@ -42,13 +43,24 @@ public class ParentController {
         msg.addProperty("Key", "Register");
         msg.addProperty("Value", json);
         ps.println(msg);
-        
+
         try {
-            boolean registerStatus = dis.readBoolean();
-            return registerStatus;
+            registerStatus = dis.readLine();
+            boolean boolStatus = Boolean.parseBoolean(registerStatus);  
+            //return registerStatus;
+            System.out.println(registerStatus);
+            System.out.println(boolStatus);
+            return boolStatus;
+            /*if (registerStatus == "true") {
+                return true;
+            } else {
+                return false;
+            }*/
+            //return registerStatus;
         } catch (IOException ex) {
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+
     }
 }
