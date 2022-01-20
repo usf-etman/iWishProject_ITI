@@ -5,15 +5,21 @@
  */
 package Controller;
 
+import View.MainscreenUI;
 import View.RegisterUI;
 import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.User;
 
-public class RegisterController extends ParentController {
+public class RegisterController {
 
     RegisterController(Stage stage, RegisterUI root) {
         root.getBtn_signup().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
@@ -67,11 +73,18 @@ public class RegisterController extends ParentController {
 
                 // saving user information
                 User user = new User(root.getTxt_user_name().getText(), root.getTxt_email().getText(),
-                        root.getTxt_password().getText(), root.getTxt_security().getText(), "iu");
+                        root.getTxt_password().getText(), root.getTxt_security().getText());
 
-                Gson gson = new Gson(); // Or use new GsonBuilder().create();
-                String json = gson.toJson(user); // serializes target to Json
-                ps.println(json);
+                boolean registerStatus = ParentController.register(user);
+                root.getUsernameError().setText(String.valueOf(registerStatus));
+                if (registerStatus) {
+                    /*MainscreenUI root = new MainscreenUI();
+                        Scene scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.show();*/
+                } else {
+                    root.getEmailError().setText("Email already exists");
+                }
             }
         });
     }
