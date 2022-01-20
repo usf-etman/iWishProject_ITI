@@ -5,7 +5,6 @@
  */
 package Controller;
 
-import View.itemsUI;
 import View.ServerUI;
 import com.google.gson.Gson;
 import java.io.DataInputStream;
@@ -24,12 +23,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.DAO;
 import model.User;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
  * @author Youssef
  */
-public class ServerController{
+public class ServerController {
 
     ServerSocket server;
     ServerUI root;
@@ -105,15 +106,23 @@ class ClientHandler extends Thread {
         while (true) {
             try {
                 msg = dis.readLine();
-                root.getTxtLog().appendText(msg + "\n");
-                Gson gson = new Gson(); // Or use new GsonBuilder().create();
-                User user = gson.fromJson(msg, User.class); // deserializes json into target2
-                try {
-                    DAO.AddUser(user);
-                } catch (SQLException ex) {
-                    Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+                JSONObject jmsg = new JSONObject(msg);
+                String key = jmsg.getString("Key");
+                String value = jmsg.getString("Value");
+                switch (key) {
+                    case "Register":
+                        Gson gson = new Gson(); // Or use new GsonBuilder().create();
+                        User user = gson.fromJson(value, User.class); // deserializes json into target2
+                        boolean registerStatus = DAO.AddUser(user);
+                        root.getTxtLog().appendText(String.valueOf(registerStatus));
+                        ps.print(registerStatus);
                 }
+                root.getTxtLog().appendText(msg + "\n");
             } catch (IOException ex) {
+                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JSONException ex) {
+                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
