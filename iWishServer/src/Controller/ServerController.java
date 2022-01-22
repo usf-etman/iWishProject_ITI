@@ -21,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 import model.DAO;
 import model.User;
 import org.json.JSONException;
@@ -116,6 +117,18 @@ class ClientHandler extends Thread {
                         boolean registerStatus = DAO.AddUser(user);
                         root.getTxtLog().appendText(String.valueOf(registerStatus));
                         ps.println(registerStatus);
+                    case "forget":
+                        Gson gson2 = new Gson(); // Or use new GsonBuilder().create();
+                        User user2 = gson2.fromJson(value, User.class); // deserializes json into target2
+                        //  boolean registerStatuss = DAO.selectuser(user2);
+                        boolean result = DAO.selectuser(user2);
+                        ps.println(result);
+                    case "reset":
+                        Gson gson3 = new Gson(); // Or use new GsonBuilder().create();
+                        User user3 = gson3.fromJson(value, User.class); // deserializes json into target2
+                        //  boolean registerStatuss = DAO.selectuser(user2);
+                        boolean result2 = DAO.update(user3);
+                        ps.println(result2);
 
                 }
                 root.getTxtLog().appendText(msg + "\n");

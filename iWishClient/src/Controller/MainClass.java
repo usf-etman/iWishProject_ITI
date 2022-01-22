@@ -26,6 +26,7 @@ public class MainClass extends Application {
         stage.setScene(scene);
         stage.show();
         LoginController lc = new LoginController(stage, root);
+        
     }
 
     /**

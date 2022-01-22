@@ -25,6 +25,7 @@ public class ParentController {
     static DataInputStream dis;
     static PrintStream ps;
     static String registerStatus;
+    static String status;
 
     static {
         try {
@@ -46,7 +47,7 @@ public class ParentController {
 
         try {
             registerStatus = dis.readLine();
-            boolean boolStatus = Boolean.parseBoolean(registerStatus);  
+            boolean boolStatus = Boolean.parseBoolean(registerStatus);
             //return registerStatus;
             System.out.println(registerStatus);
             System.out.println(boolStatus);
@@ -63,4 +64,47 @@ public class ParentController {
         }
 
     }
+
+    public static boolean Forget(User user) {
+        Gson gson = new Gson(); // Or use new GsonBuilder().create();
+        String json = gson.toJson(user); // serializes target to Json
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "forget");
+        msg.addProperty("Value", json);
+        ps.println(msg);
+
+        try {
+            status = dis.readLine();
+            boolean boolStatus = Boolean.parseBoolean(status);
+
+            return boolStatus;
+
+        } catch (IOException ex) {
+            Logger.getLogger(ForgetPasswordController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+
+    }
+
+    public static boolean Reset(User user) {
+        Gson gson = new Gson(); // Or use new GsonBuilder().create();
+        String json = gson.toJson(user); // serializes target to Json
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "reset");
+        msg.addProperty("Value", json);
+        ps.println(msg);
+
+        try {
+            status = dis.readLine();
+            boolean boolStatus = Boolean.parseBoolean(status);
+
+            return boolStatus;
+
+        } catch (IOException ex) {
+            Logger.getLogger(ResetPasswordController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+
+    }
+
 }
