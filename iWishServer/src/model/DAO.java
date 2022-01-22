@@ -69,4 +69,42 @@ public class DAO {
             return true;
         }
     }
+
+    public static boolean selectuser(User user) throws SQLException {
+        DriverManager.registerDriver(new OracleDriver());
+
+        PreparedStatement pst = con.prepareStatement("select User_Email,USER_SEQ_ANSWER from  User_Info where User_Email=? ", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst.setString(1, user.getEmail());
+        // pst.setString(2, user.getSecurityQuestion());
+        ResultSet rs = pst.executeQuery();
+
+        if (rs.next()) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public static boolean update(User user) throws SQLException {
+        int result = -1;
+
+        DriverManager.registerDriver(new OracleDriver());
+
+        PreparedStatement pst = con.prepareStatement("update User_Info set User_Password=?  where User_Email=? ", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+        pst.setString(1, user.getPassword());
+        pst.setString(2, user.getEmail());
+
+        result = pst.executeUpdate();
+        //System.out.println(result);
+        if (result == 1) {
+            return true;
+        } else {
+
+            return false;
+        }
+
+    }
+
 }
