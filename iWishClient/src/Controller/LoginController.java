@@ -5,9 +5,11 @@
  */
 package Controller;
 
+import View.ForgetPassUI;
 import View.LoginUI;
 import View.MainscreenUI;
 import View.RegisterUI;
+import View.ResetPasswordUI;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -42,6 +44,17 @@ public class LoginController extends ParentController{
                 RegisterController rc = new RegisterController(stage, registerView);
             }
         }); 
-                
+            root.getBtnForget().addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                 ForgetPassUI resetview = new  ForgetPassUI() ;
+                Scene scene = new Scene(resetview);
+                stage.setScene(scene);
+                stage.show();
+              ForgetPasswordController  ec =new ForgetPasswordController(stage, resetview);
+            }
+            
+            
+            } );
     }
 }

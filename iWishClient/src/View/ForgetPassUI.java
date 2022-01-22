@@ -10,7 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public abstract class ForgetPassUI extends BorderPane {
+public  class ForgetPassUI extends BorderPane {
 
     public Button getBtn_send() {
         return btn_send;
@@ -150,5 +150,9 @@ public abstract class ForgetPassUI extends BorderPane {
         anchorPane0.getChildren().add(imageView0);
         anchorPane0.getChildren().add(lnk_login);
 
+    }
+
+    public Hyperlink getLnk_login() {
+        return lnk_login;
     }
 }

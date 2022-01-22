@@ -13,6 +13,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
+import model.User;
 
 /**
  *
@@ -25,12 +27,38 @@ public class ForgetPasswordController {
         root.getBtn_send().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ResetPasswordUI mainView = new ResetPasswordUI() {};
+
+                User user = new User(root.getTxt_email0().getText(), root.getTxt_ansquestion().getText());
+
+                boolean status = ParentController.Forget(user);
+                //root.getUsernameError().setText(String.valueOf(registerStatus));
+                if (status == true) {
+                    ResetPasswordUI mainView = new ResetPasswordUI() ;
+                   
+                    Scene scene = new Scene(mainView);
+
+                    stage.setScene(scene);
+                    stage.show(); 
+                    }
+                else {
+                  System.out.println( "not correct email or answer ");
+                  JOptionPane.showMessageDialog(null, "not correct email or answer ");
+
+                }
+            }
+        });
+        root.getLnk_login().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                LoginUI mainView = new LoginUI() ;
+               
                 Scene scene = new Scene(mainView);
 
                 stage.setScene(scene);
                 stage.show();
+                LoginController lc = new LoginController(stage, mainView);
             }
+
         });
     }
 }
