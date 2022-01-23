@@ -6,14 +6,9 @@
 package Controller;
 
 import View.ServerUI;
-import com.google.gson.Gson;
-import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.SQLException;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -21,11 +16,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
-import model.DAO;
-import model.User;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  *
@@ -84,75 +74,5 @@ public class ServerController {
                 }
             }
         }
-    }
-}
-
-class ClientHandler extends Thread {
-
-    DataInputStream dis;
-    PrintStream ps;
-    String msg;
-    ServerUI root;
-    static Vector<ClientHandler> clientsVector = new Vector<ClientHandler>();
-
-    ClientHandler(Socket waiter, ServerUI root) throws IOException {
-        this.root = root;
-        dis = new DataInputStream(waiter.getInputStream());
-        ps = new PrintStream(waiter.getOutputStream());
-        ClientHandler.clientsVector.add(this);
-    }
-
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                msg = dis.readLine();
-                JSONObject jmsg = new JSONObject(msg);
-                String key = jmsg.getString("Key");
-                String value = jmsg.getString("Value");
-                switch (key) {
-                    case "Register":
-                        Gson gson = new Gson(); // Or use new GsonBuilder().create();
-                        User user = gson.fromJson(value, User.class); // deserializes json into target2
-                        boolean registerStatus = DAO.AddUser(user);
-                        root.getTxtLog().appendText(String.valueOf(registerStatus));
-                        ps.println(registerStatus);
-                    case "forget":
-                        Gson gson2 = new Gson(); // Or use new GsonBuilder().create();
-                        User user2 = gson2.fromJson(value, User.class); // deserializes json into target2
-                        //  boolean registerStatuss = DAO.selectuser(user2);
-                        boolean result = DAO.selectuser(user2);
-                        ps.println(result);
-                    case "reset":
-                        Gson gson3 = new Gson(); // Or use new GsonBuilder().create();
-                        User user3 = gson3.fromJson(value, User.class); // deserializes json into target2
-                        //  boolean registerStatuss = DAO.selectuser(user2);
-                        boolean result2 = DAO.update(user3);
-                        ps.println(result2);
-
-                    case "login":
-                        Gson gsonlog = new Gson(); // Or use new GsonBuilder().create();
-                        User userlog = gsonlog.fromJson(value, User.class); // deserializes json into target2
-                        boolean resultlog = DAO.loginuser(userlog);
-                        ps.println(resultlog);
-
-                }
-                root.getTxtLog().appendText(msg + "\n");
-            } catch (IOException ex) {
-                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (JSONException ex) {
-                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public static String getClientsNum() {
-        return (String.valueOf(clientsVector.size()));
     }
 }
