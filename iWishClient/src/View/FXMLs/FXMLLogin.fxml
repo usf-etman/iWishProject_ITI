@@ -34,7 +34,7 @@
    <center>
       <AnchorPane prefHeight="500.0" prefWidth="415.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="txtUname" layoutX="83.0" layoutY="158.0" prefHeight="33.0" prefWidth="203.0" promptText="User Name or Email" style="-fx-background-color: transparent; -fx-border-color: #34656D; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField fx:id="txtUname" layoutX="83.0" layoutY="158.0" prefHeight="33.0" prefWidth="203.0" promptText="Email" style="-fx-background-color: transparent; -fx-border-color: #34656D; -fx-border-width: 0px 0px 2px 0px;" />
             <PasswordField fx:id="txtPass" layoutX="82.0" layoutY="217.0" prefWidth="204.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #34656D; -fx-border-width: 0px 0px 2px 0px;" />
             <Button fx:id="btnLogin" layoutX="124.0" layoutY="349.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="100.0" style="-fx-background-color: #34656D;" text="Login" textFill="WHITE">
                <font>
@@ -74,6 +74,21 @@
             <Text layoutX="46.0" layoutY="460.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New to iWish ?">
                <font>
                   <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="txtEmailError" fill="#ea1212" layoutX="82.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="204.6708984375">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Text>
+            <Text fx:id="txtPassError" fill="#ea1212" layoutX="82.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="205.6708984375">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Text>
+            <Text fx:id="loginError" fill="#ea1212" layoutX="77.0" layoutY="416.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="214.6708984375">
+               <font>
+                  <Font name="System Bold" size="15.0" />
                </font>
             </Text>
          </children>

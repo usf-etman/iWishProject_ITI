@@ -25,6 +25,7 @@ public class ParentController {
     static DataInputStream dis;
     static PrintStream ps;
     static String registerStatus;
+    static String loginStatus;
     static String status;
 
     static {
@@ -64,7 +65,29 @@ public class ParentController {
         }
 
     }
+       public static boolean login(User user) {
+        Gson gson = new Gson(); // Or use new GsonBuilder().create();
+        String json = gson.toJson(user); // serializes target to Json
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "login");
+        msg.addProperty("Value", json);
+        ps.println(msg);
 
+        try {
+            loginStatus = dis.readLine();
+            boolean boolStatus = Boolean.parseBoolean(loginStatus);
+            //return registerStatus;
+            System.out.println(loginStatus);
+            System.out.println(boolStatus);
+            return boolStatus;
+        } catch (IOException ex) {
+            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+
+    }
+    
+    
     public static boolean Forget(User user) {
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         String json = gson.toJson(user); // serializes target to Json

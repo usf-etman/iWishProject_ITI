@@ -28,6 +28,9 @@ public class LoginUI extends BorderPane {
     protected final ImageView imageView3;
     protected final Hyperlink lnkSignup;
     protected final Text text1;
+    protected final Text txtEmailError;
+    protected final Text txtPassError;
+    protected final Text loginError;
 
     public LoginUI() {
 
@@ -46,6 +49,9 @@ public class LoginUI extends BorderPane {
         imageView3 = new ImageView();
         lnkSignup = new Hyperlink();
         text1 = new Text();
+        txtEmailError = new Text();
+        txtPassError = new Text();
+        loginError = new Text();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -90,7 +96,7 @@ public class LoginUI extends BorderPane {
         txtUname.setLayoutY(158.0);
         txtUname.setPrefHeight(33.0);
         txtUname.setPrefWidth(203.0);
-        txtUname.setPromptText("User Name or Email");
+        txtUname.setPromptText("Email");
         txtUname.setStyle("-fx-background-color: transparent; -fx-border-color: #34656D; -fx-border-width: 0px 0px 2px 0px;");
 
         txtPass.setLayoutX(82.0);
@@ -162,6 +168,30 @@ public class LoginUI extends BorderPane {
         text1.setStrokeWidth(0.0);
         text1.setText("New to iWish ?");
         text1.setFont(new Font(18.0));
+
+        txtEmailError.setFill(javafx.scene.paint.Color.valueOf("#ea1212"));
+        txtEmailError.setLayoutX(82.0);
+        txtEmailError.setLayoutY(216.0);
+        txtEmailError.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+        txtEmailError.setStrokeWidth(0.0);
+        txtEmailError.setWrappingWidth(204.6708984375);
+        txtEmailError.setFont(new Font("System Bold", 15.0));
+
+        txtPassError.setFill(javafx.scene.paint.Color.valueOf("#ea1212"));
+        txtPassError.setLayoutX(82.0);
+        txtPassError.setLayoutY(272.0);
+        txtPassError.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+        txtPassError.setStrokeWidth(0.0);
+        txtPassError.setWrappingWidth(205.6708984375);
+        txtPassError.setFont(new Font("System Bold", 15.0));
+
+        loginError.setFill(javafx.scene.paint.Color.valueOf("#ea1212"));
+        loginError.setLayoutX(77.0);
+        loginError.setLayoutY(416.0);
+        loginError.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+        loginError.setStrokeWidth(0.0);
+        loginError.setWrappingWidth(214.6708984375);
+        loginError.setFont(new Font("System Bold", 15.0));
         setCenter(anchorPane0);
 
         anchorPane.getChildren().add(imageView);
@@ -177,6 +207,9 @@ public class LoginUI extends BorderPane {
         anchorPane0.getChildren().add(imageView3);
         anchorPane0.getChildren().add(lnkSignup);
         anchorPane0.getChildren().add(text1);
+        anchorPane0.getChildren().add(txtEmailError);
+        anchorPane0.getChildren().add(txtPassError);
+        anchorPane0.getChildren().add(loginError);
 
     }
 
@@ -199,6 +232,16 @@ public class LoginUI extends BorderPane {
     public Hyperlink getLnkSignup() {
         return lnkSignup;
     }
-    
-    
+
+    public Text getTxtEmailError() {
+        return txtEmailError;
+    }
+
+    public Text getTxtPassError() {
+        return txtPassError;
+    }
+
+    public Text getLoginError() {
+        return loginError;
+    }
 }

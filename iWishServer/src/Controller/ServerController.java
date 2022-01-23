@@ -130,6 +130,12 @@ class ClientHandler extends Thread {
                         boolean result2 = DAO.update(user3);
                         ps.println(result2);
 
+                    case "login":
+                        Gson gsonlog = new Gson(); // Or use new GsonBuilder().create();
+                        User userlog = gsonlog.fromJson(value, User.class); // deserializes json into target2
+                        boolean resultlog = DAO.loginuser(userlog);
+                        ps.println(resultlog);
+
                 }
                 root.getTxtLog().appendText(msg + "\n");
             } catch (IOException ex) {
