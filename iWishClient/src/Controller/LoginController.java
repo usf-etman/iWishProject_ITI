@@ -57,7 +57,7 @@ public class LoginController extends ParentController {
                  user.setEmail(root.getTxtUname().getText());
                  user.setPassword(root.getTxtPass().getText());
                
-                boolean loginStatus = ParentController.login(user);
+                boolean loginStatus = ParentController.getUserInfo(user, "login");
                 root.getTxtEmailError().setText(String.valueOf(loginStatus));
                 if (loginStatus == true) {
                     MainscreenUI mainView = new MainscreenUI();

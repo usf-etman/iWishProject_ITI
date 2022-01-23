@@ -75,7 +75,7 @@ public class RegisterController {
                 User user = new User(root.getTxt_user_name().getText(), root.getTxt_email().getText(),
                         root.getTxt_password().getText(), root.getTxt_security().getText());
 
-                boolean registerStatus = ParentController.register(user);
+                boolean registerStatus = ParentController.getUserInfo(user, "Register");
                 root.getUsernameError().setText(String.valueOf(registerStatus));
                 if (registerStatus==true) {
                     MainscreenUI root = new MainscreenUI();

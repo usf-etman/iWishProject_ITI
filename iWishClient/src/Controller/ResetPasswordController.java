@@ -29,7 +29,7 @@ public class ResetPasswordController {
             public void handle(ActionEvent event) {
                 User user = new User(root.getTxt_user().getText(),root.getTxt_email().getText(),root.getTxt_newpass().getText());
 
-                boolean status = ParentController.Reset(user);
+                boolean status = ParentController.getUserInfo(user, "reset");
                 //root.getUsernameError().setText(String.valueOf(registerStatus));
                 if (status == true) {
                     LoginUI mainView = new LoginUI();

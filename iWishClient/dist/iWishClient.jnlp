@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="iWishClient.jar" size="378307" download="eager" />
+    <jar href="iWishClient.jar" size="379240" download="eager" />
     <jar href="lib\commons-codec-1.11.jar" size="335042" download="eager" />
     <jar href="lib\commons-io-2.10.0.jar" size="325983" download="eager" />
     <jar href="lib\commons-lang3-3.12.0.jar" size="587402" download="eager" />
@@ -28,6 +28,7 @@
     <jar href="lib\jetty-io-9.4.44.v20210927.jar" size="178897" download="eager" />
     <jar href="lib\jetty-util-9.4.44.v20210927.jar" size="581520" download="eager" />
     <jar href="lib\neko-htmlunit-2.56.0.jar" size="376453" download="eager" />
+    <jar href="lib\org.json-chargebee-1.0.jar" size="40683" download="eager" />
     <jar href="lib\salvation2-3.0.0.jar" size="65728" download="eager" />
     <jar href="lib\serializer-2.7.2.jar" size="276420" download="eager" />
     <jar href="lib\websocket-api-9.4.44.v20210927.jar" size="52178" download="eager" />
