@@ -30,7 +30,7 @@ public class ForgetPasswordController {
 
                 User user = new User(root.getTxt_email0().getText(), root.getTxt_ansquestion().getText());
 
-                boolean status = ParentController.Forget(user);
+                boolean status = ParentController.getUserInfo(user, "forget");
                 //root.getUsernameError().setText(String.valueOf(registerStatus));
                 if (status == true) {
                     ResetPasswordUI mainView = new ResetPasswordUI() ;
@@ -39,6 +39,7 @@ public class ForgetPasswordController {
 
                     stage.setScene(scene);
                     stage.show(); 
+                    ResetPasswordController k = new ResetPasswordController(stage, mainView);
                     }
                 else {
                   System.out.println( "not correct email or answer ");
