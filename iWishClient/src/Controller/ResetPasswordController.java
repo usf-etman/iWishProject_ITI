@@ -30,7 +30,7 @@ public class ResetPasswordController {
                 User user = new User(root.getTxt_user().getText(),root.getTxt_email().getText(),root.getTxt_newpass().getText());
 
                 boolean status = ParentController.Reset(user);
-                //root.getUsernameError().setText(String.valueOf(registerStatus));
+             //   root.getUsernameError().setText(String.valueOf(registerStatus));
                 if (status == true) {
                     LoginUI mainView = new LoginUI();
                     Scene scene = new Scene(mainView);
@@ -39,11 +39,11 @@ public class ResetPasswordController {
                     stage.show();
                    LoginController lc = new LoginController(stage, mainView);
 
-                } else {
+               } else {
                    
                     JOptionPane.showMessageDialog(null, "not updated ");
 
-                }
+               }
 
             }
         });

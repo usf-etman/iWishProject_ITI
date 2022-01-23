@@ -39,6 +39,7 @@ public class ForgetPasswordController {
 
                     stage.setScene(scene);
                     stage.show(); 
+                     ResetPasswordController k =new  ResetPasswordController(stage, mainView);
                     }
                 else {
                   System.out.println( "not correct email or answer ");

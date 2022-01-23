@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/javapro/iWishProject_ITI/iWishClient/src/Controller/ForgetPasswordController.java</file>
             <file>file:/D:/javapro/iWishProject_ITI/iWishClient/src/Controller/ResetPasswordController.java</file>
             <file>file:/D:/javapro/iWishProject_ITI/iWishClient/src/model/User.java</file>
+            <file>file:/D:/javapro/iWishProject_ITI/iWishClient/src/Controller/LoginController.java</file>
             <file>file:/D:/javapro/iWishProject_ITI/iWishClient/src/Controller/ParentController.java</file>
         </group>
     </open-files>
