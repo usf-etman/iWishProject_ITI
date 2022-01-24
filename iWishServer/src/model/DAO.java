@@ -70,10 +70,11 @@ public class DAO {
         }
     }
 
-    public static boolean loginuser(User user) throws SQLException {
+    public static int loginUser(User user) throws SQLException {
 
+        int result = -1;
         DriverManager.registerDriver(new OracleDriver());
-        PreparedStatement pst = con.prepareStatement("select USER_EMAIL,User_password from User_Info where USER_EMAIL = ? AND User_password = ? ", ResultSet.TYPE_SCROLL_INSENSITIVE,
+        PreparedStatement pst = con.prepareStatement("select USER_ID from User_Info where USER_EMAIL = ? AND User_password = ? ", ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY);
 
         pst.setString(1, user.getEmail());
@@ -81,9 +82,10 @@ public class DAO {
         ResultSet resultSet = pst.executeQuery();
 
         if (resultSet.next()) {
-            return true;
+            result = resultSet.getInt(1);
+            return result;
         } else {
-            return false;
+            return -1;
         }
 
     }
