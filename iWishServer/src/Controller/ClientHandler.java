@@ -79,7 +79,7 @@ public class ClientHandler extends Thread {
                     case "login":
                         Gson gsonlog = new Gson();
                         User userlog = gsonlog.fromJson(value, User.class);
-                        boolean loginStatus = DAO.loginuser(userlog);
+                        int loginStatus = DAO.loginUser(userlog);
                         jmsg = new JSONObject();
                         jmsg.put("Key", "login");
                         jmsg.put("Value", loginStatus);

@@ -57,10 +57,10 @@ public class LoginController extends ParentController {
                  user.setEmail(root.getTxtUname().getText());
                  user.setPassword(root.getTxtPass().getText());
                
-                boolean loginStatus = ParentController.getUserInfo(user, "login");
+                int loginStatus = ParentController.login(user);
                 root.getTxtEmailError().setText(String.valueOf(loginStatus));
-                if (loginStatus == true) {
-                    System.out.println("inside if condition");
+                if (loginStatus != -1) {
+                    ParentController.setUID(loginStatus);
                     MainscreenController mc = new MainscreenController(stage);
                 } else {
                     root.getTxtEmailError().setText("Email does't exist");
