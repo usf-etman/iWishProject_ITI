@@ -60,11 +60,8 @@ public class LoginController extends ParentController {
                 boolean loginStatus = ParentController.getUserInfo(user, "login");
                 root.getTxtEmailError().setText(String.valueOf(loginStatus));
                 if (loginStatus == true) {
-                    MainscreenUI mainView = new MainscreenUI();
-                    Scene scene = new Scene(mainView);
-
-                    stage.setScene(scene);
-                    stage.show();
+                    System.out.println("inside if condition");
+                    MainscreenController mc = new MainscreenController(stage);
                 } else {
                     root.getTxtEmailError().setText("Email does't exist");
                 }
