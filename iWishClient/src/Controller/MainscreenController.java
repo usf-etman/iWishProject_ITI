@@ -26,6 +26,8 @@ public class MainscreenController {
         stage.setScene(scene);
         stage.show();
         
+        System.out.println(String.valueOf(ParentController.getUID()));
+        
         mainView.getBtnItems().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

@@ -28,6 +28,8 @@ public class ParentController {
     static PrintStream ps;
     static String loginStatus;
     static String status;
+    private static int UID;
+    static int responseInt;
     static boolean blockingFlag = true;
     static boolean responseFlag;
 
@@ -43,7 +45,7 @@ public class ParentController {
         }
     }
 
-    public static boolean getUserInfo(User user, String key){
+    public static boolean getUserInfo(User user, String key) {
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         String json = gson.toJson(user); // serializes target to Json
         JsonObject msg = new JsonObject();
@@ -56,8 +58,28 @@ public class ParentController {
         blockingFlag = true;
         return responseFlag;
     }
-    
-    
+
+    public static int login(User user) {
+        Gson gson = new Gson(); // Or use new GsonBuilder().create();
+        String json = gson.toJson(user); // serializes target to Json
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "login");
+        msg.addProperty("Value", json);
+        ps.println(msg);
+        while (blockingFlag) {
+            System.out.println("");
+        }
+        blockingFlag = true;
+        return responseInt;
+    }
+
+    public static int getUID() {
+        return UID;
+    }
+
+    public static void setUID(int UID) {
+        ParentController.UID = UID;
+    }
     
     static class ClientListener extends Thread {
 
@@ -68,6 +90,9 @@ public class ParentController {
                     JSONObject jmsg = new JSONObject(msg);
                     String key = jmsg.getString("Key");
                     switch (key) {
+                        case "login":
+                            responseInt = jmsg.getInt("Value");
+                            blockingFlag = false;
                         default:
                             responseFlag = jmsg.getBoolean("Value");
                             blockingFlag = false;
