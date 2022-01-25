@@ -99,13 +99,16 @@ public class RegisterUI extends BorderPane {
         txt_user_name.setPromptText("User Name");
         txt_user_name.setStyle("-fx-background-color: transparent; -fx-border-color: #34656D; -fx-border-width: 0px 0px 2px 0px;");
 
-        usernameError.setFill(javafx.scene.paint.Color.valueOf("#34656d"));
+        usernameError.setFill(javafx.scene.paint.Color.valueOf("#ea1212"));
         usernameError.setLayoutX(71.0);
         usernameError.setLayoutY(169.0);
         usernameError.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         usernameError.setStrokeWidth(0.0);
         usernameError.setWrappingWidth(255.369140625);
-        usernameError.setText("Nayra");
+        usernameError.setFont(new Font("System Bold", 15.0));
+        
+  
+        usernameError.setStyle("-fx-background-color: transparent; -fx-border-color: #34656D; -fx-border-width: 0px 0px 2px 0px;");
 
         txt_password.setLayoutX(71.0);
         txt_password.setLayoutY(225.0);
@@ -114,12 +117,13 @@ public class RegisterUI extends BorderPane {
         txt_password.setPromptText("Password");
         txt_password.setStyle("-fx-background-color: transparent; -fx-border-color: #34656D; -fx-border-width: 0px 0px 2px 0px;");
 
-        passwordError.setFill(javafx.scene.paint.Color.valueOf("#34656d"));
+        passwordError.setFill(javafx.scene.paint.Color.valueOf("#ea1212"));
         passwordError.setLayoutX(63.0);
         passwordError.setLayoutY(267.0);
         passwordError.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         passwordError.setStrokeWidth(0.0);
         passwordError.setWrappingWidth(266.369140625);
+        passwordError.setFont(new Font("System Bold", 15.0));
 
         txt_email.setLayoutX(71.0);
         txt_email.setLayoutY(175.0);
@@ -128,12 +132,13 @@ public class RegisterUI extends BorderPane {
         txt_email.setPromptText("Email");
         txt_email.setStyle("-fx-background-color: transparent; -fx-border-color: #34656D; -fx-border-width: 0px 0px 2px 0px;");
 
-        emailError.setFill(javafx.scene.paint.Color.valueOf("#34656d"));
+        emailError.setFill(javafx.scene.paint.Color.valueOf("#ea1212"));
         emailError.setLayoutX(71.0);
         emailError.setLayoutY(110.0);
         emailError.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         emailError.setStrokeWidth(0.0);
         emailError.setWrappingWidth(98.369140625);
+        emailError.setFont(new Font("System Bold", 15.0));
 
         txt_security.setLayoutX(71.0);
         txt_security.setLayoutY(277.0);
@@ -142,12 +147,14 @@ public class RegisterUI extends BorderPane {
         txt_security.setPromptText("What's your Favorite Color?");
         txt_security.setStyle("-fx-background-color: trasnparent; -fx-border-color: #34656D; -fx-border-width: 0px 0px 2px 0px;");
 
-        securityError.setFill(javafx.scene.paint.Color.valueOf("#34656d"));
+        securityError.setFill(javafx.scene.paint.Color.valueOf("#ea1212"));
         securityError.setLayoutX(71.0);
         securityError.setLayoutY(218.0);
         securityError.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         securityError.setStrokeWidth(0.0);
-        securityError.setWrappingWidth(257.369140625);
+        securityError.setFont(new Font("System Bold", 15.0));
+        
+        
 
         btn_signup.setLayoutX(145.0);
         btn_signup.setLayoutY(321.0);
@@ -281,3 +288,4 @@ public class RegisterUI extends BorderPane {
     
 
 }
+

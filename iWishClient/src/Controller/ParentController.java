@@ -28,8 +28,9 @@ public class ParentController {
     static PrintStream ps;
     static String loginStatus;
     static String status;
-    private static int UID;
-    static int responseInt;
+    //private static int UID;
+    private static User my_info;
+    static String responseString;
     static boolean blockingFlag = true;
     static boolean responseFlag;
 
@@ -45,7 +46,7 @@ public class ParentController {
         }
     }
 
-    public static boolean getUserInfo(User user, String key) {
+    public static boolean getUserInfo(User user, String key) {  //reset password + register + forget password
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         String json = gson.toJson(user); // serializes target to Json
         JsonObject msg = new JsonObject();
@@ -56,12 +57,13 @@ public class ParentController {
             System.out.println("");
         }
         blockingFlag = true;
-        return responseFlag;
+        return responseFlag; // return flag
     }
 
-    public static int login(User user) {
+    public static User login(User user) {
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         String json = gson.toJson(user); // serializes target to Json
+        
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "login");
         msg.addProperty("Value", json);
@@ -70,16 +72,19 @@ public class ParentController {
             System.out.println("");
         }
         blockingFlag = true;
-        return responseInt;
+        User userjava = gson.fromJson(responseString,User.class); 
+        return userjava; 
     }
 
-    public static int getUID() {
-        return UID;
+    public static User getMy_info() {
+        return my_info;
     }
 
-    public static void setUID(int UID) {
-        ParentController.UID = UID;
+    public static void setMy_info(User my_info) {
+        ParentController.my_info = my_info;
     }
+
+   
     
     static class ClientListener extends Thread {
 
@@ -91,7 +96,7 @@ public class ParentController {
                     String key = jmsg.getString("Key");
                     switch (key) {
                         case "login":
-                            responseInt = jmsg.getInt("Value");
+                            responseString = jmsg.getString("Value"); //from server to client
                             blockingFlag = false;
                         default:
                             responseFlag = jmsg.getBoolean("Value");

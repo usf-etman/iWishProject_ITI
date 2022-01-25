@@ -18,14 +18,16 @@ import javafx.stage.Stage;
  */
 public class MainscreenController {
 
-    MainscreenController(Stage stage) {
+    MainscreenController(Stage stage)
+    {
         MainscreenUI mainView = new MainscreenUI();
         Scene scene = new Scene(mainView);
 
         stage.setScene(scene);
         stage.show();
         
-        System.out.println(String.valueOf(ParentController.getUID()));
+        mainView.getLblName().setText(ParentController.getMy_info().getUsername());
+        mainView.getLblBalance().setText(String.valueOf(ParentController.getMy_info().getBalance()));
         
         mainView.getBtnItems().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
@@ -39,4 +41,5 @@ public class MainscreenController {
             }
         });
     }
+    //
 }
