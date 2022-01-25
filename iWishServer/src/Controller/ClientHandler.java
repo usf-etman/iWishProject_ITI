@@ -17,6 +17,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.DAO;
+import model.Item;
 import model.User;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,9 +48,10 @@ public class ClientHandler extends Thread {
                 msg = dis.readLine();
                 JSONObject jmsg = new JSONObject(msg);
                 String key = jmsg.getString("Key");
-                String value = jmsg.getString("Value");
+                String value;
                 switch (key) {
                     case "Register":
+                        value = jmsg.getString("Value");
                         Gson gson = new Gson();
                         User user = gson.fromJson(value, User.class);
                         boolean registerStatus = DAO.AddUser(user);
@@ -59,6 +61,7 @@ public class ClientHandler extends Thread {
                         ps.println(jmsg);
                         break;
                     case "forget":
+                        value = jmsg.getString("Value");
                         Gson gson2 = new Gson();
                         User user2 = gson2.fromJson(value, User.class);
                         boolean forgetStatus = DAO.selectuser(user2);
@@ -68,6 +71,7 @@ public class ClientHandler extends Thread {
                         ps.println(jmsg);
                         break;
                     case "reset":
+                        value = jmsg.getString("Value");
                         Gson gson3 = new Gson();
                         User user3 = gson3.fromJson(value, User.class);
                         boolean resetStatus = DAO.update(user3);
@@ -77,6 +81,7 @@ public class ClientHandler extends Thread {
                         ps.println(jmsg);
                         break;
                     case "login":
+                        value = jmsg.getString("Value");
                         Gson gsonlog = new Gson();
                         User userlog = gsonlog.fromJson(value, User.class);
                         int loginStatus = DAO.loginUser(userlog);
@@ -84,6 +89,25 @@ public class ClientHandler extends Thread {
                         jmsg.put("Key", "login");
                         jmsg.put("Value", loginStatus);
                         ps.println(jmsg);
+                        break;
+                    case "ShowItems":
+                        Gson gsonItm = new Gson();
+                        Vector<Item> ItemResult = DAO.SelectItems();
+                        System.out.println(ItemResult.size());
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "VectorSize");
+                        jmsg.put("size", ItemResult.size());
+                        ps.println(jmsg);
+                        for (int i = 0; i < ItemResult.size(); i++) {
+                            gson = new Gson();
+                            String json = gson.toJson(ItemResult.get(i));
+                            jmsg = new JSONObject();
+                            jmsg.put("Key", "ShowItems");
+                            jmsg.put("size", ItemResult.size());
+                            jmsg.put("Value", json);
+                            ps.println(jmsg);
+                        }
+
                         break;
                 }
                 root.getTxtLog().appendText(msg + "\n");

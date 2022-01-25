@@ -11,8 +11,10 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Item;
 import model.User;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +34,10 @@ public class ParentController {
     static int responseInt;
     static boolean blockingFlag = true;
     static boolean responseFlag;
+    static Item itm;
+    static Vector<Item> itmVector;
+    static int vectorSize;
+    static int blokingCounter;
 
     static {
         try {
@@ -59,6 +65,23 @@ public class ParentController {
         return responseFlag;
     }
 
+    public static Vector<Item> getAllItems() {
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "ShowItems");
+        ps.println(msg);
+
+        while (blockingFlag) {
+            System.out.println(vectorSize);
+
+        }
+        blockingFlag = true;
+        while (blokingCounter < vectorSize) {
+            System.out.println(blokingCounter);
+        }
+        return itmVector;
+
+    }
+
     public static int login(User user) {
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         String json = gson.toJson(user); // serializes target to Json
@@ -80,7 +103,7 @@ public class ParentController {
     public static void setUID(int UID) {
         ParentController.UID = UID;
     }
-    
+
     static class ClientListener extends Thread {
 
         public void run() {
@@ -93,6 +116,24 @@ public class ParentController {
                         case "login":
                             responseInt = jmsg.getInt("Value");
                             blockingFlag = false;
+                        case "VectorSize":
+                            itmVector = new Vector<Item>();
+                            vectorSize = jmsg.getInt("size");
+                            blokingCounter = 0;
+                            blockingFlag = false;
+                            //System.out.println(vectorSize);
+
+                            break;
+                        case "ShowItems":
+
+                            String itmrslt = jmsg.getString("Value");
+                            Gson gson = new Gson();
+                            itm = gson.fromJson(itmrslt, Item.class);
+                            itmVector.add(itm);
+                            blokingCounter++;
+                            System.out.println(vectorSize);
+
+                            break;
                         default:
                             responseFlag = jmsg.getBoolean("Value");
                             blockingFlag = false;
