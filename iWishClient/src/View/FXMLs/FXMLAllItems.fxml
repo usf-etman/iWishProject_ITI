@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
+   <children>
+      <TableView layoutX="-2.0" layoutY="84.0" prefHeight="266.0" prefWidth="614.0">
+        <columns>
+          <TableColumn fx:id="ItemName" prefWidth="196.0" resizable="false" style="-fx-background-color: #B8DFD8;" text="Item-Name" />
+          <TableColumn fx:id="ItemPrice" prefWidth="127.0" resizable="false" style="-fx-background-color: #B8DFD8;" text="Item-Price" />
+            <TableColumn fx:id="ItemDescription" prefWidth="290.0" resizable="false" style="-fx-background-color: #B8DFD8;" text="Item-Description" />
+        </columns>
+      </TableView>
+      <Pane layoutY="85.0" prefHeight="6.0" prefWidth="614.0" style="-fx-background-color: #34656D;" />
+      <ImageView fitHeight="72.0" fitWidth="162.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/iwishh.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="272.0" fitWidth="266.0" layoutX="105.0" layoutY="-66.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/items.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnAddIIem" layoutX="216.0" layoutY="350.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="179.0" style="-fx-background-color: #34656D;" text="add to your wish list" textFill="#f8f5f5">
+         <font>
+            <Font name="Bodoni MT" size="18.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="91.0" fitWidth="69.0" layoutX="554.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/dandelions.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
