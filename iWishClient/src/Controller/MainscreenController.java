@@ -11,7 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.eclipse.jetty.util.thread.ReservedThreadExecutor;
 
 /**
  *
@@ -19,25 +18,23 @@ import org.eclipse.jetty.util.thread.ReservedThreadExecutor;
  */
 public class MainscreenController {
 
-    MainscreenController(Stage stage) {
+    MainscreenController(Stage stage)
+    {
         MainscreenUI mainView = new MainscreenUI();
         Scene scene = new Scene(mainView);
 
         stage.setScene(scene);
         stage.show();
         
-        System.out.println(String.valueOf(ParentController.getUID()));
+        mainView.getLblName().setText(ParentController.getMy_info().getUsername());
+        mainView.getLblBalance().setText(String.valueOf(ParentController.getMy_info().getBalance()));
         
         mainView.getBtnItems().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ResetPasswordUI registerView = new ResetPasswordUI();
-                Scene scene = new Scene(registerView);
-
-                stage.setScene(scene);
-                stage.show();
-                ResetPasswordController rc = new ResetPasswordController(stage, registerView);
+                AddItemController AIC = new AddItemController(stage);
             }
         });
     }
 }
+

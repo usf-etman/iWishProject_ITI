@@ -18,18 +18,16 @@ public class Item {
 
     public Item(int id, String Item_Name, String Item_Price, String Item_Descreption) {
         this.id = id;
-        this.desc = Item_Descreption;
-        this.name = Item_Name;
-        this.price = Item_Price;
-    }
-
-    public Item(String Item_Name, String Item_Price, String Item_Descreption) {
-
         this.name = Item_Name;
         this.price = Item_Price;
         this.desc = Item_Descreption;
     }
-
+ public Item( String Item_Name, String Item_Price, String Item_Descreption) {
+        
+        this.name = Item_Name;
+        this.price = Item_Price;
+        this.desc = Item_Descreption;
+    }
     public int getId() {
         return id;
     }

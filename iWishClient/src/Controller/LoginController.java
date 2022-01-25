@@ -57,11 +57,11 @@ public class LoginController extends ParentController {
                  user.setEmail(root.getTxtUname().getText());
                  user.setPassword(root.getTxtPass().getText());
                
-                int loginStatus = ParentController.login(user);
+                User loginStatus = ParentController.login(user);
                 root.getTxtEmailError().setText(String.valueOf(loginStatus));
-                if (loginStatus != -1) {
-                    ParentController.setUID(loginStatus);
-                    MainscreenController mc = new MainscreenController(stage);
+                if (loginStatus != null) { //from the server
+                    ParentController.setMy_info(loginStatus);
+                    MainscreenController mc = new MainscreenController(stage); // current user mainscreen
                 } else {
                     root.getTxtEmailError().setText("Email does't exist");
                 }
@@ -70,12 +70,13 @@ public class LoginController extends ParentController {
         root.getLnkSignup().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                RegisterUI registerView = new RegisterUI();
+                AddItemController AIC = new AddItemController(stage);
+               /* RegisterUI registerView = new RegisterUI();
                 Scene scene = new Scene(registerView);
 
                 stage.setScene(scene);
                 stage.show();
-                RegisterController rc = new RegisterController(stage, registerView);
+                RegisterController rc = new RegisterController(stage, registerView);*/
             }
         });
         root.getBtnForget().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {

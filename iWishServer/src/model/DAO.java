@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import oracle.jdbc.OracleDriver;
@@ -47,6 +48,17 @@ public class DAO {
         return result;
     }
 
+    public static Vector<Item> SelectItems() throws SQLException {
+        Vector<Item> result = new Vector<Item>();
+        PreparedStatement pst = con.prepareStatement("select * from Item", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            result.add(new Item(rs.getString("Item_Name"), rs.getString("Item_Price"), rs.getString("Item_Descreption")));
+        }
+        return result;
+    }
+    
+    
     public static boolean AddUser(User user) throws SQLException {
 
         //select from user_info
@@ -70,22 +82,23 @@ public class DAO {
         }
     }
 
-    public static int loginUser(User user) throws SQLException {
-
-        int result = -1;
+    public static User loginUser(User user) throws SQLException { //user object
         DriverManager.registerDriver(new OracleDriver());
-        PreparedStatement pst = con.prepareStatement("select USER_ID from User_Info where USER_EMAIL = ? AND User_password = ? ", ResultSet.TYPE_SCROLL_INSENSITIVE,
+        PreparedStatement pst = con.prepareStatement("select USER_ID, User_Name, User_Balance from User_Info where USER_EMAIL = ? AND User_password = ? ", ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY);
 
         pst.setString(1, user.getEmail());
         pst.setString(2, user.getPassword());
         ResultSet resultSet = pst.executeQuery();
-
+        User resultUser = new User();
+        
         if (resultSet.next()) {
-            result = resultSet.getInt(1);
-            return result;
+            resultUser.setUID(resultSet.getInt(1));
+            resultUser.setUsername(resultSet.getString(2));
+            resultUser.setBalance(resultSet.getInt(3));
+            return resultUser;
         } else {
-            return -1;
+            return null;
         }
 
     }
