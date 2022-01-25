@@ -113,7 +113,7 @@ public class ClientHandler extends Thread {
 
                         break;
                 }
-                root.getTxtLog().appendText(msg + "\n");
+                //root.getTxtLog().appendText(msg + "\n");
             } catch (IOException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
             } catch (JSONException ex) {
