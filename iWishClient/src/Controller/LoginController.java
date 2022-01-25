@@ -70,13 +70,13 @@ public class LoginController extends ParentController {
         root.getLnkSignup().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                AddItemController AIC = new AddItemController(stage);
-               /* RegisterUI registerView = new RegisterUI();
+                //AddItemController AIC = new AddItemController(stage);
+               RegisterUI registerView = new RegisterUI();
                 Scene scene = new Scene(registerView);
 
                 stage.setScene(scene);
                 stage.show();
-                RegisterController rc = new RegisterController(stage, registerView);*/
+                RegisterController rc = new RegisterController(stage, registerView);
             }
         });
         root.getBtnForget().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
