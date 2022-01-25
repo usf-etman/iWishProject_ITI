@@ -119,6 +119,7 @@ public class ParentController {
                         case "login":
                             responseString = jmsg.getString("Value"); //from server to client
                             blockingFlag = false;
+                            break;
                         case "VectorSize":
                             itmVector = new Vector<Item>();
                             vectorSize = jmsg.getInt("size");
