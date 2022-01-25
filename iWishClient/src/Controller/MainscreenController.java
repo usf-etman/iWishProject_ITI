@@ -30,12 +30,7 @@ public class MainscreenController {
         mainView.getBtnItems().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ResetPasswordUI registerView = new ResetPasswordUI();
-                Scene scene = new Scene(registerView);
-
-                stage.setScene(scene);
-                stage.show();
-                ResetPasswordController rc = new ResetPasswordController(stage, registerView);
+                AddItemController AIC = new AddItemController(stage);
             }
         });
     }
