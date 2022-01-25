@@ -66,9 +66,6 @@ public class ParentController {
         return responseFlag; // return flag
     }
 
-<<<<<<< HEAD
-    public static User login(User user) {
-=======
     public static Vector<Item> getAllItems() {
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "ShowItems");
@@ -86,8 +83,7 @@ public class ParentController {
 
     }
 
-    public static int login(User user) {
->>>>>>> origin/nayra
+    public static User login(User user) {
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         String json = gson.toJson(user); // serializes target to Json
         
@@ -111,11 +107,6 @@ public class ParentController {
         ParentController.my_info = my_info;
     }
 
-<<<<<<< HEAD
-   
-    
-=======
->>>>>>> origin/nayra
     static class ClientListener extends Thread {
 
         public void run() {
