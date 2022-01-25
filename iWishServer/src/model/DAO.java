@@ -53,7 +53,7 @@ public class DAO {
         PreparedStatement pst = con.prepareStatement("select * from Item", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
-            result.add(new Item(rs.getString("Item_Name"), rs.getString("Item_Price"), rs.getString("Item_Descreption")));
+            result.add(new Item(rs.getInt("Item_ID"),rs.getString("Item_Name"), rs.getString("Item_Price"), rs.getString("Item_Descreption")));
         }
         return result;
     }
