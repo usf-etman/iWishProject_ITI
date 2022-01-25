@@ -8,7 +8,11 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+<<<<<<< HEAD
+    <jar href="iWishServer.jar" size="30538" download="eager" />
+=======
     <jar href="iWishServer.jar" size="30973" download="eager" />
+>>>>>>> origin/nayra
     <jar href="lib\commons-codec-1.11.jar" size="335042" download="eager" />
     <jar href="lib\commons-io-2.10.0.jar" size="325983" download="eager" />
     <jar href="lib\commons-lang3-3.12.0.jar" size="587402" download="eager" />

@@ -10,14 +10,15 @@ public class User {
     private String email;
     private String password;
     private String securityQuestion;
-    //private byte[] hash;
+    private int balance; 
+    private int UID; 
+    
 
     public User(String username, String email, String password, String securityQuestion) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.securityQuestion = securityQuestion;
-        //this.hash = hash;
     }
 
     public User(String email, String securityQuestion) {
@@ -35,6 +36,7 @@ public class User {
         //this.securityQuestion = securityQuestion;
         //this.hash = hash;
     }
+
     public User() {
     }
 
@@ -61,4 +63,30 @@ public class User {
     public String getSecurityQuestion() {
         return securityQuestion;
     }
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
+
+    public int getUID() {
+        return UID;
+    }
+
+    public void setUID(int UID) {
+        this.UID = UID;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setSecurityQuestion(String securityQuestion) {
+        this.securityQuestion = securityQuestion;
+    }
+    
 }
+ 
