@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import oracle.jdbc.OracleDriver;
@@ -47,6 +48,17 @@ public class DAO {
         return result;
     }
 
+    public static Vector<Item> SelectItems() throws SQLException {
+        Vector<Item> result = new Vector<Item>();
+        PreparedStatement pst = con.prepareStatement("select * from Item", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            result.add(new Item(rs.getString("Item_Name"), rs.getString("Item_Price"), rs.getString("Item_Descreption")));
+        }
+        return result;
+    }
+    
+    
     public static boolean AddUser(User user) throws SQLException {
 
         //select from user_info
