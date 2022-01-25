@@ -39,18 +39,19 @@ public class ClientHandler extends Thread {
         ps = new PrintStream(waiter.getOutputStream());
         ClientHandler.clientsVector.add(this);
     }
-
+    
     @Override
     public void run() {
         while (true) {
             try {
-                msg = dis.readLine();
-                JSONObject jmsg = new JSONObject(msg);
-                String key = jmsg.getString("Key");
-                String value = jmsg.getString("Value");
+                msg = dis.readLine(); //recieve msg from client
+                JSONObject jmsg = new JSONObject(msg); //convert msg from string to JSONObject
+                String key = jmsg.getString("Key"); //parsing
+                String value = jmsg.getString("Value");//parsing user json object
+                Gson gson;
                 switch (key) {
                     case "Register":
-                        Gson gson = new Gson();
+                        gson = new Gson();
                         User user = gson.fromJson(value, User.class);
                         boolean registerStatus = DAO.AddUser(user);
                         jmsg = new JSONObject();
@@ -59,8 +60,8 @@ public class ClientHandler extends Thread {
                         ps.println(jmsg);
                         break;
                     case "forget":
-                        Gson gson2 = new Gson();
-                        User user2 = gson2.fromJson(value, User.class);
+                        gson = new Gson();
+                        User user2 = gson.fromJson(value, User.class);
                         boolean forgetStatus = DAO.selectuser(user2);
                         jmsg = new JSONObject();
                         jmsg.put("Key", "forget");
@@ -68,8 +69,8 @@ public class ClientHandler extends Thread {
                         ps.println(jmsg);
                         break;
                     case "reset":
-                        Gson gson3 = new Gson();
-                        User user3 = gson3.fromJson(value, User.class);
+                        gson = new Gson();
+                        User user3 = gson.fromJson(value, User.class);
                         boolean resetStatus = DAO.update(user3);
                         jmsg = new JSONObject();
                         jmsg.put("Key", "reset");
@@ -77,12 +78,13 @@ public class ClientHandler extends Thread {
                         ps.println(jmsg);
                         break;
                     case "login":
-                        Gson gsonlog = new Gson();
-                        User userlog = gsonlog.fromJson(value, User.class);
-                        int loginStatus = DAO.loginUser(userlog);
+                        gson = new Gson();
+                        User userlog = gson.fromJson(value, User.class); //converts from json string to Java Object
+                        User loginStatus = DAO.loginUser(userlog);
+                        String json = gson.toJson(loginStatus); // convert loginstatus from java object to json
                         jmsg = new JSONObject();
                         jmsg.put("Key", "login");
-                        jmsg.put("Value", loginStatus);
+                        jmsg.put("Value", json);
                         ps.println(jmsg);
                         break;
                 }
