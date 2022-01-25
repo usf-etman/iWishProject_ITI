@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import View.LoginUI;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.io.DataInputStream;
