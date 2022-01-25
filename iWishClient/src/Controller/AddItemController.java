@@ -22,14 +22,28 @@ public class AddItemController {
 
     AddItemController(Stage stage) {
         AddItemUI additmView = new AddItemUI();
+        //AddItemUI additmView = new AddItemUI();
         Scene scene = new Scene(additmView);
         stage.setScene(scene);
         stage.show();
         Vector<Item> itmVector = ParentController.getAllItems();
         //System.out.println(itmVector.size());
         for (int i = 0; i < itmVector.size(); i++) {
+
             additmView.getTableView().getItems().add(itmVector.get(i));
         }
+        additmView.getBtnProfile().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+               MainscreenController msc = new MainscreenController(stage);
+            }
+        });
+        additmView.getBtnItems().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                 AddItemController AIC = new AddItemController(stage);
+            }
+        });
 
         additmView.getBtnAddIIem().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
