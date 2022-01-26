@@ -3,6 +3,7 @@ package View;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -10,9 +11,15 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import model.User;
 
-public abstract class FriendsListUI extends AnchorPane {
+public class FriendsListUI extends AnchorPane {
 
+    protected final TableView<User> tableFriends;
+    protected final TableColumn<User, String> colFriend;
+
+    protected final TableView<User> tableSuggest;
+    protected final TableColumn<User, String> colSuggest;
     protected final StackPane stackPane;
     protected final Rectangle rectangle;
     protected final AnchorPane anchorPane;
@@ -27,8 +34,9 @@ public abstract class FriendsListUI extends AnchorPane {
     protected final ImageView imageView;
     protected final ImageView imageView0;
     protected final AnchorPane anchorPane1;
-    protected final TableView tableView;
-    protected final TableColumn table_Friends;
+    // protected final TableView tableView;
+    protected final TableColumn colFid;
+    // protected final TableColumn table_Friends;
     protected final Text text;
     protected final Rectangle rectangle1;
     protected final Text text0;
@@ -37,10 +45,13 @@ public abstract class FriendsListUI extends AnchorPane {
     protected final Button btn_Show;
     protected final Button btn_Remove;
     protected final Button btn_Add;
-    protected final TableView tableView0;
-    protected final TableColumn table_suggest;
+    //protected final TableView tableView0;
+    protected final TableColumn colSid;
+    //protected final TableColumn table_suggest;
 
     public FriendsListUI() {
+        tableFriends = new TableView<User>();
+        colFriend = new TableColumn<User, String>();
 
         stackPane = new StackPane();
         rectangle = new Rectangle();
@@ -56,8 +67,9 @@ public abstract class FriendsListUI extends AnchorPane {
         imageView = new ImageView();
         imageView0 = new ImageView();
         anchorPane1 = new AnchorPane();
-        tableView = new TableView();
-        table_Friends = new TableColumn();
+        //tableView = new TableView();
+        colFid = new TableColumn<User, Integer>();
+        //table_Friends = new TableColumn();
         text = new Text();
         rectangle1 = new Rectangle();
         text0 = new Text();
@@ -66,8 +78,9 @@ public abstract class FriendsListUI extends AnchorPane {
         btn_Show = new Button();
         btn_Remove = new Button();
         btn_Add = new Button();
-        tableView0 = new TableView();
-        table_suggest = new TableColumn();
+        tableSuggest = new TableView<User>();
+        colSid = new TableColumn<User, Integer>();
+        colSuggest = new TableColumn<User, String>();
 
         setId("AnchorPane");
         setPrefHeight(844.0);
@@ -163,20 +176,27 @@ public abstract class FriendsListUI extends AnchorPane {
         anchorPane1.setPrefHeight(727.0);
         anchorPane1.setPrefWidth(1244.0);
 
-        tableView.setLayoutX(187.0);
-        tableView.setLayoutY(130.0);
-        tableView.setPrefHeight(579.0);
-        tableView.setPrefWidth(329.0);
+        tableFriends.setLayoutX(190.0);
+        tableFriends.setLayoutY(130.0);
+        tableFriends.setPrefHeight(590.0);
+        tableFriends.setPrefWidth(330.0);
 
-        table_Friends.setMinWidth(0.0);
-        table_Friends.setPrefWidth(328.0);
-        table_Friends.setStyle("-fx-background-color: #34656d;");
-        table_Friends.setText("Name");
+        colFid.setMaxWidth(0.0);
+        colFid.setMinWidth(0.0);
+        colFid.setPrefWidth(0.0);
+        colFid.setText("ID");
+        colFid.setCellValueFactory(new PropertyValueFactory("UID"));
+
+        colFriend.setMinWidth(0.0);
+        colFriend.setPrefWidth(329.0);
+        colFriend.setStyle("-fx-background-color: #34656d;");
+        colFriend.setText("Name");
+        colFriend.setCellValueFactory(new PropertyValueFactory("username"));
 
         text.setFill(javafx.scene.paint.Color.valueOf("#34656d"));
         text.setFontSmoothingType(javafx.scene.text.FontSmoothingType.LCD);
-        text.setLayoutX(241.0);
-        text.setLayoutY(116.0);
+        text.setLayoutX(248.0);
+        text.setLayoutY(107.0);
         text.setStrokeLineCap(javafx.scene.shape.StrokeLineCap.ROUND);
         text.setStrokeLineJoin(javafx.scene.shape.StrokeLineJoin.BEVEL);
         text.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
@@ -247,15 +267,21 @@ public abstract class FriendsListUI extends AnchorPane {
         btn_Add.setText("ADD");
         btn_Add.setTextFill(javafx.scene.paint.Color.WHITE);
 
-        tableView0.setLayoutX(617.0);
-        tableView0.setLayoutY(122.0);
-        tableView0.setPrefHeight(594.0);
-        tableView0.setPrefWidth(329.0);
+        tableSuggest.setLayoutX(617.0);
+        tableSuggest.setLayoutY(130.0);
+        tableSuggest.setPrefHeight(587.0);
+        tableSuggest.setPrefWidth(330.0);
 
-        table_suggest.setPrefWidth(328.0);
-        table_suggest.setStyle("-fx-background-color: #34656d;");
-        table_suggest.setText("Name");
+        colSid.setMaxWidth(0.0);
+        colSid.setMinWidth(0.0);
+        colSid.setPrefWidth(0.0);
+        colSid.setText("ID");
+        colSid.setCellValueFactory(new PropertyValueFactory("UID"));
 
+        colSuggest.setPrefWidth(328.0);
+        colSuggest.setStyle("-fx-background-color: #34656d;");
+        colSuggest.setText("Name");
+        colSuggest.setCellValueFactory(new PropertyValueFactory("username"));
         stackPane.getChildren().add(rectangle);
         anchorPane.getChildren().add(btn_profile);
         anchorPane.getChildren().add(btn_friends);
@@ -269,8 +295,9 @@ public abstract class FriendsListUI extends AnchorPane {
         anchorPane0.getChildren().add(imageView);
         anchorPane0.getChildren().add(imageView0);
         getChildren().add(anchorPane0);
-        tableView.getColumns().add(table_Friends);
-        anchorPane1.getChildren().add(tableView);
+        tableFriends.getColumns().add(colFid);
+        tableFriends.getColumns().add(colFriend);
+        anchorPane1.getChildren().add(tableFriends);
         anchorPane1.getChildren().add(text);
         anchorPane1.getChildren().add(rectangle1);
         anchorPane1.getChildren().add(text0);
@@ -279,9 +306,46 @@ public abstract class FriendsListUI extends AnchorPane {
         anchorPane1.getChildren().add(btn_Show);
         anchorPane1.getChildren().add(btn_Remove);
         anchorPane1.getChildren().add(btn_Add);
-        tableView0.getColumns().add(table_suggest);
-        anchorPane1.getChildren().add(tableView0);
+        tableSuggest.getColumns().add(colSid);
+        tableSuggest.getColumns().add(colSuggest);
+        anchorPane1.getChildren().add(tableSuggest);
         getChildren().add(anchorPane1);
 
+    }
+
+    public TableView<User> getTableFriends() {
+        return tableFriends;
+    }
+
+    public TableView<User> getTableSuggest() {
+        return tableSuggest;
+    }
+
+    public TableColumn<User, String> getColFriend() {
+        return colFriend;
+    }
+
+    public TableColumn<User, String> getColSuggest() {
+        return colSuggest;
+    }
+
+    public TableColumn getColFid() {
+        return colFid;
+    }
+
+    public Button getBtn_Show() {
+        return btn_Show;
+    }
+
+    public Button getBtn_Remove() {
+        return btn_Remove;
+    }
+
+    public Button getBtn_Add() {
+        return btn_Add;
+    }
+
+    public TableColumn getColSid() {
+        return colSid;
     }
 }

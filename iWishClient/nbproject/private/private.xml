@@ -3,11 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/E:/computer%20science/ITI/courses/Java2/project/GitHub/iWishProject_ITI/iWishClient/src/View/FXMLs/FXMLAllItems.fxml</file>
             <file>file:/E:/computer%20science/ITI/courses/Java2/project/GitHub/iWishProject_ITI/iWishClient/src/model/WishList.java</file>
             <file>file:/E:/computer%20science/ITI/courses/Java2/project/GitHub/iWishProject_ITI/iWishClient/src/View/AddItemUI.java</file>
             <file>file:/E:/computer%20science/ITI/courses/Java2/project/GitHub/iWishProject_ITI/iWishClient/src/Controller/ParentController.java</file>
             <file>file:/E:/computer%20science/ITI/courses/Java2/project/GitHub/iWishProject_ITI/iWishClient/src/Controller/AddItemController.java</file>
+=======
+            <file>file:/D:/java_project1/iWishProject_ITI/iWishClient/src/Controller/FriendListController.java</file>
+            <file>file:/D:/java_project1/iWishProject_ITI/iWishClient/src/Controller/AddItemController.java</file>
+            <file>file:/D:/java_project1/iWishProject_ITI/iWishClient/src/Controller/ParentController.java</file>
+            <file>file:/D:/java_project1/iWishProject_ITI/iWishClient/src/Controller/MainscreenController.java</file>
+>>>>>>> origin/jessica
         </group>
     </open-files>
 </project-private>

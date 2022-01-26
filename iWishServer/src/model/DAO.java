@@ -71,6 +71,25 @@ public class DAO {
         return result;
     }
 
+
+    public static Vector<User> ReturnFriend(int uid) throws SQLException {
+        Vector<User> res = new Vector<User>();
+        PreparedStatement pst = con.prepareStatement("SELECT USER_ID, USER_NAME FROM USER_INFO WHERE USER_ID NOT IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID=?) AND USER_ID != ? ", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+         pst.setInt(1, uid);
+        pst.setInt(2, uid);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            User selected_user = new User();
+            selected_user.setUsername(rs.getString("user_name"));
+            selected_user.setUID(rs.getInt("user_ID"));
+            // res.add();
+            res.add(selected_user);
+        }
+        return res;
+
+    }
+
+
     public static boolean AddUser(User user) throws SQLException {
 
         //select from user_info
@@ -136,10 +155,11 @@ public class DAO {
 
         DriverManager.registerDriver(new OracleDriver());
 
-        PreparedStatement pst = con.prepareStatement("update User_Info set User_Password=?  where User_Email=? ", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        PreparedStatement pst = con.prepareStatement("update User_Info set User_Password=?  where User_Email=? and User_Name=?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
         pst.setString(1, user.getPassword());
         pst.setString(2, user.getEmail());
+         pst.setString(3,user.getUsername());
 
         result = pst.executeUpdate();
         //System.out.println(result);

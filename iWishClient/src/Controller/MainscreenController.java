@@ -5,10 +5,12 @@
  */
 package Controller;
 
+import View.FriendsListUI;
 import View.MainscreenUI;
 import View.ResetPasswordUI;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -34,6 +36,18 @@ public class MainscreenController {
             public void handle(ActionEvent event) {
                 AddItemController AIC = new AddItemController(stage);
             }
+           
+        });
+        mainView.getBtnFriends().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                
+                FriendListController flc=new FriendListController(stage);
+            }
+        
+        
+        
+        
         });
     }
 }
