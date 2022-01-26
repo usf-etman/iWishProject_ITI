@@ -35,6 +35,8 @@ public class ServerController {
     ServerSocket server;
     ServerUI root;
     int serverFlag = 0;
+    String IP;
+    Thread th;
 
     ServerController(Stage stage) {
 
@@ -66,14 +68,14 @@ public class ServerController {
                 server = new ServerSocket(5566);
                 root.getTxtLog().appendText("Listening...\n");
                 ServerListener serverListener = new ServerListener();
-                Thread th = new Thread(serverListener);
+                th = new Thread(serverListener);
                 th.start();
                 serverFlag = 1;
             } else if (serverFlag == 1) {
 
                 root.getTxtLog().appendText("Stoping...\n");
-                root.getTxtLog().appendText("Service stoped\n");
-                Thread.currentThread().isInterrupted();
+                root.getTxtLog().appendText("Service stopped\n");
+                th.stop();
                 server.close();
                 serverFlag = 0;
             }
@@ -91,7 +93,9 @@ public class ServerController {
                 try {
                     Socket waiter = server.accept();
                     if (waiter.isConnected()) {
-                        String IP = String.valueOf(waiter.getInetAddress());
+                        IP = String.valueOf(waiter.getInetAddress());
+                        ClientHandler clientHandler = new ClientHandler(waiter, root);
+                        clientHandler.start();
                         Platform.runLater(new Runnable() {
                             public void run() {
                                 root.getTxtLog().appendText(IP + " has connected\n");
@@ -99,8 +103,6 @@ public class ServerController {
                             }
                         });
                     }
-                    ClientHandler clientHandler = new ClientHandler(waiter, root);
-                    clientHandler.start();
                 } catch (IOException ex) {
                     Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, ex);
                 }

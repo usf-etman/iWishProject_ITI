@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.Vector;
@@ -34,19 +35,14 @@ public class ParentController {
     static PrintStream ps;
     static String loginStatus;
     static String status;
-
-    //private static int UID;
-  //static User my_info;
-  static User friend_info;
-
+    static User friend_info;
     private static User my_info;
-
     static String responseString;
     static boolean blockingFlag = true;
     static boolean responseFlag;
     static Item itm;
     static Vector<Item> itmVector;
-    static Vector <User> uservector;
+    static Vector<User> uservector;
     static int vectorSize;
     static int blokingCounter;
     static int wshlstStatus;
@@ -58,12 +54,13 @@ public class ParentController {
             ps = new PrintStream(socket.getOutputStream());
             ClientListener clientListener = new ClientListener();
             clientListener.start();
+        } catch (ConnectException ex) {
+            Logger.getLogger(ParentController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ParentController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    
     public static boolean getUserInfo(User user, String key) {  //reset password + register + forget password
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         String json = gson.toJson(user); // serializes target to Json
@@ -108,11 +105,12 @@ public class ParentController {
         return itmVector;
 
     }
-    public static Vector<User> reurnSuggestFriend(){
-    
-     JsonObject msg = new JsonObject();
+
+    public static Vector<User> reurnSuggestFriend() {
+
+        JsonObject msg = new JsonObject();
         msg.addProperty("Key", "DisplayFriend");
-         msg.addProperty("Value",my_info.getUID());
+        msg.addProperty("Value", my_info.getUID());
         ps.println(msg);
 //blocking untill recieve vector size
         while (blockingFlag) {
@@ -124,9 +122,8 @@ public class ParentController {
         while (blokingCounter < vectorSize) {
             System.out.println(" ");
         }
-        return  uservector;
+        return uservector;
 
-    
     }
 
     public static User login(User user) {
@@ -169,7 +166,7 @@ public class ParentController {
 
                         case "VectorSize":
                             itmVector = new Vector<Item>();
-                            uservector =new Vector<User>();
+                            uservector = new Vector<User>();
                             vectorSize = jmsg.getInt("size");
                             blokingCounter = 0;
                             blockingFlag = false;
@@ -182,17 +179,16 @@ public class ParentController {
                             itm = gson.fromJson(itmrslt, Item.class);
                             itmVector.add(itm);
                             blokingCounter++;
-                           // System.out.println(vectorSize);
+                            // System.out.println(vectorSize);
 
                             break;
-                          case  "DisplayFriend":
-                              String friendlist = jmsg.getString("Value");
+                        case "DisplayFriend":
+                            String friendlist = jmsg.getString("Value");
                             Gson gson2 = new Gson();
-                            friend_info = gson2.fromJson(friendlist , User.class);
+                            friend_info = gson2.fromJson(friendlist, User.class);
                             uservector.add(friend_info);
                             blokingCounter++;
-                           // System.out.println(vectorSize);
-
+                            // System.out.println(vectorSize);
 
                             System.out.println(vectorSize);
 
@@ -207,7 +203,7 @@ public class ParentController {
                             responseFlag = jmsg.getBoolean("Value");
                             blockingFlag = false;
                             break;
-                            
+
                     }
                 }
 
