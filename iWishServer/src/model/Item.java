@@ -23,6 +23,14 @@ public class Item {
         this.price = Item_Price;
     }
 
+    public Item(String desc,String name , String price) {
+        this.desc = desc;
+        this.name = name;
+        this.price = price;
+    }
+    
+    
+
    /* public Item(String Item_Name, String Item_Price, String Item_Descreption) {
 
         this.name = Item_Name;
