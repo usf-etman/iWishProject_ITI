@@ -10,8 +10,14 @@ package model;
  * @author Youssef
  */
 public class Wish {
+    private int wishID;
     private String name;
     private String price;
+
+    public Wish(String name, String price) {
+        this.name = name;
+        this.price = price;
+    }
 
     public String getName() {
         return name;
@@ -27,5 +33,13 @@ public class Wish {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public int getWishID() {
+        return wishID;
+    }
+
+    public void setWishID(int wishID) {
+        this.wishID = wishID;
     }
 }

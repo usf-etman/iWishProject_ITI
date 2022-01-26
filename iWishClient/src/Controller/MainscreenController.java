@@ -44,9 +44,14 @@ public class MainscreenController {
                 
                 FriendListController flc=new FriendListController(stage);
             }
+        });
         
-        
-        
+         mainView.getBtnNotifications().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                
+                PendingFriendController pf=new PendingFriendController(stage);
+            }
         
         });
     }
