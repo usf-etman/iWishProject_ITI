@@ -74,9 +74,11 @@ public class DAO {
 
     public static Vector<User> ReturnFriend(int uid) throws SQLException {
         Vector<User> res = new Vector<User>();
-        PreparedStatement pst = con.prepareStatement("SELECT USER_ID, USER_NAME FROM USER_INFO WHERE USER_ID NOT IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID=?) AND USER_ID != ? ", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        String sql ="SELECT USER_ID, USER_NAME FROM USER_INFO WHERE USER_ID  NOT IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID=?) AND USER_ID NOT IN (SELECT  USER_ID FROM Pending_Request WHERE Sender_ID=?)  AND USER_ID != ?";
+        PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
          pst.setInt(1, uid);
         pst.setInt(2, uid);
+          pst.setInt(3, uid);
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
             User selected_user = new User();
@@ -170,6 +172,19 @@ public class DAO {
             return false;
         }
 
+    }
+    
+    /////////////////////////////friend requests////////////////////////////////////////////////////////
+    public static int AddToPending(PendingRequest pndngRqust) throws SQLException {
+        int result = -1;
+        
+        String sql = "insert into Pending_Request(Request_ID,User_ID,Sender_ID) values(PendingRqustSEQ.nextval,?,?)";
+        PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst.setInt(1, pndngRqust.getUser_ID());
+        pst.setInt(2, pndngRqust.getSender_ID());       
+        result = pst.executeUpdate();
+        pst.close();       
+        return result;
     }
 
 }
