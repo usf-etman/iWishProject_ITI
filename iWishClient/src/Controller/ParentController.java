@@ -34,13 +34,13 @@ public class ParentController {
     static PrintStream ps;
     static String loginStatus;
     static String status;
-<<<<<<< HEAD
+
     //private static int UID;
-  static User my_info;
+  //static User my_info;
   static User friend_info;
-=======
+
     private static User my_info;
->>>>>>> origin/salma
+
     static String responseString;
     static boolean blockingFlag = true;
     static boolean responseFlag;
@@ -166,10 +166,7 @@ public class ParentController {
                             responseString = jmsg.getString("Value"); //from server to client
                             blockingFlag = false;
                             break;
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/salma
                         case "VectorSize":
                             itmVector = new Vector<Item>();
                             uservector =new Vector<User>();
@@ -185,7 +182,6 @@ public class ParentController {
                             itm = gson.fromJson(itmrslt, Item.class);
                             itmVector.add(itm);
                             blokingCounter++;
-<<<<<<< HEAD
                            // System.out.println(vectorSize);
 
                             break;
@@ -197,9 +193,9 @@ public class ParentController {
                             blokingCounter++;
                            // System.out.println(vectorSize);
 
-=======
+
                             System.out.println(vectorSize);
->>>>>>> origin/salma
+
                             break;
 
                         case "AddToWishList":
