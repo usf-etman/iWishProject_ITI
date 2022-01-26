@@ -32,10 +32,15 @@ public class itemsController {
             Vector<Item> itmVector = DAO.SelectItems();
             for (int i = 0; i < itmVector.size(); i++) {
                 iUI.getTableItems().getItems().add(itmVector.get(i));
-                //additmView.getTableView().getItems().add(itmVector.get(i));
+               
             }
 
-            
+            iUI.getBtnInsert().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    AddManuallyController amc = new AddManuallyController((stage));
+                }
+            });
             
             iUI.getBtnAmazon().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
                 @Override
