@@ -17,9 +17,12 @@ public class FriendsListUI extends AnchorPane {
 
     protected final TableView<User> tableFriends;
     protected final TableColumn<User, String> colFriend;
+    protected final TableColumn<User, Integer> colFid;
 
     protected final TableView<User> tableSuggest;
     protected final TableColumn<User, String> colSuggest;
+    protected final TableColumn<User, Integer> colSid;
+
     protected final StackPane stackPane;
     protected final Rectangle rectangle;
     protected final AnchorPane anchorPane;
@@ -35,7 +38,7 @@ public class FriendsListUI extends AnchorPane {
     protected final ImageView imageView0;
     protected final AnchorPane anchorPane1;
     // protected final TableView tableView;
-    protected final TableColumn colFid;
+
     // protected final TableColumn table_Friends;
     protected final Text text;
     protected final Rectangle rectangle1;
@@ -46,12 +49,16 @@ public class FriendsListUI extends AnchorPane {
     protected final Button btn_Remove;
     protected final Button btn_Add;
     //protected final TableView tableView0;
-    protected final TableColumn colSid;
-    //protected final TableColumn table_suggest;
 
+    //protected final TableColumn table_suggest;
     public FriendsListUI() {
         tableFriends = new TableView<User>();
+        colFid = new TableColumn<User, Integer>();
         colFriend = new TableColumn<User, String>();
+
+        tableSuggest = new TableView<User>();
+        colSid = new TableColumn<User, Integer>();
+        colSuggest = new TableColumn<User, String>();
 
         stackPane = new StackPane();
         rectangle = new Rectangle();
@@ -68,7 +75,7 @@ public class FriendsListUI extends AnchorPane {
         imageView0 = new ImageView();
         anchorPane1 = new AnchorPane();
         //tableView = new TableView();
-        colFid = new TableColumn<User, Integer>();
+
         //table_Friends = new TableColumn();
         text = new Text();
         rectangle1 = new Rectangle();
@@ -78,9 +85,6 @@ public class FriendsListUI extends AnchorPane {
         btn_Show = new Button();
         btn_Remove = new Button();
         btn_Add = new Button();
-        tableSuggest = new TableView<User>();
-        colSid = new TableColumn<User, Integer>();
-        colSuggest = new TableColumn<User, String>();
 
         setId("AnchorPane");
         setPrefHeight(844.0);
@@ -313,7 +317,9 @@ public class FriendsListUI extends AnchorPane {
 
     }
 
-    public TableView<User> getTableFriends() {
+    
+    
+    /*public TableView<User> getTableFriends() {
         return tableFriends;
     }
 
@@ -347,5 +353,61 @@ public class FriendsListUI extends AnchorPane {
 
     public TableColumn getColSid() {
         return colSid;
+    }*/
+
+    public TableView<User> getTableFriends() {
+        return tableFriends;
+    }
+
+    public TableColumn<User, String> getColFriend() {
+        return colFriend;
+    }
+
+    public TableColumn<User, Integer> getColFid() {
+        return colFid;
+    }
+
+    public TableView<User> getTableSuggest() {
+        return tableSuggest;
+    }
+
+    public TableColumn<User, String> getColSuggest() {
+        return colSuggest;
+    }
+
+    public TableColumn<User, Integer> getColSid() {
+        return colSid;
+    }
+
+    public Button getBtn_profile() {
+        return btn_profile;
+    }
+
+    public Button getBtn_friends() {
+        return btn_friends;
+    }
+
+    public Button getBtn_items() {
+        return btn_items;
+    }
+
+    public Button getBtn_signout() {
+        return btn_signout;
+    }
+
+    public Button getBtn_notifications() {
+        return btn_notifications;
+    }
+
+    public Button getBtn_Show() {
+        return btn_Show;
+    }
+
+    public Button getBtn_Remove() {
+        return btn_Remove;
+    }
+
+    public Button getBtn_Add() {
+        return btn_Add;
     }
 }

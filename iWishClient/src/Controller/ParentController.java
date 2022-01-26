@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Item;
+import model.PendingRequest;
 import model.User;
 import model.WishList;
 import org.json.JSONException;
@@ -46,7 +47,7 @@ public class ParentController {
     static int vectorSize;
     static int blokingCounter;
     static int wshlstStatus;
-
+    static int pendingStatus;
     static {
         try {
             socket = new Socket("127.0.0.1", 5566);
@@ -87,6 +88,20 @@ public class ParentController {
         }
         blockingFlag = true;
         return wshlstStatus;
+    }
+    
+    public static int addPndingRequest(PendingRequest rqust) {
+        Gson gson = new Gson(); // Or use new GsonBuilder().create();
+        String json = gson.toJson(rqust); // serializes target to Json
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "AddToPending");
+        msg.addProperty("Value", json);
+        ps.println(msg);
+        while (blockingFlag) {
+            System.out.println("");
+        }
+        blockingFlag = true;
+        return pendingStatus;
     }
 
     public static Vector<Item> getAllItems() {
@@ -188,16 +203,23 @@ public class ParentController {
                             friend_info = gson2.fromJson(friendlist, User.class);
                             uservector.add(friend_info);
                             blokingCounter++;
+<<<<<<< HEAD
+                           // System.out.println(vectorSize);
+=======
                             // System.out.println(vectorSize);
 
+>>>>>>> origin/jessica
                             System.out.println(vectorSize);
-
                             break;
 
                         case "AddToWishList":
                             wshlstStatus = jmsg.getInt("Value");
                             blockingFlag = false;
                             break;
+                        case "AddToPending":
+                            pendingStatus = jmsg.getInt("Value");
+                            blockingFlag = false;
+                            break;    
 
                         default:
                             responseFlag = jmsg.getBoolean("Value");
