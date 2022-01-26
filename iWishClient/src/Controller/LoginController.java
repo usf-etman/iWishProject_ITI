@@ -5,17 +5,14 @@
  */
 package Controller;
 
-import static Controller.ParentController.loginStatus;
 import View.ForgetPassUI;
 import View.LoginUI;
-import View.MainscreenUI;
-import View.RegisterUI;
-import View.ResetPasswordUI;
 import java.util.regex.Pattern;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.User;
 
@@ -67,12 +64,14 @@ public class LoginController extends ParentController {
                                     MainscreenController mc = new MainscreenController(stage);
                                 }
                             });  
-                        } else {
+                        } else {                            
                             Platform.runLater(new Runnable(){
                                 public void run(){
-                                    root.getTxtEmailError().setText("Email does't exist");
+                                    root.unloadScreen();
+                                    root.getTxtEmailError().setText("Incorrect email or password");
                                 }
-                            });                            
+                            }); 
+                            stop();
                         }
                     }
                 }.start();
