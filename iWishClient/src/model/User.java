@@ -5,15 +5,24 @@
 package model;
 
 public class User {
-
+    private int UID; 
     private String username;
     private String email;
     private String password;
     private String securityQuestion;
     private int balance; 
-    private int UID; 
+
+    public User(int UID, String username) {
+        this.UID = UID;
+        this.username = username;
+    }
+ 
+
+   
     
 
+    
+    
     public User(String username, String email, String password, String securityQuestion) {
         this.username = username;
         this.email = email;
