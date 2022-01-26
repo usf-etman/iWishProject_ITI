@@ -12,9 +12,11 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import model.Item;
 import model.User;
 import model.WishList;
@@ -67,8 +69,8 @@ public class ParentController {
         blockingFlag = true;
         return responseFlag; // return flag
     }
-    
-    public static int addWishList(WishList wshlist){
+
+    public static int addWishList(WishList wshlist) {
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         String json = gson.toJson(wshlist); // serializes target to Json
         JsonObject msg = new JsonObject();
@@ -98,7 +100,6 @@ public class ParentController {
         return itmVector;
 
     }
-    
 
     public static User login(User user) {
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
@@ -156,8 +157,8 @@ public class ParentController {
                             break;
 
                         case "AddToWishList":
-                           wshlstStatus = jmsg.getInt("Value");
-                           blockingFlag = false;
+                            wshlstStatus = jmsg.getInt("Value");
+                            blockingFlag = false;
                             break;
 
                         default:
@@ -166,6 +167,17 @@ public class ParentController {
                             break;
                     }
                 }
+
+            } catch (SocketException ex) {
+                try {
+                    dis.close();
+                    ps.close();
+                    socket.close();
+                    JOptionPane.showMessageDialog(null, "Server is disconnected");
+                } catch (IOException ex1) {
+
+                }
+
             } catch (IOException ex) {
                 Logger.getLogger(ParentController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (JSONException ex) {
