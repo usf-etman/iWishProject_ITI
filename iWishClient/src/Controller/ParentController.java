@@ -5,17 +5,21 @@
  */
 package Controller;
 
+import View.LoginUI;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import model.Item;
 import model.User;
+import model.WishList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,9 +34,13 @@ public class ParentController {
     static PrintStream ps;
     static String loginStatus;
     static String status;
+<<<<<<< HEAD
     //private static int UID;
   static User my_info;
   static User friend_info;
+=======
+    private static User my_info;
+>>>>>>> origin/salma
     static String responseString;
     static boolean blockingFlag = true;
     static boolean responseFlag;
@@ -41,6 +49,7 @@ public class ParentController {
     static Vector <User> uservector;
     static int vectorSize;
     static int blokingCounter;
+    static int wshlstStatus;
 
     static {
         try {
@@ -67,6 +76,20 @@ public class ParentController {
         }
         blockingFlag = true;
         return responseFlag; // return flag
+    }
+
+    public static int addWishList(WishList wshlist) {
+        Gson gson = new Gson(); // Or use new GsonBuilder().create();
+        String json = gson.toJson(wshlist); // serializes target to Json
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "AddToWishList");
+        msg.addProperty("Value", json);
+        ps.println(msg);
+        while (blockingFlag) {
+            System.out.println("");
+        }
+        blockingFlag = true;
+        return wshlstStatus;
     }
 
     public static Vector<Item> getAllItems() {
@@ -109,7 +132,7 @@ public class ParentController {
     public static User login(User user) {
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         String json = gson.toJson(user); // serializes target to Json
-        
+
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "login");
         msg.addProperty("Value", json);
@@ -118,8 +141,8 @@ public class ParentController {
             System.out.println("");
         }
         blockingFlag = true;
-        User userjava = gson.fromJson(responseString,User.class); 
-        return userjava; 
+        User userjava = gson.fromJson(responseString, User.class);
+        return userjava;
     }
 
     public static User getMy_info() {
@@ -143,6 +166,10 @@ public class ParentController {
                             responseString = jmsg.getString("Value"); //from server to client
                             blockingFlag = false;
                             break;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/salma
                         case "VectorSize":
                             itmVector = new Vector<Item>();
                             uservector =new Vector<User>();
@@ -150,15 +177,15 @@ public class ParentController {
                             blokingCounter = 0;
                             blockingFlag = false;
                             //System.out.println(vectorSize);
-
                             break;
-                        case "ShowItems":
 
+                        case "ShowItems":
                             String itmrslt = jmsg.getString("Value");
                             Gson gson = new Gson();
                             itm = gson.fromJson(itmrslt, Item.class);
                             itmVector.add(itm);
                             blokingCounter++;
+<<<<<<< HEAD
                            // System.out.println(vectorSize);
 
                             break;
@@ -170,7 +197,16 @@ public class ParentController {
                             blokingCounter++;
                            // System.out.println(vectorSize);
 
+=======
+                            System.out.println(vectorSize);
+>>>>>>> origin/salma
                             break;
+
+                        case "AddToWishList":
+                            wshlstStatus = jmsg.getInt("Value");
+                            blockingFlag = false;
+                            break;
+
                         default:
                             responseFlag = jmsg.getBoolean("Value");
                             blockingFlag = false;
@@ -178,6 +214,17 @@ public class ParentController {
                             
                     }
                 }
+
+            } catch (SocketException ex) {
+                try {
+                    dis.close();
+                    ps.close();
+                    socket.close();
+                    JOptionPane.showMessageDialog(null, "Server is disconnected");
+                } catch (IOException ex1) {
+
+                }
+
             } catch (IOException ex) {
                 Logger.getLogger(ParentController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (JSONException ex) {

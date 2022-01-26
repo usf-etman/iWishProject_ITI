@@ -32,7 +32,7 @@
          </children></AnchorPane>
    </left>
    <center>
-      <AnchorPane prefHeight="500.0" prefWidth="415.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="anchorRight" prefHeight="500.0" prefWidth="415.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
          <children>
             <TextField fx:id="txtUname" layoutX="83.0" layoutY="158.0" prefHeight="33.0" prefWidth="203.0" promptText="Email" style="-fx-background-color: transparent; -fx-border-color: #34656D; -fx-border-width: 0px 0px 2px 0px;" />
             <PasswordField fx:id="txtPass" layoutX="82.0" layoutY="217.0" prefWidth="204.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #34656D; -fx-border-width: 0px 0px 2px 0px;" />
@@ -91,6 +91,11 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Text>
+            <ImageView fitHeight="246.0" fitWidth="245.0" layoutX="-122.0" layoutY="122.0" opacity="0.95" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/loading2.gif" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </center>

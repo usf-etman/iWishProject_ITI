@@ -51,13 +51,7 @@ public class ForgetPasswordController {
         root.getLnk_login().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                LoginUI mainView = new LoginUI() ;
-               
-                Scene scene = new Scene(mainView);
-
-                stage.setScene(scene);
-                stage.show();
-                LoginController lc = new LoginController(stage, mainView);
+                LoginController lc = new LoginController(stage);
             }
 
         });

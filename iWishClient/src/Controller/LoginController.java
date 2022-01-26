@@ -25,21 +25,23 @@ import model.User;
  */
 public class LoginController extends ParentController {
 
-    LoginController(Stage stage, LoginUI root) {
+    LoginController(Stage stage) {
+        LoginUI root = new LoginUI();
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.show();
         root.getBtnLogin().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                root.getTxtEmailError().setText("Email must not be null!");
+                root.loadScreen();
+
                 if (root.getTxtUname().getText().length() < 1) {
                     root.getTxtEmailError().setText("Email must not be null!");
-                } else {
-                    root.getTxtEmailError().setText("");
                 }
 
                 if (root.getTxtPass().getText().length() < 1) {
                     root.getTxtPassError().setText("password must not be null!");
-                } else {
-                    root.getTxtPassError().setText("");
                 }
                 // checking for email format
                 String regexPattern = "^(.+)@(\\S+)$";
@@ -50,33 +52,36 @@ public class LoginController extends ParentController {
                 if (!emailMatch) {
                     root.getLoginError().setText("Sorry, you have to enter the email in the right format");
                     return;
-                } else {
-                    root.getLoginError().setText("");
                 }
-                 User user = new User();
-                 user.setEmail(root.getTxtUname().getText());
-                 user.setPassword(root.getTxtPass().getText());
-               
-                User loginStatus = ParentController.login(user);
-                root.getTxtEmailError().setText(String.valueOf(loginStatus));
-                if (loginStatus != null) { //from the server
-                    ParentController.setMy_info(loginStatus);
-                    MainscreenController mc = new MainscreenController(stage); // current user mainscreen
-                } else {
-                    root.getTxtEmailError().setText("Email does't exist");
-                }
+                User user = new User();
+                user.setEmail(root.getTxtUname().getText());
+                user.setPassword(root.getTxtPass().getText());
+
+                new Thread() {
+                    public void run() {
+                        User loginStatus = ParentController.login(user);
+                        if (loginStatus != null) { //from the server
+                            ParentController.setMy_info(loginStatus);
+                            Platform.runLater(new Runnable(){
+                                public void run(){
+                                    MainscreenController mc = new MainscreenController(stage);
+                                }
+                            });  
+                        } else {
+                            Platform.runLater(new Runnable(){
+                                public void run(){
+                                    root.getTxtEmailError().setText("Email does't exist");
+                                }
+                            });                            
+                        }
+                    }
+                }.start();
             }
         });
         root.getLnkSignup().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 AddItemController AIC = new AddItemController(stage);
-               /* RegisterUI registerView = new RegisterUI();
-                Scene scene = new Scene(registerView);
-
-                stage.setScene(scene);
-                stage.show();
-                RegisterController rc = new RegisterController(stage, registerView);*/
             }
         });
         root.getBtnForget().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {

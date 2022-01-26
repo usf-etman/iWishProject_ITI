@@ -32,12 +32,7 @@ public class ResetPasswordController {
                 boolean status = ParentController.getUserInfo(user, "reset");
                 //root.getUsernameError().setText(String.valueOf(registerStatus));
                 if (status == true) {
-                    LoginUI mainView = new LoginUI();
-                    Scene scene = new Scene(mainView);
-
-                    stage.setScene(scene);
-                    stage.show();
-                   LoginController lc = new LoginController(stage, mainView);
+                   LoginController lc = new LoginController(stage);
 
                 } else {
                    

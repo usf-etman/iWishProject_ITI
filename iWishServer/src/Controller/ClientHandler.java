@@ -12,6 +12,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -19,6 +20,7 @@ import java.util.logging.Logger;
 import model.DAO;
 import model.Item;
 import model.User;
+import model.WishList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -112,6 +114,7 @@ public class ClientHandler extends Thread {
                         }
 
                         break;
+<<<<<<< HEAD
                     case "DisplayFriend":
                         Gson gsonuser = new Gson();
                         int d = 0;
@@ -132,10 +135,30 @@ public class ClientHandler extends Thread {
                             jmsg.put("Value", jsonuser);
                             ps.println(jmsg);
                         }
+=======
+                    case "AddToWishList":
+                        gson = new Gson();
+                        value = jmsg.getString("Value");
+                        WishList wshlst = gson.fromJson(value, WishList.class);
+                        int wshlstStatus = DAO.AddToWishlist(wshlst);
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "AddToWishList");                     
+                        jmsg.put("Value", wshlstStatus);
+                        ps.println(jmsg);
+>>>>>>> origin/salma
                         break;
                 }
-                root.getTxtLog().appendText(msg + "\n");
-            } catch (IOException ex) {
+                //root.getTxtLog().appendText(msg + "\n");
+            } 
+            catch (SocketException ex) {
+                try {
+                    dis.close();
+                    clientsVector.remove(this);
+                } catch (IOException ex1) {
+                    Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            }
+            catch (IOException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
             } catch (JSONException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
