@@ -12,6 +12,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -125,7 +126,16 @@ public class ClientHandler extends Thread {
                         break;
                 }
                 //root.getTxtLog().appendText(msg + "\n");
-            } catch (IOException ex) {
+            } 
+            catch (SocketException ex) {
+                try {
+                    dis.close();
+                    clientsVector.remove(this);
+                } catch (IOException ex1) {
+                    Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            }
+            catch (IOException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
             } catch (JSONException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
