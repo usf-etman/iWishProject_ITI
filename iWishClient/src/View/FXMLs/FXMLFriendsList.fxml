@@ -48,12 +48,13 @@
       </AnchorPane>
       <AnchorPane layoutX="-5.0" layoutY="78.0" prefHeight="727.0" prefWidth="1244.0">
          <children>
-            <TableView layoutX="187.0" layoutY="130.0" prefHeight="579.0" prefWidth="329.0">
+            <TableView layoutX="190.0" layoutY="130.0" prefHeight="590.0" prefWidth="330.0">
               <columns>
-                <TableColumn fx:id="table_Friends" minWidth="0.0" prefWidth="328.0" style="-fx-background-color: #34656d;" text="Name" />
+                  <TableColumn fx:id="colFid" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text="ID" />
+                <TableColumn fx:id="table_Friends" minWidth="0.0" prefWidth="329.0" style="-fx-background-color: #34656d;" text="Name" />
               </columns>
             </TableView>
-            <Text fill="#34656d" fontSmoothingType="LCD" layoutX="241.0" layoutY="116.0" strokeLineCap="ROUND" strokeLineJoin="BEVEL" strokeType="OUTSIDE" strokeWidth="0.0" text="Friends List" textAlignment="CENTER" wrappingWidth="161.20263671875">
+            <Text fill="#34656d" fontSmoothingType="LCD" layoutX="248.0" layoutY="107.0" strokeLineCap="ROUND" strokeLineJoin="BEVEL" strokeType="OUTSIDE" strokeWidth="0.0" text="Friends List" textAlignment="CENTER" wrappingWidth="161.20263671875">
                <font>
                   <Font name="System Bold Italic" size="26.0" />
                </font>
@@ -77,8 +78,9 @@
             <Button fx:id="btn_Show" layoutX="89.0" layoutY="495.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="88.0" style="-fx-background-color: #34656d;" text="SHOW" textFill="WHITE" />
             <Button fx:id="btn_Remove" layoutX="89.0" layoutY="572.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="88.0" style="-fx-background-color: #34656d;" text="Remove" textFill="WHITE" />
             <Button fx:id="btn_Add" layoutX="959.0" layoutY="382.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="104.0" style="-fx-background-color: #34656d;" text="ADD" textFill="WHITE" />
-            <TableView layoutX="617.0" layoutY="122.0" prefHeight="594.0" prefWidth="329.0">
+            <TableView layoutX="617.0" layoutY="130.0" prefHeight="587.0" prefWidth="330.0">
               <columns>
+                  <TableColumn fx:id="colSid" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text="ID" />
                 <TableColumn fx:id="table_suggest" prefWidth="328.0" style="-fx-background-color: #34656d;" text="Name" />
               </columns>
             </TableView>

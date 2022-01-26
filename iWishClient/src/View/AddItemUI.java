@@ -1,6 +1,7 @@
 package View;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -8,13 +9,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import model.Item;
 
-public  class AddItemUI extends AnchorPane {
+public class AddItemUI extends BorderPane {
 
     protected final StackPane stackPane;
     protected final Rectangle rectangle;
@@ -34,8 +35,8 @@ public  class AddItemUI extends AnchorPane {
     protected final Separator separator1;
     protected final Separator separator2;
     protected final Separator separator3;
-    protected final Pane pane;
-     protected final TableView<Item> tableView;
+    protected final AnchorPane anchorCenter;
+    protected final TableView<Item> tableView;
     protected final TableColumn<Item, Integer> ItemID;
     protected final TableColumn<Item, String> ItemName;
     protected final TableColumn<Item, String> ItemPrice;
@@ -44,6 +45,7 @@ public  class AddItemUI extends AnchorPane {
     protected final ImageView imageView2;
     protected final ImageView imageView3;
     protected final Button btnAddIIem;
+    protected final Label lblResult;
 
     public AddItemUI() {
 
@@ -65,28 +67,26 @@ public  class AddItemUI extends AnchorPane {
         separator1 = new Separator();
         separator2 = new Separator();
         separator3 = new Separator();
-        pane = new Pane();
-          tableView = new TableView<Item>();
-          ItemID = new TableColumn<Item, Integer>();
+        anchorCenter = new AnchorPane();
+        tableView = new TableView<Item>();
+        ItemID = new TableColumn<Item, Integer>();
         ItemName = new TableColumn<Item, String>();
         ItemPrice = new TableColumn<Item, String>();
-        ItemDescription = new TableColumn<Item, String>();       
-        
-       
+        ItemDescription = new TableColumn<Item, String>();
         imageView1 = new ImageView();
         imageView2 = new ImageView();
         imageView3 = new ImageView();
         btnAddIIem = new Button();
+        lblResult = new Label();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
         setMinWidth(USE_PREF_SIZE);
-        setPrefHeight(675.0);
-        setPrefWidth(902.0);
+        setPrefHeight(731.0);
+        setPrefWidth(1041.0);
 
-        stackPane.setLayoutX(10.0);
-        stackPane.setLayoutY(10.0);
+        BorderPane.setAlignment(stackPane, javafx.geometry.Pos.CENTER);
         stackPane.setPrefHeight(44.0);
         stackPane.setPrefWidth(892.0);
 
@@ -96,10 +96,10 @@ public  class AddItemUI extends AnchorPane {
         rectangle.setHeight(44.0);
         rectangle.setStroke(javafx.scene.paint.Color.valueOf("#f1faee"));
         rectangle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
-        rectangle.setWidth(892.0);
+        rectangle.setWidth(1041.0);
 
-        anchorPane.setPrefHeight(89.0);
-        anchorPane.setPrefWidth(892.0);
+        anchorPane.setPrefHeight(40.0);
+        anchorPane.setPrefWidth(768.0);
 
         btnProfile.setLayoutX(202.0);
         btnProfile.setLayoutY(1.0);
@@ -214,16 +214,15 @@ public  class AddItemUI extends AnchorPane {
         separator3.setOrientation(javafx.geometry.Orientation.VERTICAL);
         separator3.setPrefHeight(41.0);
         separator3.setPrefWidth(1.0);
+        setTop(stackPane);
 
-        pane.setLayoutX(-2.0);
-        pane.setLayoutY(154.0);
-        pane.setPrefHeight(10.0);
-        pane.setPrefWidth(903.0);
-        pane.setStyle("-fx-background-color: #34656D;");
+        BorderPane.setAlignment(anchorCenter, javafx.geometry.Pos.CENTER);
+        anchorCenter.setPrefHeight(200.0);
+        anchorCenter.setPrefWidth(200.0);
 
-        tableView.setLayoutY(161.0);
-        tableView.setPrefHeight(443.0);
-        tableView.setPrefWidth(903.0);
+        tableView.setLayoutY(80.0);
+        tableView.setPrefHeight(502.0);
+        tableView.setPrefWidth(1041.0);
 
         ItemID.setMaxWidth(0.0);
         ItemID.setMinWidth(0.0);
@@ -239,14 +238,13 @@ public  class AddItemUI extends AnchorPane {
         ItemName.setText("Item-Name");
         ItemName.setCellValueFactory(new PropertyValueFactory("name"));
 
-
-        ItemPrice.setPrefWidth(189.0);
+        ItemPrice.setPrefWidth(263.0);
         ItemPrice.setResizable(false);
         ItemPrice.setStyle("-fx-background-color: #B8DFD8;");
         ItemPrice.setText("Item-Price");
         ItemPrice.setCellValueFactory(new PropertyValueFactory("price"));
-        
-        ItemDescription.setPrefWidth(394.0);
+
+        ItemDescription.setPrefWidth(455.0);
         ItemDescription.setResizable(false);
         ItemDescription.setStyle("-fx-background-color: #B8DFD8;");
         ItemDescription.setText("Item-Description");
@@ -254,29 +252,28 @@ public  class AddItemUI extends AnchorPane {
 
         imageView1.setFitHeight(84.0);
         imageView1.setFitWidth(222.0);
-        imageView1.setLayoutY(70.0);
+        imageView1.setLayoutY(-4.0);
         imageView1.setPickOnBounds(true);
         imageView1.setPreserveRatio(true);
         imageView1.setImage(new Image(getClass().getResource("images/iwishh.png").toExternalForm()));
 
         imageView2.setFitHeight(311.0);
         imageView2.setFitWidth(404.0);
-        imageView2.setLayoutX(139.0);
-        imageView2.setLayoutY(-8.0);
+        imageView2.setLayoutX(140.0);
+        imageView2.setLayoutY(-82.0);
         imageView2.setPickOnBounds(true);
         imageView2.setPreserveRatio(true);
         imageView2.setImage(new Image(getClass().getResource("images/items.png").toExternalForm()));
 
-        imageView3.setFitHeight(100.0);
-        imageView3.setFitWidth(92.0);
-        imageView3.setLayoutX(837.0);
-        imageView3.setLayoutY(54.0);
+        imageView3.setFitHeight(80.0);
+        imageView3.setFitWidth(53.0);
+        imageView3.setLayoutX(988.0);
         imageView3.setPickOnBounds(true);
         imageView3.setPreserveRatio(true);
         imageView3.setImage(new Image(getClass().getResource("images/dandelions.png").toExternalForm()));
 
-        btnAddIIem.setLayoutX(352.0);
-        btnAddIIem.setLayoutY(604.0);
+        btnAddIIem.setLayoutX(410.0);
+        btnAddIIem.setLayoutY(585.0);
         btnAddIIem.setMnemonicParsing(false);
         btnAddIIem.setPrefHeight(67.0);
         btnAddIIem.setPrefWidth(209.0);
@@ -284,6 +281,12 @@ public  class AddItemUI extends AnchorPane {
         btnAddIIem.setText("add to your wish list");
         btnAddIIem.setTextFill(javafx.scene.paint.Color.valueOf("#f8f5f5"));
         btnAddIIem.setFont(new Font("Bodoni MT", 18.0));
+
+        lblResult.setLayoutX(357.0);
+        lblResult.setLayoutY(653.0);
+        lblResult.setPrefHeight(31.0);
+        lblResult.setPrefWidth(305.0);
+        setCenter(anchorCenter);
 
         stackPane.getChildren().add(rectangle);
         anchorPane.getChildren().add(btnProfile);
@@ -302,19 +305,17 @@ public  class AddItemUI extends AnchorPane {
         anchorPane.getChildren().add(separator2);
         anchorPane.getChildren().add(separator3);
         stackPane.getChildren().add(anchorPane);
-        getChildren().add(stackPane);
-        getChildren().add(pane);
-        /*tableView.getColumns().add(ItemID);
+        tableView.getColumns().add(ItemID);
         tableView.getColumns().add(ItemName);
         tableView.getColumns().add(ItemPrice);
-        tableView.getColumns().add(ItemDescription);*/
-        getChildren().add(tableView);
-        getChildren().add(imageView1);
-        getChildren().add(imageView2);
-        getChildren().add(imageView3);
-        getChildren().add(btnAddIIem);
-        tableView.getColumns().setAll(ItemID,ItemName, ItemPrice, ItemDescription);
-
+        tableView.getColumns().add(ItemDescription);
+        anchorCenter.getChildren().add(tableView);
+        anchorCenter.getChildren().add(imageView1);
+        anchorCenter.getChildren().add(imageView2);
+        anchorCenter.getChildren().add(imageView3);
+        anchorCenter.getChildren().add(btnAddIIem);
+        anchorCenter.getChildren().add(lblResult);
+        tableView.getColumns().setAll(ItemID, ItemName, ItemPrice, ItemDescription);
     }
 
     public Button getBtnProfile() {
@@ -360,5 +361,9 @@ public  class AddItemUI extends AnchorPane {
     public Button getBtnAddIIem() {
         return btnAddIIem;
     }
-    
+
+    public Label getLblResult() {
+        return lblResult;
+    }
+
 }

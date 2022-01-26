@@ -12,6 +12,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -19,6 +20,7 @@ import java.util.logging.Logger;
 import model.DAO;
 import model.Item;
 import model.User;
+import model.WishList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,7 +42,7 @@ public class ClientHandler extends Thread {
         ps = new PrintStream(waiter.getOutputStream());
         ClientHandler.clientsVector.add(this);
     }
-    
+
     @Override
     public void run() {
         while (true) {
@@ -112,9 +114,51 @@ public class ClientHandler extends Thread {
                         }
 
                         break;
+
+                    case "DisplayFriend":
+                        Gson gsonuser = new Gson();
+                        int d = 0;
+                        // String value1;
+                        int UID = jmsg.getInt("Value");
+                        Vector<User> userinfo = DAO.ReturnFriend(UID);
+                        System.out.println(userinfo.size());
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "VectorSize");
+                        jmsg.put("size", userinfo.size());
+                        ps.println(jmsg);
+                        for (int i = 0; i < userinfo.size(); i++) {
+                            gson = new Gson();
+                            String jsonuser = gson.toJson(userinfo.get(i));
+                            jmsg = new JSONObject();
+                            jmsg.put("Key", "DisplayFriend");
+                            jmsg.put("size", userinfo.size());
+                            jmsg.put("Value", jsonuser);
+                            ps.println(jmsg);
+                        }
+
+                    case "AddToWishList":
+                        gson = new Gson();
+                        value = jmsg.getString("Value");
+                        WishList wshlst = gson.fromJson(value, WishList.class);
+                        int wshlstStatus = DAO.AddToWishlist(wshlst);
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "AddToWishList");                     
+                        jmsg.put("Value", wshlstStatus);
+                        ps.println(jmsg);
+
+                        break;
                 }
                 //root.getTxtLog().appendText(msg + "\n");
-            } catch (IOException ex) {
+            } 
+            catch (SocketException ex) {
+                try {
+                    dis.close();
+                    clientsVector.remove(this);
+                } catch (IOException ex1) {
+                    Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            }
+            catch (IOException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
             } catch (JSONException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
