@@ -3,14 +3,16 @@ package View;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import model.Item;
 
 public class itemsUI extends AnchorPane {
 
-    protected final TableView tableItems;
-    protected final TableColumn colName;
-    protected final TableColumn colPrice;
-    protected final TableColumn colDesc;
+    protected final TableView<Item> tableItems;
+    protected final TableColumn<Item, String> colName;
+    protected final TableColumn<Item, String> colPrice;
+    protected final TableColumn<Item, String> colDesc;
     protected final Button btnDelete;
     protected final Button btnUpdate;
     protected final Button btnAmazon;
@@ -18,10 +20,10 @@ public class itemsUI extends AnchorPane {
 
     public itemsUI() {
 
-        tableItems = new TableView();
-        colName = new TableColumn();
-        colPrice = new TableColumn();
-        colDesc = new TableColumn();
+        tableItems = new TableView<Item>();
+        colName = new TableColumn<Item, String>();
+        colPrice = new TableColumn<Item, String>();
+        colDesc = new TableColumn<Item, String>();
         btnDelete = new Button();
         btnUpdate = new Button();
         btnAmazon = new Button();
@@ -42,15 +44,18 @@ public class itemsUI extends AnchorPane {
         colName.setMaxWidth(250.0);
         colName.setPrefWidth(250.0);
         colName.setText("Name");
+        colName.setCellValueFactory(new PropertyValueFactory("name"));
 
         colPrice.setMaxWidth(90.0);
         colPrice.setMinWidth(0.0);
         colPrice.setPrefWidth(90.0);
         colPrice.setText("Price");
+        colPrice.setCellValueFactory(new PropertyValueFactory("price"));
 
         colDesc.setMaxWidth(410.0);
         colDesc.setPrefWidth(410.0);
         colDesc.setText("Description");
+        colDesc.setCellValueFactory(new PropertyValueFactory("desc"));
 
         btnDelete.setLayoutX(295.0);
         btnDelete.setLayoutY(561.0);
@@ -81,22 +86,23 @@ public class itemsUI extends AnchorPane {
         getChildren().add(btnUpdate);
         getChildren().add(btnAmazon);
         getChildren().add(btnInsert);
+        tableItems.getColumns().setAll( colName, colPrice, colDesc);
 
     }
 
-    public TableView getTableItems() {
+    public TableView<Item> getTableItems() {
         return tableItems;
     }
 
-    public TableColumn getColName() {
+    public TableColumn<Item, String> getColName() {
         return colName;
     }
 
-    public TableColumn getColPrice() {
+    public TableColumn<Item, String> getColPrice() {
         return colPrice;
     }
 
-    public TableColumn getColDesc() {
+    public TableColumn<Item, String> getColDesc() {
         return colDesc;
     }
 
@@ -115,6 +121,6 @@ public class itemsUI extends AnchorPane {
     public Button getBtnInsert() {
         return btnInsert;
     }
-    
+
     
 }
