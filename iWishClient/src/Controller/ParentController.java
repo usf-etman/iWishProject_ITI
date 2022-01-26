@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Item;
 import model.User;
+import model.WishList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,7 +31,6 @@ public class ParentController {
     static PrintStream ps;
     static String loginStatus;
     static String status;
-    //private static int UID;
     private static User my_info;
     static String responseString;
     static boolean blockingFlag = true;
@@ -39,6 +39,7 @@ public class ParentController {
     static Vector<Item> itmVector;
     static int vectorSize;
     static int blokingCounter;
+    static int wshlstStatus;
 
     static {
         try {
@@ -65,6 +66,20 @@ public class ParentController {
         blockingFlag = true;
         return responseFlag; // return flag
     }
+    
+    public static int addWishList(WishList wshlist){
+        Gson gson = new Gson(); // Or use new GsonBuilder().create();
+        String json = gson.toJson(wshlist); // serializes target to Json
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "AddToWishList");
+        msg.addProperty("Value", json);
+        ps.println(msg);
+        while (blockingFlag) {
+            System.out.println("");
+        }
+        blockingFlag = true;
+        return wshlstStatus;
+    }
 
     public static Vector<Item> getAllItems() {
         JsonObject msg = new JsonObject();
@@ -82,11 +97,12 @@ public class ParentController {
         return itmVector;
 
     }
+    
 
     public static User login(User user) {
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         String json = gson.toJson(user); // serializes target to Json
-        
+
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "login");
         msg.addProperty("Value", json);
@@ -95,8 +111,8 @@ public class ParentController {
             System.out.println("");
         }
         blockingFlag = true;
-        User userjava = gson.fromJson(responseString,User.class); 
-        return userjava; 
+        User userjava = gson.fromJson(responseString, User.class);
+        return userjava;
     }
 
     public static User getMy_info() {
@@ -120,24 +136,29 @@ public class ParentController {
                             responseString = jmsg.getString("Value"); //from server to client
                             blockingFlag = false;
                             break;
+
                         case "VectorSize":
                             itmVector = new Vector<Item>();
                             vectorSize = jmsg.getInt("size");
                             blokingCounter = 0;
                             blockingFlag = false;
                             //System.out.println(vectorSize);
-
                             break;
-                        case "ShowItems":
 
+                        case "ShowItems":
                             String itmrslt = jmsg.getString("Value");
                             Gson gson = new Gson();
                             itm = gson.fromJson(itmrslt, Item.class);
                             itmVector.add(itm);
                             blokingCounter++;
                             System.out.println(vectorSize);
-
                             break;
+
+                        case "AddToWishList":
+                           wshlstStatus = jmsg.getInt("Value");
+                           blockingFlag = false;
+                            break;
+
                         default:
                             responseFlag = jmsg.getBoolean("Value");
                             blockingFlag = false;
