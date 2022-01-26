@@ -40,31 +40,20 @@ public class ClientHandler extends Thread {
         ps = new PrintStream(waiter.getOutputStream());
         ClientHandler.clientsVector.add(this);
     }
-    
+
     @Override
     public void run() {
         while (true) {
             try {
-<<<<<<< HEAD
-                msg = dis.readLine(); //recieve msg from client
-                JSONObject jmsg = new JSONObject(msg); //convert msg from string to JSONObject
-                String key = jmsg.getString("Key"); //parsing
-                String value = jmsg.getString("Value");//parsing user json object
-                Gson gson;
-=======
                 msg = dis.readLine();
                 JSONObject jmsg = new JSONObject(msg);
                 String key = jmsg.getString("Key");
                 String value;
->>>>>>> origin/nayra
+                Gson gson;
                 switch (key) {
                     case "Register":
-<<<<<<< HEAD
                         gson = new Gson();
-=======
                         value = jmsg.getString("Value");
-                        Gson gson = new Gson();
->>>>>>> origin/nayra
                         User user = gson.fromJson(value, User.class);
                         boolean registerStatus = DAO.AddUser(user);
                         jmsg = new JSONObject();
@@ -73,14 +62,10 @@ public class ClientHandler extends Thread {
                         ps.println(jmsg);
                         break;
                     case "forget":
-<<<<<<< HEAD
                         gson = new Gson();
-                        User user2 = gson.fromJson(value, User.class);
-=======
                         value = jmsg.getString("Value");
-                        Gson gson2 = new Gson();
-                        User user2 = gson2.fromJson(value, User.class);
->>>>>>> origin/nayra
+                        User user2 = gson.fromJson(value, User.class);
+                        value = jmsg.getString("Value");
                         boolean forgetStatus = DAO.selectuser(user2);
                         jmsg = new JSONObject();
                         jmsg.put("Key", "forget");
@@ -88,14 +73,9 @@ public class ClientHandler extends Thread {
                         ps.println(jmsg);
                         break;
                     case "reset":
-<<<<<<< HEAD
                         gson = new Gson();
-                        User user3 = gson.fromJson(value, User.class);
-=======
                         value = jmsg.getString("Value");
-                        Gson gson3 = new Gson();
-                        User user3 = gson3.fromJson(value, User.class);
->>>>>>> origin/nayra
+                        User user3 = gson.fromJson(value, User.class);
                         boolean resetStatus = DAO.update(user3);
                         jmsg = new JSONObject();
                         jmsg.put("Key", "reset");
@@ -103,20 +83,14 @@ public class ClientHandler extends Thread {
                         ps.println(jmsg);
                         break;
                     case "login":
-<<<<<<< HEAD
                         gson = new Gson();
+                        value = jmsg.getString("Value");
                         User userlog = gson.fromJson(value, User.class); //converts from json string to Java Object
                         User loginStatus = DAO.loginUser(userlog);
-                        String json = gson.toJson(loginStatus); // convert loginstatus from java object to json
-=======
-                        value = jmsg.getString("Value");
-                        Gson gsonlog = new Gson();
-                        User userlog = gsonlog.fromJson(value, User.class);
-                        int loginStatus = DAO.loginUser(userlog);
->>>>>>> origin/nayra
+                        String jsonUser = gson.toJson(loginStatus); // convert loginstatus from java object to json
                         jmsg = new JSONObject();
                         jmsg.put("Key", "login");
-                        jmsg.put("Value", json);
+                        jmsg.put("Value", jsonUser);
                         ps.println(jmsg);
                         break;
                     case "ShowItems":
@@ -129,14 +103,35 @@ public class ClientHandler extends Thread {
                         ps.println(jmsg);
                         for (int i = 0; i < ItemResult.size(); i++) {
                             gson = new Gson();
-                            String json = gson.toJson(ItemResult.get(i));
+                            String jsonItem = gson.toJson(ItemResult.get(i));
                             jmsg = new JSONObject();
                             jmsg.put("Key", "ShowItems");
                             jmsg.put("size", ItemResult.size());
-                            jmsg.put("Value", json);
+                            jmsg.put("Value", jsonItem);
                             ps.println(jmsg);
                         }
 
+                        break;
+                    case "DisplayFriend":
+                        Gson gsonuser = new Gson();
+                        int d = 0;
+                        // String value1;
+                        int UID = jmsg.getInt("Value");
+                        Vector<User> userinfo = DAO.ReturnFriend(UID);
+                        System.out.println(userinfo.size());
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "VectorSize");
+                        jmsg.put("size", userinfo.size());
+                        ps.println(jmsg);
+                        for (int i = 0; i < userinfo.size(); i++) {
+                            gson = new Gson();
+                            String jsonuser = gson.toJson(userinfo.get(i));
+                            jmsg = new JSONObject();
+                            jmsg.put("Key", "DisplayFriend");
+                            jmsg.put("size", userinfo.size());
+                            jmsg.put("Value", jsonuser);
+                            ps.println(jmsg);
+                        }
                         break;
                 }
                 root.getTxtLog().appendText(msg + "\n");
