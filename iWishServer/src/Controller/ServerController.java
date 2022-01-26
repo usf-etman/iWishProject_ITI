@@ -34,54 +34,50 @@ public class ServerController {
 
     ServerSocket server;
     ServerUI root;
-    int serverFlag=0;
+    int serverFlag = 0;
 
     ServerController(Stage stage) {
-        
-            root = new ServerUI();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
 
-            root.getBtnAdd().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    itemsController ic = new itemsController(stage);
-                }
-            });
-            
-            
-            root.getBtnStart().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+        root = new ServerUI();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+        root.getBtnAdd().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                itemsController ic = new itemsController(stage);
+            }
+        });
 
+        root.getBtnStart().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
                 serverStartStop();
             }
-            }); 
-                 
-      
+        });
+
     }
-    
-    public void serverStartStop(){
+
+    public void serverStartStop() {
         try {
-            if(serverFlag==0){
+            if (serverFlag == 0) {
                 root.getTxtLog().appendText("Service started\n");
                 server = new ServerSocket(5566);
                 root.getTxtLog().appendText("Listening...\n");
                 ServerListener serverListener = new ServerListener();
                 Thread th = new Thread(serverListener);
                 th.start();
-                serverFlag=1;
-            }
-            else if(serverFlag==1){
-                
+                serverFlag = 1;
+            } else if (serverFlag == 1) {
+
                 root.getTxtLog().appendText("Stoping...\n");
                 root.getTxtLog().appendText("Service stoped\n");
                 Thread.currentThread().isInterrupted();
                 server.close();
-                serverFlag=0;
+                serverFlag = 0;
             }
-            
+
         } catch (IOException ex) {
             Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -91,37 +87,24 @@ public class ServerController {
 
         @Override
         public void run() {
-            
-     
             while (true) {
- 
-                        try { 
-                  
-                        Socket waiter = server.accept();
-                        if (waiter.isConnected()) {
-                            String IP = String.valueOf(waiter.getInetAddress());
-                            Platform.runLater(new Runnable() {
-                                public void run() {
-                                    root.getTxtLog().appendText(IP + " has connected\n");
-                                    root.getLblClients().setText(ClientHandler.getClientsNum());
-                                }
-                            });
-                        }
-                        ClientHandler clientHandler = new ClientHandler(waiter, root);
-                        clientHandler.start();
-                        
-                        }
-                        
-                        
-                    
-                    catch (IOException ex) {
-   
-                        Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, ex);
+                try {
+                    Socket waiter = server.accept();
+                    if (waiter.isConnected()) {
+                        String IP = String.valueOf(waiter.getInetAddress());
+                        Platform.runLater(new Runnable() {
+                            public void run() {
+                                root.getTxtLog().appendText(IP + " has connected\n");
+                                root.getLblClients().setText(ClientHandler.getClientsNum());
+                            }
+                        });
+                    }
+                    ClientHandler clientHandler = new ClientHandler(waiter, root);
+                    clientHandler.start();
+                } catch (IOException ex) {
+                    Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                    
-                
             }
-            
         }
     }
 }

@@ -3,6 +3,7 @@ package View;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
@@ -59,6 +60,7 @@ public class MainscreenUI extends BorderPane {
     protected final TreeTableView<Wish> tblWishlist;
     protected final TreeTableColumn<Wish, String> colName;
     protected final TreeTableColumn<Wish, String> colPrice;
+    protected final TreeTableColumn<Wish, Integer> colID;
     protected final GridPane gridPane0;
     protected final ColumnConstraints columnConstraints2;
     protected final RowConstraints rowConstraints2;
@@ -71,7 +73,6 @@ public class MainscreenUI extends BorderPane {
     protected final BorderPane borderPane2;
     protected final Button btnRecharge;
     protected final DropShadow dropShadow;
-    protected final BorderPane borderPane3;
 
     public MainscreenUI() {
 
@@ -110,8 +111,9 @@ public class MainscreenUI extends BorderPane {
         label = new Label();
         stackPane2 = new StackPane();
         tblWishlist = new TreeTableView<Wish>();
-        colName = new TreeTableColumn<>();
-        colPrice = new TreeTableColumn<>();
+        colName = new TreeTableColumn<Wish, String>();
+        colPrice = new TreeTableColumn<Wish, String>();
+        colID = new TreeTableColumn<Wish, Integer>();
         gridPane0 = new GridPane();
         columnConstraints2 = new ColumnConstraints();
         rowConstraints2 = new RowConstraints();
@@ -124,7 +126,6 @@ public class MainscreenUI extends BorderPane {
         borderPane2 = new BorderPane();
         btnRecharge = new Button();
         dropShadow = new DropShadow();
-        borderPane3 = new BorderPane();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -351,6 +352,12 @@ public class MainscreenUI extends BorderPane {
         colPrice.setText("Price");
         colPrice.setCellValueFactory(new TreeItemPropertyValueFactory<>("price"));
 
+        colID.setMaxWidth(0.0);
+        colID.setMinWidth(0.0);
+        colID.setPrefWidth(0.0);
+        colID.setText("ID");
+        colID.setCellValueFactory(new TreeItemPropertyValueFactory<>("wishID"));
+
         GridPane.setColumnIndex(gridPane0, 1);
         GridPane.setRowIndex(gridPane0, 2);
 
@@ -399,9 +406,6 @@ public class MainscreenUI extends BorderPane {
         dropShadow.setBlurType(javafx.scene.effect.BlurType.ONE_PASS_BOX);
         btnRecharge.setEffect(dropShadow);
         borderPane2.setCenter(btnRecharge);
-
-        borderPane3.setPrefHeight(200.0);
-        borderPane3.setPrefWidth(200.0);
         setCenter(stackPane1);
 
         stackPane.getChildren().add(rectangle);
@@ -434,6 +438,7 @@ public class MainscreenUI extends BorderPane {
         gridPane.getChildren().add(borderPane);
         tblWishlist.getColumns().add(colName);
         tblWishlist.getColumns().add(colPrice);
+        tblWishlist.getColumns().add(colID);
         stackPane2.getChildren().add(tblWishlist);
         gridPane.getChildren().add(stackPane2);
         gridPane0.getColumnConstraints().add(columnConstraints2);
@@ -445,8 +450,26 @@ public class MainscreenUI extends BorderPane {
         gridPane0.getChildren().add(borderPane2);
         gridPane.getChildren().add(gridPane0);
         stackPane1.getChildren().add(gridPane);
-        stackPane1.getChildren().add(borderPane3);
 
+        TreeItem itm = new TreeItem(new Wish("Laptop", "750"));        
+        TreeItem cont1 = new TreeItem(new Wish("Nayra", "220"));
+        TreeItem cont2 = new TreeItem(new Wish("Jessica", "125"));
+        itm.getChildren().add(cont1);
+        itm.getChildren().add(cont2);
+        
+        TreeItem itm2 = new TreeItem(new Wish("Shirt", "225"));        
+        TreeItem cont3 = new TreeItem(new Wish("Mariem", "75"));
+        TreeItem cont4 = new TreeItem(new Wish("Salma", "95"));
+        itm2.getChildren().add(cont3);
+        itm2.getChildren().add(cont4);
+        
+        TreeItem treeRoot = new TreeItem(new Wish("Wishlist & Contributors", "..."));
+        treeRoot.getChildren().add(itm);
+        treeRoot.getChildren().add(itm2);
+        treeRoot.setExpanded(true);
+        
+        tblWishlist.setRoot(treeRoot);
+        tblWishlist.setEditable(true);
     }
 
     public Button getBtnProfile() {
@@ -485,6 +508,10 @@ public class MainscreenUI extends BorderPane {
         return colPrice;
     }
 
+    public TreeTableColumn<Wish, Integer> getColID() {
+        return colID;
+    }
+
     public Label getLblBalance() {
         return lblBalance;
     }
@@ -492,5 +519,6 @@ public class MainscreenUI extends BorderPane {
     public Button getBtnRecharge() {
         return btnRecharge;
     }
+    
     
 }

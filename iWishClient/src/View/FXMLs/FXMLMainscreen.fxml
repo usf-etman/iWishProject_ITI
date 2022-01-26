@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="666.0" prefWidth="892.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="666.0" prefWidth="892.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.FXMLs.FXMLMainscreenController">
    <top>
       <StackPane prefHeight="44.0" prefWidth="892.0" BorderPane.alignment="CENTER">
          <children>
@@ -134,6 +134,7 @@
                           <columns>
                             <TreeTableColumn fx:id="colName" maxWidth="431.0" minWidth="431.0" prefWidth="431.0" text="Name" />
                             <TreeTableColumn fx:id="colPrice" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Price" />
+                              <TreeTableColumn fx:id="colID" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text="ID" />
                           </columns>
                         </TreeTableView>
                      </children>
@@ -179,7 +180,6 @@
                   </GridPane>
                </children>
             </GridPane>
-            <BorderPane prefHeight="200.0" prefWidth="200.0" />
          </children>
       </StackPane>
    </center>
