@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import model.DAO;
 import model.Item;
 import model.User;
+import model.WishList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,7 +41,7 @@ public class ClientHandler extends Thread {
         ps = new PrintStream(waiter.getOutputStream());
         ClientHandler.clientsVector.add(this);
     }
-    
+
     @Override
     public void run() {
         while (true) {
@@ -111,6 +112,16 @@ public class ClientHandler extends Thread {
                             ps.println(jmsg);
                         }
 
+                        break;
+                    case "AddToWishList":
+                        gson = new Gson();
+                        value = jmsg.getString("Value");
+                        WishList wshlst = gson.fromJson(value, WishList.class);
+                        int wshlstStatus = DAO.AddToWishlist(wshlst);
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "AddToWishList");                     
+                        jmsg.put("Value", wshlstStatus);
+                        ps.println(jmsg);
                         break;
                 }
                 //root.getTxtLog().appendText(msg + "\n");

@@ -35,16 +35,29 @@ public class DAO {
     }
 
     public static int AddItem(Item itm) throws SQLException {
-
         int result = -1;
         PreparedStatement pst = con.prepareStatement("insert into Item(Item_ID,Item_Descreption,Item_Name,Item_Price) values(Item_seq.nextval,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         //pst.setInt(1,itm.getItem_ID());
         pst.setString(1, itm.getDesc());
         pst.setString(2, itm.getName());
         pst.setInt(3, Integer.parseInt(itm.getPrice()));
-
         result = pst.executeUpdate();
         pst.close();
+        return result;
+    }
+
+    public static int AddToWishlist(WishList wishlst) throws SQLException {
+        int result = -1;
+        
+        String sql = "insert into Wish_List(Wish_ID,User_ID,Item_ID,Item_Price) values(WishListSEQ.nextval,?,?,?)";
+        PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        //pst.setInt(1, wishlst.getWish_ID());
+        pst.setInt(1, wishlst.getUser_ID());
+        pst.setInt(2, wishlst.getItem_ID());
+        pst.setInt(3, wishlst.getItem_Price());
+        result = pst.executeUpdate();
+        pst.close();
+        //System.out.println(result);
         return result;
     }
 
@@ -53,12 +66,11 @@ public class DAO {
         PreparedStatement pst = con.prepareStatement("select * from Item", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
-            result.add(new Item(rs.getInt("Item_ID"),rs.getString("Item_Name"), rs.getString("Item_Price"), rs.getString("Item_Descreption")));
+            result.add(new Item(rs.getInt("Item_ID"), rs.getString("Item_Name"), rs.getString("Item_Price"), rs.getString("Item_Descreption")));
         }
         return result;
     }
-    
-    
+
     public static boolean AddUser(User user) throws SQLException {
 
         //select from user_info
@@ -91,7 +103,7 @@ public class DAO {
         pst.setString(2, user.getPassword());
         ResultSet resultSet = pst.executeQuery();
         User resultUser = new User();
-        
+
         if (resultSet.next()) {
             resultUser.setUID(resultSet.getInt(1));
             resultUser.setUsername(resultSet.getString(2));
