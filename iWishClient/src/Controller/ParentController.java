@@ -203,12 +203,12 @@ public class ParentController {
                             friend_info = gson2.fromJson(friendlist, User.class);
                             uservector.add(friend_info);
                             blokingCounter++;
-<<<<<<< HEAD
+
                            // System.out.println(vectorSize);
-=======
+
                             // System.out.println(vectorSize);
 
->>>>>>> origin/jessica
+
                             System.out.println(vectorSize);
                             break;
 
