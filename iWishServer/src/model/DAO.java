@@ -71,7 +71,7 @@ public class DAO {
         return result;
     }
 
-<<<<<<< HEAD
+
     public static Vector<User> ReturnFriend(int uid) throws SQLException {
         Vector<User> res = new Vector<User>();
         PreparedStatement pst = con.prepareStatement("SELECT USER_ID, USER_NAME FROM USER_INFO WHERE USER_ID NOT IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID=?) AND USER_ID != ? ", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -89,8 +89,7 @@ public class DAO {
 
     }
 
-=======
->>>>>>> origin/salma
+
     public static boolean AddUser(User user) throws SQLException {
 
         //select from user_info

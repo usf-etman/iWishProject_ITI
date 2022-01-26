@@ -114,7 +114,7 @@ public class ClientHandler extends Thread {
                         }
 
                         break;
-<<<<<<< HEAD
+
                     case "DisplayFriend":
                         Gson gsonuser = new Gson();
                         int d = 0;
@@ -135,7 +135,7 @@ public class ClientHandler extends Thread {
                             jmsg.put("Value", jsonuser);
                             ps.println(jmsg);
                         }
-=======
+
                     case "AddToWishList":
                         gson = new Gson();
                         value = jmsg.getString("Value");
@@ -145,7 +145,7 @@ public class ClientHandler extends Thread {
                         jmsg.put("Key", "AddToWishList");                     
                         jmsg.put("Value", wshlstStatus);
                         ps.println(jmsg);
->>>>>>> origin/salma
+
                         break;
                 }
                 //root.getTxtLog().appendText(msg + "\n");
