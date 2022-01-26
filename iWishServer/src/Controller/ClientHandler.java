@@ -114,6 +114,28 @@ public class ClientHandler extends Thread {
                         }
 
                         break;
+
+                    case "DisplayFriend":
+                        Gson gsonuser = new Gson();
+                        int d = 0;
+                        // String value1;
+                        int UID = jmsg.getInt("Value");
+                        Vector<User> userinfo = DAO.ReturnFriend(UID);
+                        System.out.println(userinfo.size());
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "VectorSize");
+                        jmsg.put("size", userinfo.size());
+                        ps.println(jmsg);
+                        for (int i = 0; i < userinfo.size(); i++) {
+                            gson = new Gson();
+                            String jsonuser = gson.toJson(userinfo.get(i));
+                            jmsg = new JSONObject();
+                            jmsg.put("Key", "DisplayFriend");
+                            jmsg.put("size", userinfo.size());
+                            jmsg.put("Value", jsonuser);
+                            ps.println(jmsg);
+                        }
+
                     case "AddToWishList":
                         gson = new Gson();
                         value = jmsg.getString("Value");
@@ -123,6 +145,7 @@ public class ClientHandler extends Thread {
                         jmsg.put("Key", "AddToWishList");                     
                         jmsg.put("Value", wshlstStatus);
                         ps.println(jmsg);
+
                         break;
                 }
                 //root.getTxtLog().appendText(msg + "\n");
