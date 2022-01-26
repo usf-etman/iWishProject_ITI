@@ -11,7 +11,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="569.0" prefWidth="610.0" style="-fx-background-color: #F1FAEE;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView layoutX="52.0" layoutY="120.0" prefHeight="370.0" prefWidth="287.0" style="-fx-background-color: #fffff;">
+      <TableView layoutX="52.0" layoutY="120.0" prefHeight="370.0" prefWidth="287.0">
          <columns>
             <TableColumn id="stylename" prefWidth="286.0" style="-fx-background-color: #34656D;" text="Name " />
          </columns>
@@ -23,7 +23,7 @@
       </Button>
       <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="375.0" layoutY="247.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../correction.png" />
+            <Image url="@../images/correction.png" />
          </image>
       </ImageView>
       <Button layoutX="369.0" layoutY="344.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="132.0" style="-fx-background-color: #34656D; -fx-border-radius: 80;" text="  Decline" textFill="WHITE">
@@ -33,12 +33,12 @@
       </Button>
       <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="375.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../failed.png" />
+            <Image url="@../images/failed.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="46.0" fitWidth="51.0" layoutX="254.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../participation.png" />
+            <Image url="@../images/participation.png" />
          </image>
       </ImageView>
       <Text fill="#34656d" layoutX="76.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pending Friends">
@@ -57,14 +57,14 @@
                <children>
                   <ImageView fitHeight="32.0" fitWidth="78.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../zzz/iWishProject_ITI/iWishClient/src/View/images/iwishh.png" />
+                        <Image url="@../images/iwishh.png" />
                      </image>
                   </ImageView>
                </children>
             </AnchorPane>
             <ImageView fitHeight="46.0" fitWidth="45.0" layoutX="37.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../zzz/iWishProject_ITI/iWishClient/src/View/images/Logo.png" />
+                  <Image url="@../images/Logo.png" />
                </image>
             </ImageView>
          </children>

@@ -9,7 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class PendingFriendUI extends AnchorPane {
+public  class PendingFriendUI extends AnchorPane {
 
     protected final TableView tableView;
     protected final TableColumn tableColumn;
@@ -61,7 +61,6 @@ public class PendingFriendUI extends AnchorPane {
         tableView.setLayoutY(120.0);
         tableView.setPrefHeight(370.0);
         tableView.setPrefWidth(287.0);
-        tableView.setStyle("-fx-background-color: #fffff;");
 
         tableColumn.setId("stylename");
         tableColumn.setPrefWidth(286.0);
@@ -84,7 +83,7 @@ public class PendingFriendUI extends AnchorPane {
         imageView.setLayoutY(247.0);
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
-        imageView.setImage(new Image(getClass().getResource("../../../../../correction.png").toExternalForm()));
+        imageView.setImage(new Image(getClass().getResource("images/correction.png").toExternalForm()));
 
         button0.setLayoutX(369.0);
         button0.setLayoutY(344.0);
@@ -102,7 +101,7 @@ public class PendingFriendUI extends AnchorPane {
         imageView0.setLayoutY(345.0);
         imageView0.setPickOnBounds(true);
         imageView0.setPreserveRatio(true);
-        imageView0.setImage(new Image(getClass().getResource("../../../../../failed.png").toExternalForm()));
+        imageView0.setImage(new Image(getClass().getResource("images/failed.png").toExternalForm()));
 
         imageView1.setFitHeight(46.0);
         imageView1.setFitWidth(51.0);
@@ -110,7 +109,7 @@ public class PendingFriendUI extends AnchorPane {
         imageView1.setLayoutY(54.0);
         imageView1.setPickOnBounds(true);
         imageView1.setPreserveRatio(true);
-        imageView1.setImage(new Image(getClass().getResource("../../../../../participation.png").toExternalForm()));
+        imageView1.setImage(new Image(getClass().getResource("images/participation.png").toExternalForm()));
 
         text.setFill(javafx.scene.paint.Color.valueOf("#34656d"));
         text.setLayoutX(76.0);
@@ -178,7 +177,7 @@ public class PendingFriendUI extends AnchorPane {
         imageView2.setLayoutY(1.0);
         imageView2.setPickOnBounds(true);
         imageView2.setPreserveRatio(true);
-        imageView2.setImage(new Image(getClass().getResource("../../../../zzz/iWishProject_ITI/iWishClient/src/View/images/iwishh.png").toExternalForm()));
+        imageView2.setImage(new Image(getClass().getResource("images/iwishh.png").toExternalForm()));
 
         imageView3.setFitHeight(46.0);
         imageView3.setFitWidth(45.0);
@@ -186,7 +185,7 @@ public class PendingFriendUI extends AnchorPane {
         imageView3.setLayoutY(3.0);
         imageView3.setPickOnBounds(true);
         imageView3.setPreserveRatio(true);
-        imageView3.setImage(new Image(getClass().getResource("../../../../zzz/iWishProject_ITI/iWishClient/src/View/images/Logo.png").toExternalForm()));
+        imageView3.setImage(new Image(getClass().getResource("images/Logo.png").toExternalForm()));
 
         tableView.getColumns().add(tableColumn);
         getChildren().add(tableView);
