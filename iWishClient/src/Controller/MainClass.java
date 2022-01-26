@@ -21,12 +21,7 @@ public class MainClass extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        LoginUI root = new LoginUI();
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.show();
-        LoginController lc = new LoginController(stage, root);
+        LoginController lc = new LoginController(stage);
         stage.setOnCloseRequest(e -> {
             Platform.exit();
             System.exit(0);
