@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import model.DAO;
 import model.Item;
+import model.PendingRequest;
 import model.User;
 import model.WishList;
 import org.json.JSONException;
@@ -138,7 +139,6 @@ public class ClientHandler extends Thread {
                             jmsg.put("Value", jsonuser);
                             ps.println(jmsg);
                         }
-
                     case "AddToWishList":
                         gson = new Gson();
                         value = jmsg.getString("Value");
@@ -149,6 +149,17 @@ public class ClientHandler extends Thread {
                         jmsg.put("Value", wshlstStatus);
                         ps.println(jmsg);
                         break;
+                    case "AddToPending":
+                        gson = new Gson();
+                        value = jmsg.getString("Value");
+                        PendingRequest pndngRqust = gson.fromJson(value, PendingRequest.class);
+                        int pendingStatus = DAO.AddToPending(pndngRqust);
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "AddToWishList");                     
+                        jmsg.put("Value", pendingStatus);
+                        ps.println(jmsg);
+
+                        break;    
                 }
                 //root.getTxtLog().appendText(msg + "\n");
             } 

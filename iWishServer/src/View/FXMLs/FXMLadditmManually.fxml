@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="508.0" prefWidth="750.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
+   <children>
+      <ImageView fitHeight="119.0" fitWidth="126.0" layoutX="664.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Logo.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="78.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/iwishh.png" />
+         </image>
+      </ImageView>
+      <Text fill="#5681ab" fontSmoothingType="LCD" layoutX="229.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Item" textAlignment="CENTER" wrappingWidth="351.99999801814556">
+         <font>
+            <Font name="Chiller" size="74.0" />
+         </font>
+      </Text>
+      <TextField fx:id="nameTXT" layoutX="280.0" layoutY="188.0" prefHeight="43.0" prefWidth="220.0" />
+      <TextField fx:id="priceTXT" layoutX="280.0" layoutY="259.0" prefHeight="43.0" prefWidth="220.0" />
+      <TextField fx:id="descTXT" layoutX="280.0" layoutY="336.0" prefHeight="43.0" prefWidth="220.0" />
+      <Text fill="#5681ab" layoutX="57.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Name" wrappingWidth="152.6708984375">
+         <font>
+            <Font name="Chiller" size="38.0" />
+         </font>
+      </Text>
+      <Text fill="#5681ab" layoutX="57.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Description" wrappingWidth="152.6708984375">
+         <font>
+            <Font name="Chiller" size="31.0" />
+         </font>
+      </Text>
+      <Text fill="#5681ab" layoutX="57.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Price" wrappingWidth="152.6708984375">
+         <font>
+            <Font name="Chiller" size="38.0" />
+         </font>
+      </Text>
+      <Button fx:id="additmBTN" layoutX="313.0" layoutY="429.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="153.0" text="Add Item" textFill="#114e86" />
+      <Pane layoutY="423.0" prefHeight="6.0" prefWidth="779.0" style="-fx-background-color: #5681ab;" />
+      <Label fx:id="rsltLBL" layoutX="313.0" layoutY="480.0" prefHeight="21.0" prefWidth="220.0" textFill="#245582" />
+   </children>
+</AnchorPane>
