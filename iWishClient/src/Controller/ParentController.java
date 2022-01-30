@@ -36,15 +36,12 @@ public class ParentController {
     static PrintStream ps;
     static String loginStatus;
     static String status;
-<<<<<<< HEAD
 
     //private static int UID;
     //static User my_info;
     static User friend_info;
     static User friend_info1;
-=======
-    static User friend_info;
->>>>>>> origin/salma
+
     private static User my_info;
     static String responseString;
     static boolean blockingFlag = true;
@@ -52,11 +49,10 @@ public class ParentController {
     static Item itm;
     static Vector<Item> itmVector;
     static Vector<User> uservector;
-<<<<<<< HEAD
+
     static Vector<User> uservector1;
 
-=======
->>>>>>> origin/salma
+
     static int vectorSize;
     static int blokingCounter;
     static int wshlstStatus;
@@ -152,7 +148,7 @@ public class ParentController {
         }
         return uservector;
 
-<<<<<<< HEAD
+
     }
 
     public static Vector<User> reurnallFriend() {
@@ -174,8 +170,7 @@ public class ParentController {
         }
         return uservector1;
 
-=======
->>>>>>> origin/salma
+
     }
 
     public static User login(User user) {
@@ -219,10 +214,10 @@ public class ParentController {
                         case "VectorSize":
                             itmVector = new Vector<Item>();
                             uservector = new Vector<User>();
-<<<<<<< HEAD
+
                               uservector1 = new Vector<User>();
-=======
->>>>>>> origin/salma
+
+
                             vectorSize = jmsg.getInt("size");
                             blokingCounter = 0;
                             blockingFlag = false;
@@ -244,15 +239,15 @@ public class ParentController {
                             friend_info = gson2.fromJson(friendlist, User.class);
                             uservector.add(friend_info);
                             blokingCounter++;
-<<<<<<< HEAD
+
                             // System.out.println(vectorSize);
-=======
+
 
                            // System.out.println(vectorSize);
 
                             // System.out.println(vectorSize);
 
->>>>>>> origin/salma
+
 
                             System.out.println(vectorSize);
                             break;
