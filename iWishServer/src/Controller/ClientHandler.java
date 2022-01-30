@@ -158,10 +158,9 @@ public class ClientHandler extends Thread {
                             jmsg.put("Value", jsonuser);
                             ps.println(jmsg);
                         }
-<<<<<<< HEAD
+
                         break;
-=======
->>>>>>> origin/salma
+
                     case "AddToWishList":
                         gson = new Gson();
                         value = jmsg.getString("Value");
