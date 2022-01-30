@@ -21,12 +21,14 @@ import model.User;
  * @author salma
  */
 public class FriendListController {
-          User selectedItm;
-          PendingRequest rqust;
+
+    User selectedItm;
+    PendingRequest rqust;
+
     FriendListController(Stage stage) {
 
         FriendsListUI mainView = new FriendsListUI();
-      //  FriendsListUI mainView2 = new FriendsListUI();
+        //  FriendsListUI mainView2 = new FriendsListUI();
 
         Scene scene = new Scene(mainView);
 
@@ -41,51 +43,42 @@ public class FriendListController {
         }
 
         Vector<User> userVector1 = ParentController.reurnallFriend();
-                //System.out.printlitmVector.size());
-                for (int i = 0; i < userVector1.size(); i++) {
-                    mainView.getTableFriends().getItems().add(userVector.get(i));
+        //System.out.printlitmVector.size());
+        for (int i = 0; i < userVector1.size(); i++) {
+            mainView.getTableFriends().getItems().add(userVector.get(i));
 
-                }
-      
-                
-                
-                
-                mainView.getTableSuggest().setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+        }
+
+        mainView.getTableSuggest().setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
 
             public void handle(javafx.scene.input.MouseEvent event) {
                 selectedItm = mainView.getTableSuggest().getSelectionModel().getSelectedItem();
-                rqust = new PendingRequest(selectedItm.getUID(),ParentController.getMy_info().getUID());
+                rqust = new PendingRequest(selectedItm.getUID(), ParentController.getMy_info().getUID());
                 System.out.println(rqust);
             }
 
         });
 
-                
-mainView.getBtn_Add().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-@Override
-public void handle(ActionEvent event) {
-if (rqust != null) {
-int rqustStatus = ParentController.addPndingRequest(rqust);
-if(rqustStatus != -1)
-{
-System.out.println("added successfully");
-mainView.getTableSuggest().getItems().remove(selectedItm);
-}
-else{
+        mainView.getBtn_Add().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (rqust != null) {
+                    int rqustStatus = ParentController.addPndingRequest(rqust);
+                    if (rqustStatus != -1) {
+                        System.out.println("added successfully");
+                        mainView.getTableSuggest().getItems().remove(selectedItm);
+                    } else {
 
-System.out.println("try again");
-}
-}
-else{
-System.out.println("try again");
-}
-}
+                        System.out.println("try again");
+                    }
+                } else {
+                    System.out.println("try again");
+                }
+            }
 
+        });
 
-
-});
-  
     }
 
 }
