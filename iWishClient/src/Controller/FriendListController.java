@@ -26,6 +26,8 @@ public class FriendListController {
     FriendListController(Stage stage) {
 
         FriendsListUI mainView = new FriendsListUI();
+      //  FriendsListUI mainView2 = new FriendsListUI();
+
         Scene scene = new Scene(mainView);
 
         stage.setScene(scene);
@@ -37,6 +39,12 @@ public class FriendListController {
             mainView.getTableSuggest().getItems().add(userVector.get(i));
 
         }
+<<<<<<< HEAD
+        Vector<User> userVector1 = ParentController.reurnallFriend();
+                //System.out.printlitmVector.size());
+                for (int i = 0; i < userVector1.size(); i++) {
+                    mainView.getTableFriends().getItems().add(userVector.get(i));
+=======
         
       
                 mainView.getTableSuggest().setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
@@ -49,10 +57,17 @@ public class FriendListController {
             }
 
         });
+>>>>>>> origin/salma
 
-         mainView.getBtn_Add().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                }
+
+        mainView.getBtn_Show().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+<<<<<<< HEAD
+               
+              
+=======
                 if (rqust != null) {
                     int rqustStatus = ParentController.addPndingRequest(rqust);
                     if(rqustStatus != -1)
@@ -68,6 +83,7 @@ public class FriendListController {
                 else{
                       System.out.println("try again");   
                 }
+>>>>>>> origin/salma
             }
 
         });

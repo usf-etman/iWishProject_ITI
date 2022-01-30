@@ -118,7 +118,26 @@ public class ClientHandler extends Thread {
                         }
 
                         break;
-
+                    case "showFriend":
+                         Gson gsonuser1 = new Gson();
+                        // String value1;
+                        int UID1 = jmsg.getInt("Value");
+                        Vector<User> userinfo1 = DAO.ShowFriend(UID1);
+                        System.out.println(userinfo1.size());
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "VectorSize");
+                        jmsg.put("size", userinfo1.size());
+                        ps.println(jmsg);
+                        for (int i = 0; i < userinfo1.size(); i++) {
+                            gson = new Gson();
+                            String jsonuser = gson.toJson(userinfo1.get(i));
+                            jmsg = new JSONObject();
+                            jmsg.put("Key", "showFriend");
+                            jmsg.put("size", userinfo1.size());
+                            jmsg.put("Value", jsonuser);
+                            ps.println(jmsg);
+                        }
+                        break;
                     case "DisplayFriend":
                         Gson gsonuser = new Gson();
                         int d = 0;
@@ -139,13 +158,17 @@ public class ClientHandler extends Thread {
                             jmsg.put("Value", jsonuser);
                             ps.println(jmsg);
                         }
+<<<<<<< HEAD
+                        break;
+=======
+>>>>>>> origin/salma
                     case "AddToWishList":
                         gson = new Gson();
                         value = jmsg.getString("Value");
                         WishList wshlst = gson.fromJson(value, WishList.class);
                         int wshlstStatus = DAO.AddToWishlist(wshlst);
                         jmsg = new JSONObject();
-                        jmsg.put("Key", "AddToWishList");                     
+                        jmsg.put("Key", "AddToWishList");
                         jmsg.put("Value", wshlstStatus);
                         ps.println(jmsg);
                         break;
@@ -162,8 +185,7 @@ public class ClientHandler extends Thread {
                         break;    
                 }
                 //root.getTxtLog().appendText(msg + "\n");
-            } 
-            catch (SocketException ex) {
+            } catch (SocketException ex) {
                 try {
                     dis.close();
                     ps.close();
@@ -179,8 +201,7 @@ public class ClientHandler extends Thread {
                 } catch (IOException ex1) {
                     Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex1);
                 }
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
             } catch (JSONException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
