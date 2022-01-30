@@ -3,9 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/java_project1/iWishProject_ITI/iWishServer/src/model/DAO.java</file>
             <file>file:/D:/java_project1/iWishProject_ITI/iWishServer/src/model/User.java</file>
             <file>file:/D:/java_project1/iWishProject_ITI/iWishServer/src/Controller/ClientHandler.java</file>
+=======
+            <file>file:/E:/computer%20science/ITI/courses/Java2/project/GitHub/iWishProject_ITI/iWishServer/src/View/itemsUI.java</file>
+            <file>file:/E:/computer%20science/ITI/courses/Java2/project/GitHub/iWishProject_ITI/iWishServer/src/View/AmazonUI.java</file>
+            <file>file:/E:/computer%20science/ITI/courses/Java2/project/GitHub/iWishProject_ITI/iWishServer/src/Controller/itemsController.java</file>
+>>>>>>> origin/salma
         </group>
     </open-files>
 </project-private>

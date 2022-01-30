@@ -7,7 +7,6 @@ package Controller;
 
 import View.ServerUI;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -17,8 +16,10 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import model.DAO;
 import model.Item;
+import model.PendingRequest;
 import model.User;
 import model.WishList;
 import org.json.JSONException;
@@ -32,12 +33,15 @@ public class ClientHandler extends Thread {
 
     DataInputStream dis;
     PrintStream ps;
-    String msg;
+    Socket waiter;
     ServerUI root;
+    String IP;
     static Vector<ClientHandler> clientsVector = new Vector<ClientHandler>();
 
     ClientHandler(Socket waiter, ServerUI root) throws IOException {
+        this.waiter = waiter;
         this.root = root;
+        IP = String.valueOf(waiter.getInetAddress());
         dis = new DataInputStream(waiter.getInputStream());
         ps = new PrintStream(waiter.getOutputStream());
         ClientHandler.clientsVector.add(this);
@@ -47,7 +51,7 @@ public class ClientHandler extends Thread {
     public void run() {
         while (true) {
             try {
-                msg = dis.readLine();
+                String msg = dis.readLine();
                 JSONObject jmsg = new JSONObject(msg);
                 String key = jmsg.getString("Key");
                 String value;
@@ -154,7 +158,10 @@ public class ClientHandler extends Thread {
                             jmsg.put("Value", jsonuser);
                             ps.println(jmsg);
                         }
+<<<<<<< HEAD
                         break;
+=======
+>>>>>>> origin/salma
                     case "AddToWishList":
                         gson = new Gson();
                         value = jmsg.getString("Value");
@@ -164,14 +171,33 @@ public class ClientHandler extends Thread {
                         jmsg.put("Key", "AddToWishList");
                         jmsg.put("Value", wshlstStatus);
                         ps.println(jmsg);
-
                         break;
+                    case "AddToPending":
+                        gson = new Gson();
+                        value = jmsg.getString("Value");
+                        PendingRequest pndngRqust = gson.fromJson(value, PendingRequest.class);
+                        int pendingStatus = DAO.AddToPending(pndngRqust);
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "AddToWishList");                     
+                        jmsg.put("Value", pendingStatus);
+                        ps.println(jmsg);
+
+                        break;    
                 }
                 //root.getTxtLog().appendText(msg + "\n");
             } catch (SocketException ex) {
                 try {
                     dis.close();
-                    clientsVector.remove(this);
+                    ps.close();
+                    waiter.close();
+                    clientsVector.remove(this);                    
+                    Platform.runLater(new Runnable(){
+                        public void run(){
+                            root.getTxtLog().appendText(IP + " has disconnected\n");
+                            root.getLblClients().setText(ClientHandler.getClientsNum());
+                        }
+                    });
+                    this.stop();
                 } catch (IOException ex1) {
                     Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex1);
                 }

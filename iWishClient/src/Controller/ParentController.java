@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.Vector;
@@ -18,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Item;
+import model.PendingRequest;
 import model.User;
 import model.WishList;
 import org.json.JSONException;
@@ -34,25 +36,31 @@ public class ParentController {
     static PrintStream ps;
     static String loginStatus;
     static String status;
+<<<<<<< HEAD
 
     //private static int UID;
     //static User my_info;
     static User friend_info;
     static User friend_info1;
+=======
+    static User friend_info;
+>>>>>>> origin/salma
     private static User my_info;
-
     static String responseString;
     static boolean blockingFlag = true;
     static boolean responseFlag;
     static Item itm;
     static Vector<Item> itmVector;
     static Vector<User> uservector;
+<<<<<<< HEAD
     static Vector<User> uservector1;
 
+=======
+>>>>>>> origin/salma
     static int vectorSize;
     static int blokingCounter;
     static int wshlstStatus;
-
+    static int pendingStatus;
     static {
         try {
             socket = new Socket("127.0.0.1", 5566);
@@ -60,6 +68,8 @@ public class ParentController {
             ps = new PrintStream(socket.getOutputStream());
             ClientListener clientListener = new ClientListener();
             clientListener.start();
+        } catch (ConnectException ex) {
+            Logger.getLogger(ParentController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ParentController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -91,6 +101,20 @@ public class ParentController {
         }
         blockingFlag = true;
         return wshlstStatus;
+    }
+    
+    public static int addPndingRequest(PendingRequest rqust) {
+        Gson gson = new Gson(); // Or use new GsonBuilder().create();
+        String json = gson.toJson(rqust); // serializes target to Json
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "AddToPending");
+        msg.addProperty("Value", json);
+        ps.println(msg);
+        while (blockingFlag) {
+            System.out.println("");
+        }
+        blockingFlag = true;
+        return pendingStatus;
     }
 
     public static Vector<Item> getAllItems() {
@@ -128,6 +152,7 @@ public class ParentController {
         }
         return uservector;
 
+<<<<<<< HEAD
     }
 
     public static Vector<User> reurnallFriend() {
@@ -149,6 +174,8 @@ public class ParentController {
         }
         return uservector1;
 
+=======
+>>>>>>> origin/salma
     }
 
     public static User login(User user) {
@@ -192,7 +219,10 @@ public class ParentController {
                         case "VectorSize":
                             itmVector = new Vector<Item>();
                             uservector = new Vector<User>();
+<<<<<<< HEAD
                               uservector1 = new Vector<User>();
+=======
+>>>>>>> origin/salma
                             vectorSize = jmsg.getInt("size");
                             blokingCounter = 0;
                             blockingFlag = false;
@@ -214,10 +244,17 @@ public class ParentController {
                             friend_info = gson2.fromJson(friendlist, User.class);
                             uservector.add(friend_info);
                             blokingCounter++;
+<<<<<<< HEAD
+                            // System.out.println(vectorSize);
+=======
+
+                           // System.out.println(vectorSize);
+
                             // System.out.println(vectorSize);
 
-                            System.out.println(vectorSize);
+>>>>>>> origin/salma
 
+                            System.out.println(vectorSize);
                             break;
                         case "showFriend":
                             String allfriendlist = jmsg.getString("Value");
@@ -232,6 +269,10 @@ public class ParentController {
                             wshlstStatus = jmsg.getInt("Value");
                             blockingFlag = false;
                             break;
+                        case "AddToPending":
+                            pendingStatus = jmsg.getInt("Value");
+                            blockingFlag = false;
+                            break;    
 
                         default:
                             responseFlag = jmsg.getBoolean("Value");
