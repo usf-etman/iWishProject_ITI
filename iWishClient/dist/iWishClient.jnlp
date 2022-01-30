@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="iWishClient.jar" size="827283" download="eager" />
+    <jar href="iWishClient.jar" size="827719" download="eager" />
     <jar href="lib\gson-2.8.2.jar" size="232932" download="eager" />
     <jar href="lib\ojdbc8.jar" size="4410832" download="eager" />
     <jar href="lib\org.json-chargebee-1.0.jar" size="40683" download="eager" />

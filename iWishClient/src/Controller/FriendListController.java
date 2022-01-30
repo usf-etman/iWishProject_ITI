@@ -24,6 +24,8 @@ public class FriendListController {
     FriendListController(Stage stage) {
 
         FriendsListUI mainView = new FriendsListUI();
+      //  FriendsListUI mainView2 = new FriendsListUI();
+
         Scene scene = new Scene(mainView);
 
         stage.setScene(scene);
@@ -35,11 +37,18 @@ public class FriendListController {
             mainView.getTableSuggest().getItems().add(userVector.get(i));
 
         }
+        Vector<User> userVector1 = ParentController.reurnallFriend();
+                //System.out.printlitmVector.size());
+                for (int i = 0; i < userVector1.size(); i++) {
+                    mainView.getTableFriends().getItems().add(userVector.get(i));
 
-         mainView.getBtn_Add().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                }
+
+        mainView.getBtn_Show().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
+               
+              
             }
 
         });
