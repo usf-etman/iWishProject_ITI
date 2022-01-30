@@ -89,6 +89,22 @@ public class DAO {
 
     }
 
+        public static Vector<User> ShowFriend(int uid1) throws SQLException {
+        Vector<User> res1 = new Vector<User>();
+        PreparedStatement pst = con.prepareStatement("SELECT USER_ID, USER_NAME FROM USER_INFO WHERE USER_ID IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID = ?) AND USER_ID !=?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+         pst.setInt(1, uid1);
+        pst.setInt(2, uid1);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            User selected_user1 = new User();
+            selected_user1.setUsername(rs.getString("user_name"));
+            selected_user1.setUID(rs.getInt("user_ID"));
+            // res.add();
+            res1.add(selected_user1);
+        }
+        return res1;
+
+    }
 
     public static boolean AddUser(User user) throws SQLException {
 
