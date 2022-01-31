@@ -13,6 +13,8 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.net.SocketException;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +24,7 @@ import model.Item;
 import model.PendingRequest;
 import model.User;
 import model.WishList;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -145,7 +148,7 @@ public class ClientHandler extends Thread {
                         WishList wshlst = gson.fromJson(value, WishList.class);
                         int wshlstStatus = DAO.AddToWishlist(wshlst);
                         jmsg = new JSONObject();
-                        jmsg.put("Key", "AddToWishList");                     
+                        jmsg.put("Key", "AddToWishList");
                         jmsg.put("Value", wshlstStatus);
                         ps.println(jmsg);
                         break;
@@ -155,22 +158,42 @@ public class ClientHandler extends Thread {
                         PendingRequest pndngRqust = gson.fromJson(value, PendingRequest.class);
                         int pendingStatus = DAO.AddToPending(pndngRqust);
                         jmsg = new JSONObject();
-                        jmsg.put("Key", "AddToWishList");                     
+                        jmsg.put("Key", "AddToWishList");
                         jmsg.put("Value", pendingStatus);
                         ps.println(jmsg);
 
-                        break;    
+                        break;
+                    case "DisplayWishlist":
+                        gson = new Gson();
+                        int userID = jmsg.getInt("Value");
+                        Vector<Item> itms = DAO.DisplayWishlist(userID);
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "VectorSize");
+                        jmsg.put("size", itms.size());
+                        ps.println(jmsg);
+                        System.out.println(jmsg);
+                        for (int i = 0; i < itms.size(); i++) {
+                            Item itm = itms.get(i);
+                            gson = new Gson();
+                            String json = gson.toJson(itm);
+                            jmsg = new JSONObject();
+                            jmsg.put("Key", "ShowItems");
+                            jmsg.put("Value", json);
+                            System.out.println(jmsg);
+                            ps.println(jmsg);
+                        }
+                        System.out.println("Done");
+                        break;
                 }
                 //root.getTxtLog().appendText(msg + "\n");
-            } 
-            catch (SocketException ex) {
+            } catch (SocketException ex) {
                 try {
                     dis.close();
                     ps.close();
                     waiter.close();
-                    clientsVector.remove(this);                    
-                    Platform.runLater(new Runnable(){
-                        public void run(){
+                    clientsVector.remove(this);
+                    Platform.runLater(new Runnable() {
+                        public void run() {
                             root.getTxtLog().appendText(IP + " has disconnected\n");
                             root.getLblClients().setText(ClientHandler.getClientsNum());
                         }
@@ -179,8 +202,7 @@ public class ClientHandler extends Thread {
                 } catch (IOException ex1) {
                     Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex1);
                 }
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
             } catch (JSONException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
