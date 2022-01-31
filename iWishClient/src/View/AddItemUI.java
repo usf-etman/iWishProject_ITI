@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import static javafx.scene.layout.Region.USE_PREF_SIZE;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -257,10 +258,10 @@ public class AddItemUI extends BorderPane {
         imageView1.setPreserveRatio(true);
         imageView1.setImage(new Image(getClass().getResource("images/iwishh.png").toExternalForm()));
 
-        imageView2.setFitHeight(311.0);
-        imageView2.setFitWidth(404.0);
-        imageView2.setLayoutX(140.0);
-        imageView2.setLayoutY(-82.0);
+        imageView2.setFitHeight(72.0);
+        imageView2.setFitWidth(168.0);
+        imageView2.setLayoutX(209.0);
+        imageView2.setLayoutY(14.0);
         imageView2.setPickOnBounds(true);
         imageView2.setPreserveRatio(true);
         imageView2.setImage(new Image(getClass().getResource("images/items.png").toExternalForm()));

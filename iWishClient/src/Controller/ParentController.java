@@ -14,6 +14,7 @@ import java.io.PrintStream;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.HashMap;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +23,7 @@ import model.Item;
 import model.PendingRequest;
 import model.User;
 import model.WishList;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,14 +42,20 @@ public class ParentController {
     private static User my_info;
     static String responseString;
     static boolean blockingFlag = true;
+    static boolean blockingFlag2 = true;
+    static boolean blockingFlag3 = true;
     static boolean responseFlag;
     static Item itm;
+    static Item mapKey;
     static Vector<Item> itmVector;
     static Vector<User> uservector;
+    static HashMap<Item, Vector<Item>> hm;
     static int vectorSize;
+    static int mapSize;
     static int blokingCounter;
     static int wshlstStatus;
     static int pendingStatus;
+
     static {
         try {
             socket = new Socket("127.0.0.1", 5566);
@@ -89,7 +97,7 @@ public class ParentController {
         blockingFlag = true;
         return wshlstStatus;
     }
-    
+
     public static int addPndingRequest(PendingRequest rqust) {
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         String json = gson.toJson(rqust); // serializes target to Json
@@ -107,6 +115,24 @@ public class ParentController {
     public static Vector<Item> getAllItems() {
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "ShowItems");
+        ps.println(msg);
+
+        while (blockingFlag) {
+            System.out.println(" ");
+
+        }
+        blockingFlag = true;
+        while (blokingCounter < vectorSize) {
+            System.out.println(" ");
+        }
+        return itmVector;
+
+    }
+    
+    public static Vector<Item> displayWishlist() {
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "DisplayWishlist");
+        msg.addProperty("Value", my_info.getUID());
         ps.println(msg);
 
         while (blockingFlag) {
@@ -171,31 +197,27 @@ public class ParentController {
             try {
                 while (true) {
                     String msg = dis.readLine();
+                    Gson gson;
                     JSONObject jmsg = new JSONObject(msg);
                     String key = jmsg.getString("Key");
                     switch (key) {
                         case "login":
-                            responseString = jmsg.getString("Value"); //from server to client
+                            responseString = jmsg.getString("Value");
                             blockingFlag = false;
                             break;
-
                         case "VectorSize":
                             itmVector = new Vector<Item>();
                             uservector = new Vector<User>();
                             vectorSize = jmsg.getInt("size");
                             blokingCounter = 0;
                             blockingFlag = false;
-                            //System.out.println(vectorSize);
                             break;
-
                         case "ShowItems":
                             String itmrslt = jmsg.getString("Value");
-                            Gson gson = new Gson();
+                            gson = new Gson();
                             itm = gson.fromJson(itmrslt, Item.class);
                             itmVector.add(itm);
                             blokingCounter++;
-                            // System.out.println(vectorSize);
-
                             break;
                         case "DisplayFriend":
                             String friendlist = jmsg.getString("Value");
@@ -203,15 +225,7 @@ public class ParentController {
                             friend_info = gson2.fromJson(friendlist, User.class);
                             uservector.add(friend_info);
                             blokingCounter++;
-
-                           // System.out.println(vectorSize);
-
-                            // System.out.println(vectorSize);
-
-
-                            System.out.println(vectorSize);
                             break;
-
                         case "AddToWishList":
                             wshlstStatus = jmsg.getInt("Value");
                             blockingFlag = false;
@@ -219,13 +233,11 @@ public class ParentController {
                         case "AddToPending":
                             pendingStatus = jmsg.getInt("Value");
                             blockingFlag = false;
-                            break;    
-
+                            break;
                         default:
                             responseFlag = jmsg.getBoolean("Value");
                             blockingFlag = false;
                             break;
-
                     }
                 }
 
