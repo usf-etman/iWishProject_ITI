@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.PendingRequest;
 
@@ -25,6 +26,7 @@ public class FriendListController {
 
     User selectedItm;
     PendingRequest rqust;
+    int friendid;
 
     FriendListController(Stage stage) {
 
@@ -48,7 +50,14 @@ public class FriendListController {
         for (int i = 0; i < userVector1.size(); i++) {
             mainView.getTableFriends().getItems().add(userVector1.get(i));
         }
+        mainView.getTableFriends().setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                selectedItm = mainView.getTableFriends().getSelectionModel().getSelectedItem();
+                friendid = selectedItm.getUID();
 
+            }
+        });
         mainView.getTableSuggest().setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
 
@@ -75,6 +84,7 @@ public class FriendListController {
                 } else {
                     System.out.println("try again");
                 }
+
             }
 
         });
@@ -100,8 +110,18 @@ public class FriendListController {
         mainView.getBtn_profile().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
             }
 
+        });
+
+        mainView.getBtn_Show().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                //int id = rqust.getUser_ID();
+                FriendWishlistController fwc = new FriendWishlistController(stage, friendid);
+            }
         });
 
     }
