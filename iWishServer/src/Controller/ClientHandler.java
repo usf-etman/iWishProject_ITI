@@ -215,6 +215,25 @@ public class ClientHandler extends Thread {
                         }
                         System.out.println("Done");
                         break;
+                           case "Friendwishlist":
+                            Gson gsonwish = new Gson();
+                            int uid = jmsg.getInt("Value");
+                        Vector<Item> wishResult = DAO.SelectFriendwishlist(uid);
+                        System.out.println(wishResult.size());
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "VectorSize");
+                        jmsg.put("size", wishResult.size());
+                        ps.println(jmsg);
+                        for (int i = 0; i < wishResult.size(); i++) {
+                            gson = new Gson();
+                            String jsonwish = gson.toJson(wishResult.get(i));
+                            jmsg = new JSONObject();
+                            jmsg.put("Key", "Friendwishlist");
+                            jmsg.put("size", wishResult.size());
+                            jmsg.put("Value", jsonwish);
+                            ps.println(jmsg);
+                        }
+                        break;
                 }
                 //root.getTxtLog().appendText(msg + "\n");
             } catch (SocketException ex) {
