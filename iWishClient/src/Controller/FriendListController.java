@@ -6,6 +6,7 @@
 package Controller;
 
 import View.FriendsListUI;
+import View.ResetPasswordUI;
 import java.util.Vector;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -46,7 +47,6 @@ public class FriendListController {
         //System.out.printlitmVector.size());
         for (int i = 0; i < userVector1.size(); i++) {
             mainView.getTableFriends().getItems().add(userVector1.get(i));
-
         }
 
         mainView.getTableSuggest().setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
@@ -65,7 +65,6 @@ public class FriendListController {
             public void handle(ActionEvent event) {
                 if (rqust != null) {
                     int rqustStatus = ParentController.addPndingRequest(rqust);
-                 
                     if (rqustStatus != -1) {
                         System.out.println("added successfully");
                         mainView.getTableSuggest().getItems().remove(selectedItm);
@@ -76,6 +75,31 @@ public class FriendListController {
                 } else {
                     System.out.println("try again");
                 }
+            }
+
+        });
+
+        mainView.getBtn_signout().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+            }
+
+        });
+        mainView.getBtn_friends().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+            }
+
+        });
+        mainView.getBtn_items().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+            }
+
+        });
+        mainView.getBtn_profile().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
             }
 
         });
