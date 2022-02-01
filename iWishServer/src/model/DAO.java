@@ -47,13 +47,20 @@ public class DAO {
         return result;
     }
 
+    //suggested friends
     public static Vector<User> ReturnFriend(int uid) throws SQLException {
         Vector<User> res = new Vector<User>();
-        String sql = "SELECT USER_ID, USER_NAME FROM USER_INFO WHERE USER_ID  NOT IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID=?) AND USER_ID NOT IN (SELECT  USER_ID FROM Pending_Request WHERE Sender_ID=?)  AND USER_ID != ?";
+        String sql = "SELECT USER_ID, USER_NAME \n"
+                + "FROM USER_INFO \n"
+                + "WHERE USER_ID  NOT IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID=?) \n"
+                + "AND USER_ID NOT IN (SELECT USER_ID FROM Pending_Request WHERE Sender_ID=?) \n"
+                + "AND USER_ID NOT IN (SELECT sender_id FROM Pending_Request WHERE user_id=?)\n"
+                + "AND USER_ID != ?";
         PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         pst.setInt(1, uid);
         pst.setInt(2, uid);
         pst.setInt(3, uid);
+        pst.setInt(4, uid);
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
             User selected_user = new User();
@@ -65,12 +72,17 @@ public class DAO {
         return res;
 
     }
+    //friends
 
-        public static Vector<User> ShowFriend(int uid1) throws SQLException {
+    public static Vector<User> ShowFriend(int uid1) throws SQLException {
         Vector<User> res1 = new Vector<User>();
-        PreparedStatement pst = con.prepareStatement("SELECT USER_ID, USER_NAME FROM USER_INFO WHERE USER_ID IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID = ?) AND USER_ID !=?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-         pst.setInt(1, uid1);
+        PreparedStatement pst = con.prepareStatement("FROM USER_INFO \n"
+                + "WHERE (USER_ID IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID = ?) \n"
+                + "OR USER_ID IN (SELECT USER_ID FROM FRIEND_LIST WHERE FRIEND_ID = ?))\n"
+                + "AND USER_ID !=?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst.setInt(1, uid1);
         pst.setInt(2, uid1);
+        pst.setInt(3, uid1);
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
             User selected_user1 = new User();
@@ -219,16 +231,15 @@ public class DAO {
         rs.next();
         keyID = rs.getInt(1);
         itms.add(new Item(rs.getInt(1), rs.getString(2), String.valueOf(rs.getInt(3)), "k"));
-        do{
-            if(keyID != rs.getInt(1)){
+        do {
+            if (keyID != rs.getInt(1)) {
                 keyID = rs.getInt(1);
                 itms.add(new Item(rs.getInt(1), rs.getString(2), String.valueOf(rs.getInt(3)), "k"));
                 itms.add(new Item(rs.getInt(4), rs.getString(5), String.valueOf(rs.getInt(6)), "v"));
             } else {
                 itms.add(new Item(rs.getInt(4), rs.getString(5), String.valueOf(rs.getInt(6)), "v"));
             }
-        }
-        while (rs.next());
+        } while (rs.next());
         return itms;
     }
 }
