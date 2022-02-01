@@ -5,9 +5,15 @@
  */
 package Controller;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import model.DAO;
+import model.PendingRequest;
+import model.WishList;
 
 /**
  *
@@ -17,14 +23,21 @@ public class MainClass extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+         //WishList lst  = new WishList(7, 263, 2, 3006);
+        //DAO.AddToWishlist(lst);
+        //PendingRequest rqst=new PendingRequest(231, 232);
+        //DAO.AddToPending(rqst);
         ServerController sc = new ServerController(stage);
-         stage.setOnCloseRequest(e -> {
+        stage.setOnCloseRequest(e -> {
             Platform.exit();
             System.exit(0);
         });
+
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
+
         launch(args);
+
     }
 }

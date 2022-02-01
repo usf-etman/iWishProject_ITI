@@ -5,17 +5,15 @@
  */
 package Controller;
 
-import static Controller.ParentController.loginStatus;
 import View.ForgetPassUI;
 import View.LoginUI;
-import View.MainscreenUI;
 import View.RegisterUI;
-import View.ResetPasswordUI;
 import java.util.regex.Pattern;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.User;
 
@@ -23,23 +21,30 @@ import model.User;
  *
  * @author Youssef
  */
-public class LoginController extends ParentController {
+public class LoginController{
 
-    LoginController(Stage stage, LoginUI root) {
+    LoginController(Stage stage) {
+        LoginUI root = new LoginUI();
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.show();
         root.getBtnLogin().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                root.getTxtEmailError().setText("Email must not be null!");
+                root.loadScreen();
+                root.getTxtEmailError().setText("");
+                root.getTxtPassError().setText("");
+                root.getLoginError().setText("");
+
                 if (root.getTxtUname().getText().length() < 1) {
+                    root.unloadScreen();
                     root.getTxtEmailError().setText("Email must not be null!");
-                } else {
-                    root.getTxtEmailError().setText("");
                 }
 
                 if (root.getTxtPass().getText().length() < 1) {
+                    root.unloadScreen();
                     root.getTxtPassError().setText("password must not be null!");
-                } else {
-                    root.getTxtPassError().setText("");
                 }
                 // checking for email format
                 String regexPattern = "^(.+)@(\\S+)$";
@@ -48,23 +53,35 @@ public class LoginController extends ParentController {
                         .matches();
 
                 if (!emailMatch) {
+                    root.unloadScreen();
                     root.getLoginError().setText("Sorry, you have to enter the email in the right format");
-                    return;
-                } else {
-                    root.getLoginError().setText("");
+                    //return;
                 }
-                 User user = new User();
-                 user.setEmail(root.getTxtUname().getText());
-                 user.setPassword(root.getTxtPass().getText());
-               
-                User loginStatus = ParentController.login(user);
-                root.getTxtEmailError().setText(String.valueOf(loginStatus));
-                if (loginStatus != null) { //from the server
-                    ParentController.setMy_info(loginStatus);
-                    MainscreenController mc = new MainscreenController(stage); // current user mainscreen
-                } else {
-                    root.getTxtEmailError().setText("Email does't exist");
-                }
+                User user = new User();
+                user.setEmail(root.getTxtUname().getText());
+                user.setPassword(root.getTxtPass().getText());
+
+                new Thread() {
+                    public void run() {
+                        User loginStatus = ParentController.login(user);
+                        if (loginStatus != null) { //from the server
+                            ParentController.setMy_info(loginStatus);
+                            Platform.runLater(new Runnable(){
+                                public void run(){
+                                    MainscreenController mc = new MainscreenController(stage);
+                                }
+                            });  
+                        } else {                            
+                            Platform.runLater(new Runnable(){
+                                public void run(){
+                                    root.unloadScreen();
+                                    root.getTxtEmailError().setText("Incorrect email or password");
+                                }
+                            }); 
+                            stop();
+                        }
+                    }
+                }.start();
             }
         });
         root.getLnkSignup().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
@@ -73,7 +90,6 @@ public class LoginController extends ParentController {
                 //AddItemController AIC = new AddItemController(stage);
                 RegisterUI registerView = new RegisterUI();
                 Scene scene = new Scene(registerView);
-
                 stage.setScene(scene);
                 stage.show();
                 RegisterController rc = new RegisterController(stage, registerView);

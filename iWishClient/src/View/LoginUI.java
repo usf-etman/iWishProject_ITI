@@ -31,6 +31,7 @@ public class LoginUI extends BorderPane {
     protected final Text txtEmailError;
     protected final Text txtPassError;
     protected final Text loginError;
+    ImageView loadGIF;
 
     public LoginUI() {
 
@@ -214,6 +215,24 @@ public class LoginUI extends BorderPane {
 
     }
 
+    public void loadScreen(){
+        loadGIF = new ImageView();
+        loadGIF.setFitHeight(246.0);
+        loadGIF.setFitWidth(245.0);
+        loadGIF.setLayoutX(-122.0);
+        loadGIF.setLayoutY(122.0);
+        loadGIF.setOpacity(0.95);
+        loadGIF.setPickOnBounds(true);
+        loadGIF.setPreserveRatio(true);
+        loadGIF.setImage(new Image(getClass().getResource("images/loading2.gif").toExternalForm()));
+        setCenter(anchorPane0);
+        anchorPane0.getChildren().add(loadGIF);        
+    }
+    
+    public void unloadScreen(){
+        anchorPane0.getChildren().remove(loadGIF);
+    }
+    
     public TextField getTxtUname() {
         return txtUname;
     }

@@ -6,6 +6,7 @@
 package Controller;
 
 import View.MainscreenUI;
+import Controller.LoginController;
 import View.LoginUI;
 import View.RegisterUI;
 import java.util.regex.Pattern;
@@ -79,12 +80,8 @@ public class RegisterController {
                 boolean registerStatus = ParentController.getUserInfo(user, "Register");
                 root.getUsernameError().setText(String.valueOf(registerStatus));
                 if (registerStatus==true) {
-                LoginUI loginView = new LoginUI();
-                Scene scene = new Scene(loginView);
-
-                stage.setScene(scene);
-                stage.show();
-                LoginController lc = new LoginController(stage, loginView);
+      
+                LoginController lc = new LoginController(stage);
                    //MainscreenController mc = new MainscreenController(stage);
                 } else {
                     root.getEmailError().setText("Email already exists");
@@ -95,12 +92,7 @@ public class RegisterController {
         root.getLmk_login().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
              @Override
             public void handle(ActionEvent event) {
-                LoginUI loginView = new LoginUI();
-                Scene scene = new Scene(loginView);
-
-                stage.setScene(scene);
-                stage.show();
-                LoginController lc = new LoginController(stage, loginView);
+                LoginController lc = new LoginController(stage);
             }
         });
     }

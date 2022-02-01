@@ -3,8 +3,11 @@ package View;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
+import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -16,6 +19,8 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import model.Item;
+
 
 public class MainscreenUI extends BorderPane {
 
@@ -53,9 +58,10 @@ public class MainscreenUI extends BorderPane {
     protected final FlowPane flowPane;
     protected final Label label;
     protected final StackPane stackPane2;
-    protected final TreeTableView tblWishlist;
-    protected final TreeTableColumn colName;
-    protected final TreeTableColumn colPrice;
+    protected final TreeTableView<Item> tblWishlist;
+    protected final TreeTableColumn<Item, String> colName;
+    protected final TreeTableColumn<Item, String> colPrice;
+    protected final TreeTableColumn<Item, Integer> colID;
     protected final GridPane gridPane0;
     protected final ColumnConstraints columnConstraints2;
     protected final RowConstraints rowConstraints2;
@@ -66,7 +72,8 @@ public class MainscreenUI extends BorderPane {
     protected final BorderPane borderPane1;
     protected final Label lblBalance;
     protected final BorderPane borderPane2;
-    protected final Button btn_Recharge;
+    protected final Button btnRecharge;
+    protected final DropShadow dropShadow;
 
     public MainscreenUI() {
 
@@ -104,9 +111,10 @@ public class MainscreenUI extends BorderPane {
         flowPane = new FlowPane();
         label = new Label();
         stackPane2 = new StackPane();
-        tblWishlist = new TreeTableView();
-        colName = new TreeTableColumn();
-        colPrice = new TreeTableColumn();
+        tblWishlist = new TreeTableView<Item>();
+        colName = new TreeTableColumn<Item, String>();
+        colPrice = new TreeTableColumn<Item, String>();
+        colID = new TreeTableColumn<Item, Integer>();
         gridPane0 = new GridPane();
         columnConstraints2 = new ColumnConstraints();
         rowConstraints2 = new RowConstraints();
@@ -117,7 +125,8 @@ public class MainscreenUI extends BorderPane {
         borderPane1 = new BorderPane();
         lblBalance = new Label();
         borderPane2 = new BorderPane();
-        btn_Recharge = new Button();
+        btnRecharge = new Button();
+        dropShadow = new DropShadow();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -336,11 +345,19 @@ public class MainscreenUI extends BorderPane {
         colName.setMinWidth(431.0);
         colName.setPrefWidth(431.0);
         colName.setText("Name");
+        colName.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
 
         colPrice.setMaxWidth(100.0);
         colPrice.setMinWidth(100.0);
         colPrice.setPrefWidth(100.0);
         colPrice.setText("Price");
+        colPrice.setCellValueFactory(new TreeItemPropertyValueFactory<>("price"));
+
+        colID.setMaxWidth(0.0);
+        colID.setMinWidth(0.0);
+        colID.setPrefWidth(0.0);
+        colID.setText("ID");
+        colID.setCellValueFactory(new TreeItemPropertyValueFactory<>("id"));
 
         GridPane.setColumnIndex(gridPane0, 1);
         GridPane.setRowIndex(gridPane0, 2);
@@ -381,11 +398,14 @@ public class MainscreenUI extends BorderPane {
         GridPane.setRowIndex(borderPane2, 2);
         borderPane2.setPrefHeight(200.0);
         borderPane2.setPrefWidth(200.0);
+        BorderPane.setAlignment(btnRecharge, javafx.geometry.Pos.CENTER);
+        btnRecharge.setMnemonicParsing(false);
+        btnRecharge.setStyle("-fx-background-color: #f1faee;");
+        btnRecharge.setText("Recharge");
 
-        BorderPane.setAlignment(btn_Recharge, javafx.geometry.Pos.CENTER);
-        btn_Recharge.setMnemonicParsing(false);
-        btn_Recharge.setText("Recharge");
-        borderPane2.setCenter(btn_Recharge);
+        dropShadow.setBlurType(javafx.scene.effect.BlurType.ONE_PASS_BOX);
+        btnRecharge.setEffect(dropShadow);
+        borderPane2.setCenter(btnRecharge);
         setCenter(stackPane1);
 
         stackPane.getChildren().add(rectangle);
@@ -418,6 +438,7 @@ public class MainscreenUI extends BorderPane {
         gridPane.getChildren().add(borderPane);
         tblWishlist.getColumns().add(colName);
         tblWishlist.getColumns().add(colPrice);
+        tblWishlist.getColumns().add(colID);
         stackPane2.getChildren().add(tblWishlist);
         gridPane.getChildren().add(stackPane2);
         gridPane0.getColumnConstraints().add(columnConstraints2);
@@ -429,7 +450,7 @@ public class MainscreenUI extends BorderPane {
         gridPane0.getChildren().add(borderPane2);
         gridPane.getChildren().add(gridPane0);
         stackPane1.getChildren().add(gridPane);
-
+        tblWishlist.setEditable(true);
     }
 
     public Button getBtnProfile() {
@@ -456,13 +477,30 @@ public class MainscreenUI extends BorderPane {
         return lblName;
     }
 
+    public TreeTableView<Item> getTblWishlist() {
+        return tblWishlist;
+    }
+
+    public TreeTableColumn<Item, String> getColName() {
+        return colName;
+    }
+
+    public TreeTableColumn<Item, String> getColPrice() {
+        return colPrice;
+    }
+
+    public TreeTableColumn<Item, Integer> getColID() {
+        return colID;
+    }
+
     public Label getLblBalance() {
         return lblBalance;
     }
-
-    public Button getBtn_Recharge() {
-        return btn_Recharge;
+    
+    public Button getBtnRecharge() {
+        return btnRecharge;
     }
+    
     
 }
 
