@@ -60,6 +60,15 @@ public class DAO {
         //System.out.println(result);
         return result;
     }
+    public static int DeleteItem(Item itm) throws SQLException {
+        int result = -1;
+        PreparedStatement pst = con.prepareStatement("delete from Item where Item_ID =? ", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst.setInt(1,itm.getId());
+      
+        result = pst.executeUpdate();
+        pst.close();
+        return result;
+    }
 
     public static Vector<Item> SelectItems() throws SQLException {
         Vector<Item> result = new Vector<Item>();

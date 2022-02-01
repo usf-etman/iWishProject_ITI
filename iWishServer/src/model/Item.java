@@ -28,6 +28,12 @@ public class Item {
         this.name = name;
         this.price = price;
     }
+
+    public Item(int id) {
+        this.id = id;
+
+
+    }
     
     
 
