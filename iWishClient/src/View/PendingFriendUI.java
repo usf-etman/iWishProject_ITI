@@ -3,19 +3,19 @@ package View;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import model.User;
 
-public  class PendingFriendUI extends AnchorPane {
+public class PendingFriendUI extends AnchorPane {
 
-    protected final TableView tableView;
-    protected final TableColumn tableColumn;
-    protected final Button button;
+    protected final Button Btn_accept;
     protected final ImageView imageView;
-    protected final Button button0;
+    protected final Button Btn_decline;
     protected final ImageView imageView0;
     protected final ImageView imageView1;
     protected final Text text;
@@ -29,13 +29,15 @@ public  class PendingFriendUI extends AnchorPane {
     protected final ImageView imageView2;
     protected final ImageView imageView3;
 
+    protected final TableView<User> pendingTable;
+    protected final TableColumn<User, Integer> colid;
+    protected final TableColumn<User, String> colname;
+
     public PendingFriendUI() {
 
-        tableView = new TableView();
-        tableColumn = new TableColumn();
-        button = new Button();
+        Btn_accept = new Button();
         imageView = new ImageView();
-        button0 = new Button();
+        Btn_decline = new Button();
         imageView0 = new ImageView();
         imageView1 = new ImageView();
         text = new Text();
@@ -48,6 +50,9 @@ public  class PendingFriendUI extends AnchorPane {
         anchorPane0 = new AnchorPane();
         imageView2 = new ImageView();
         imageView3 = new ImageView();
+        pendingTable = new TableView<User>();
+        colid = new TableColumn<User, Integer>();
+        colname = new TableColumn<User, String>();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -57,25 +62,15 @@ public  class PendingFriendUI extends AnchorPane {
         setPrefWidth(610.0);
         setStyle("-fx-background-color: #F1FAEE;");
 
-        tableView.setLayoutX(52.0);
-        tableView.setLayoutY(120.0);
-        tableView.setPrefHeight(370.0);
-        tableView.setPrefWidth(287.0);
-
-        tableColumn.setId("stylename");
-        tableColumn.setPrefWidth(286.0);
-        tableColumn.setStyle("-fx-background-color: #34656D;");
-        tableColumn.setText("Name ");
-
-        button.setLayoutX(369.0);
-        button.setLayoutY(246.0);
-        button.setMnemonicParsing(false);
-        button.setPrefHeight(31.0);
-        button.setPrefWidth(132.0);
-        button.setStyle("-fx-background-color: #34656D; -fx-border-radius: 80;");
-        button.setText("  Accept");
-        button.setTextFill(javafx.scene.paint.Color.WHITE);
-        button.setFont(new Font("System Bold", 15.0));
+        Btn_accept.setLayoutX(369.0);
+        Btn_accept.setLayoutY(246.0);
+        Btn_accept.setMnemonicParsing(false);
+        Btn_accept.setPrefHeight(31.0);
+        Btn_accept.setPrefWidth(132.0);
+        Btn_accept.setStyle("-fx-background-color: #34656D; -fx-border-radius: 80;");
+        Btn_accept.setText("  Accept");
+        Btn_accept.setTextFill(javafx.scene.paint.Color.WHITE);
+        Btn_accept.setFont(new Font("System Bold", 15.0));
 
         imageView.setFitHeight(31.0);
         imageView.setFitWidth(30.0);
@@ -85,15 +80,15 @@ public  class PendingFriendUI extends AnchorPane {
         imageView.setPreserveRatio(true);
         imageView.setImage(new Image(getClass().getResource("images/correction.png").toExternalForm()));
 
-        button0.setLayoutX(369.0);
-        button0.setLayoutY(344.0);
-        button0.setMnemonicParsing(false);
-        button0.setPrefHeight(31.0);
-        button0.setPrefWidth(132.0);
-        button0.setStyle("-fx-background-color: #34656D; -fx-border-radius: 80;");
-        button0.setText("  Decline");
-        button0.setTextFill(javafx.scene.paint.Color.WHITE);
-        button0.setFont(new Font("System Bold", 15.0));
+        Btn_decline.setLayoutX(369.0);
+        Btn_decline.setLayoutY(344.0);
+        Btn_decline.setMnemonicParsing(false);
+        Btn_decline.setPrefHeight(31.0);
+        Btn_decline.setPrefWidth(132.0);
+        Btn_decline.setStyle("-fx-background-color: #34656D; -fx-border-radius: 80;");
+        Btn_decline.setText("  Decline");
+        Btn_decline.setTextFill(javafx.scene.paint.Color.WHITE);
+        Btn_decline.setFont(new Font("System Bold", 15.0));
 
         imageView0.setFitHeight(31.0);
         imageView0.setFitWidth(30.0);
@@ -187,11 +182,24 @@ public  class PendingFriendUI extends AnchorPane {
         imageView3.setPreserveRatio(true);
         imageView3.setImage(new Image(getClass().getResource("images/Logo.png").toExternalForm()));
 
-        tableView.getColumns().add(tableColumn);
-        getChildren().add(tableView);
-        getChildren().add(button);
+        pendingTable.setLayoutX(35.0);
+        pendingTable.setLayoutY(146.0);
+        pendingTable.setPrefHeight(358.0);
+        pendingTable.setPrefWidth(293.0);
+
+        colid.setMinWidth(0.0);
+        colid.setPrefWidth(7.0);
+           colid.setCellValueFactory(new PropertyValueFactory("UID"));
+
+        
+        
+        colname.setPrefWidth(285.0);
+        colname.setText("Name");
+        colname.setCellValueFactory(new PropertyValueFactory("username"));
+
+        getChildren().add(Btn_accept);
         getChildren().add(imageView);
-        getChildren().add(button0);
+        getChildren().add(Btn_decline);
         getChildren().add(imageView0);
         getChildren().add(imageView1);
         getChildren().add(text);
@@ -204,6 +212,49 @@ public  class PendingFriendUI extends AnchorPane {
         anchorPane.getChildren().add(anchorPane0);
         anchorPane.getChildren().add(imageView3);
         getChildren().add(anchorPane);
+        pendingTable.getColumns().add(colid);
+        pendingTable.getColumns().add(colname);
+        getChildren().add(pendingTable);
 
+    }
+
+    public Button getBtn_accept() {
+        return Btn_accept;
+    }
+
+    public Button getBtn_decline() {
+        return Btn_decline;
+    }
+
+    public Button getBtn_profile() {
+        return btn_profile;
+    }
+
+    public Button getBtn_friends() {
+        return btn_friends;
+    }
+
+    public Button getBtn_items() {
+        return btn_items;
+    }
+
+    public Button getBtn_signout() {
+        return btn_signout;
+    }
+
+    public Button getBtn_notifications() {
+        return btn_notifications;
+    }
+
+    public TableView<User> getPendingTable() {
+        return pendingTable;
+    }
+
+    public TableColumn<User, Integer> getColid() {
+        return colid;
+    }
+
+    public TableColumn<User, String> getColname() {
+        return colname;
     }
 }

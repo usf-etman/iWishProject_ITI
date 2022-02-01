@@ -19,6 +19,9 @@ public class PendingRequest {
         this.Sender_ID = Sender_ID;
     }
 
+    PendingRequest() {
+    }
+
     public int getRequest_ID() {
         return Request_ID;
     }
