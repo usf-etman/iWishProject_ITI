@@ -3,10 +3,11 @@ package View;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableView;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,8 +22,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import model.Item;
 
-
-public class MainscreenUI extends BorderPane {
+public  class FriendWishlistUI extends BorderPane {
 
     protected final StackPane stackPane;
     protected final Rectangle rectangle;
@@ -58,10 +58,10 @@ public class MainscreenUI extends BorderPane {
     protected final FlowPane flowPane;
     protected final Label label;
     protected final StackPane stackPane2;
-    protected final TreeTableView<Item> tblWishlist;
-    protected final TreeTableColumn<Item, String> colName;
-    protected final TreeTableColumn<Item, String> colPrice;
-    protected final TreeTableColumn<Item, Integer> colID;
+    protected final TableView<Item> tableView;
+    protected final TableColumn<Item, Integer> colWishID;
+    protected final TableColumn<Item, String> colWishname;
+    protected final TableColumn<Item, String> colWishprice;
     protected final GridPane gridPane0;
     protected final ColumnConstraints columnConstraints2;
     protected final RowConstraints rowConstraints2;
@@ -70,12 +70,13 @@ public class MainscreenUI extends BorderPane {
     protected final BorderPane borderPane0;
     protected final Label label0;
     protected final BorderPane borderPane1;
-    protected final Label lblBalance;
+    protected final Spinner<Integer> spinAmount;
+    protected final Label label1;
     protected final BorderPane borderPane2;
-    protected final Button btnRecharge;
+    protected final Button btnContribute;
     protected final DropShadow dropShadow;
 
-    public MainscreenUI() {
+    public FriendWishlistUI() {
 
         stackPane = new StackPane();
         rectangle = new Rectangle();
@@ -111,10 +112,10 @@ public class MainscreenUI extends BorderPane {
         flowPane = new FlowPane();
         label = new Label();
         stackPane2 = new StackPane();
-        tblWishlist = new TreeTableView<Item>();
-        colName = new TreeTableColumn<Item, String>();
-        colPrice = new TreeTableColumn<Item, String>();
-        colID = new TreeTableColumn<Item, Integer>();
+        tableView = new TableView<Item>();
+        colWishID = new TableColumn<Item, Integer>();
+        colWishname = new TableColumn<Item, String>();
+        colWishprice = new TableColumn<Item, String>();
         gridPane0 = new GridPane();
         columnConstraints2 = new ColumnConstraints();
         rowConstraints2 = new RowConstraints();
@@ -123,9 +124,10 @@ public class MainscreenUI extends BorderPane {
         borderPane0 = new BorderPane();
         label0 = new Label();
         borderPane1 = new BorderPane();
-        lblBalance = new Label();
+        spinAmount = new Spinner<Integer>();
+        label1 = new Label();
         borderPane2 = new BorderPane();
-        btnRecharge = new Button();
+        btnContribute = new Button();
         dropShadow = new DropShadow();
 
         setMaxHeight(USE_PREF_SIZE);
@@ -322,6 +324,7 @@ public class MainscreenUI extends BorderPane {
 
         BorderPane.setAlignment(lblName, javafx.geometry.Pos.CENTER);
         lblName.setText("Youssef Etman");
+        lblName.setTextFill(javafx.scene.paint.Color.valueOf("#2883b8"));
         lblName.setFont(new Font("Lucida Bright Regular", 30.0));
         borderPane.setCenter(lblName);
 
@@ -329,8 +332,11 @@ public class MainscreenUI extends BorderPane {
         flowPane.setPrefHeight(21.0);
         flowPane.setPrefWidth(531.0);
 
-        label.setText("Your wish list");
-        label.setFont(new Font(14.0));
+        label.setPrefHeight(47.0);
+        label.setPrefWidth(245.0);
+        label.setText("Your friend wish list");
+        label.setTextFill(javafx.scene.paint.Color.valueOf("#2883b8"));
+        label.setFont(new Font("Edwardian Script ITC", 34.0));
         borderPane.setBottom(flowPane);
 
         GridPane.setColumnIndex(stackPane2, 1);
@@ -338,27 +344,24 @@ public class MainscreenUI extends BorderPane {
         stackPane2.setPrefHeight(150.0);
         stackPane2.setPrefWidth(200.0);
 
-        tblWishlist.setPrefHeight(200.0);
-        tblWishlist.setPrefWidth(200.0);
+        tableView.setPrefHeight(25.0);
+        tableView.setPrefWidth(25.0);
 
-        colName.setMaxWidth(431.0);
-        colName.setMinWidth(431.0);
-        colName.setPrefWidth(431.0);
-        colName.setText("Name");
-        colName.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
+        colWishID.setMaxWidth(0.0);
+        colWishID.setMinWidth(0.0);
+        colWishID.setPrefWidth(0.0);
+        colWishID.setText("uid");
+        colWishID.setCellValueFactory(new PropertyValueFactory("id"));
 
-        colPrice.setMaxWidth(100.0);
-        colPrice.setMinWidth(100.0);
-        colPrice.setPrefWidth(100.0);
-        colPrice.setText("Price");
-        colPrice.setCellValueFactory(new TreeItemPropertyValueFactory<>("price"));
-
-        colID.setMaxWidth(0.0);
-        colID.setMinWidth(0.0);
-        colID.setPrefWidth(0.0);
-        colID.setText("ID");
-        colID.setCellValueFactory(new TreeItemPropertyValueFactory<>("id"));
-
+        colWishname.setPrefWidth(330.0);
+        colWishname.setText("Wish Name");
+        colWishname.setCellValueFactory(new PropertyValueFactory("name"));
+        
+        colWishprice.setMinWidth(0.0);
+        colWishprice.setPrefWidth(201.0);
+        colWishprice.setText("Wish Price");
+        colWishprice.setCellValueFactory(new PropertyValueFactory("price"));
+        
         GridPane.setColumnIndex(gridPane0, 1);
         GridPane.setRowIndex(gridPane0, 2);
 
@@ -382,32 +385,48 @@ public class MainscreenUI extends BorderPane {
         borderPane0.setPrefWidth(200.0);
 
         BorderPane.setAlignment(label0, javafx.geometry.Pos.CENTER);
-        label0.setText("Your current balance is:");
-        label0.setFont(new Font(14.0));
-        borderPane0.setCenter(label0);
+        label0.setText("Do you want to make your friend happier?!!");
+        label0.setTextFill(javafx.scene.paint.Color.valueOf("#2883b8"));
+        label0.setFont(new Font("Edwardian Script ITC", 41.0));
+        borderPane0.setLeft(label0);
 
         GridPane.setRowIndex(borderPane1, 1);
         borderPane1.setPrefHeight(200.0);
         borderPane1.setPrefWidth(200.0);
 
-        BorderPane.setAlignment(lblBalance, javafx.geometry.Pos.CENTER);
-        lblBalance.setText("1220");
-        lblBalance.setFont(new Font("Dubai Bold", 18.0));
-        borderPane1.setCenter(lblBalance);
+        BorderPane.setAlignment(spinAmount, javafx.geometry.Pos.CENTER);
+        spinAmount.setEditable(true);
+        borderPane1.setCenter(spinAmount);
+
+        BorderPane.setAlignment(label1, javafx.geometry.Pos.CENTER);
+        label1.setPrefHeight(37.0);
+        label1.setPrefWidth(220.0);
+        label1.setText("Countribute with..");
+        label1.setTextFill(javafx.scene.paint.Color.valueOf("#2883b8"));
+        label1.setFont(new Font("Edwardian Script ITC", 35.0));
+        borderPane1.setLeft(label1);
 
         GridPane.setRowIndex(borderPane2, 2);
         borderPane2.setPrefHeight(200.0);
         borderPane2.setPrefWidth(200.0);
-        BorderPane.setAlignment(btnRecharge, javafx.geometry.Pos.CENTER);
-        btnRecharge.setMnemonicParsing(false);
-        btnRecharge.setStyle("-fx-background-color: #f1faee;");
-        btnRecharge.setText("Recharge");
+
+        BorderPane.setAlignment(btnContribute, javafx.geometry.Pos.CENTER);
+        btnContribute.setMnemonicParsing(false);
+        btnContribute.setPrefHeight(39.0);
+        btnContribute.setPrefWidth(129.0);
+        btnContribute.setStyle("-fx-background-color: #f1faee;");
+        btnContribute.setText("Contribute");
+        btnContribute.setTextFill(javafx.scene.paint.Color.valueOf("#226e9a"));
 
         dropShadow.setBlurType(javafx.scene.effect.BlurType.ONE_PASS_BOX);
-        btnRecharge.setEffect(dropShadow);
-        borderPane2.setCenter(btnRecharge);
+        btnContribute.setEffect(dropShadow);
+        btnContribute.setFont(new Font("Forte", 20.0));
+        borderPane2.setCenter(btnContribute);
         setCenter(stackPane1);
-
+        
+        
+ 
+       
         stackPane.getChildren().add(rectangle);
         anchorPane.getChildren().add(btnProfile);
         anchorPane.getChildren().add(btnFriends);
@@ -436,10 +455,10 @@ public class MainscreenUI extends BorderPane {
         gridPane.getRowConstraints().add(rowConstraints1);
         flowPane.getChildren().add(label);
         gridPane.getChildren().add(borderPane);
-        tblWishlist.getColumns().add(colName);
-        tblWishlist.getColumns().add(colPrice);
-        tblWishlist.getColumns().add(colID);
-        stackPane2.getChildren().add(tblWishlist);
+        tableView.getColumns().add(colWishID);
+        tableView.getColumns().add(colWishname);
+        tableView.getColumns().add(colWishprice);
+        stackPane2.getChildren().add(tableView);
         gridPane.getChildren().add(stackPane2);
         gridPane0.getColumnConstraints().add(columnConstraints2);
         gridPane0.getRowConstraints().add(rowConstraints2);
@@ -450,7 +469,7 @@ public class MainscreenUI extends BorderPane {
         gridPane0.getChildren().add(borderPane2);
         gridPane.getChildren().add(gridPane0);
         stackPane1.getChildren().add(gridPane);
-        tblWishlist.setEditable(true);
+
     }
 
     public Button getBtnProfile() {
@@ -477,30 +496,28 @@ public class MainscreenUI extends BorderPane {
         return lblName;
     }
 
-    public TreeTableView<Item> getTblWishlist() {
-        return tblWishlist;
+    public TableView<Item> getTableView() {
+        return tableView;
     }
 
-    public TreeTableColumn<Item, String> getColName() {
-        return colName;
+    public TableColumn<Item, Integer> getColWishID() {
+        return colWishID;
     }
 
-    public TreeTableColumn<Item, String> getColPrice() {
-        return colPrice;
+    public TableColumn<Item, String> getColWishname() {
+        return colWishname;
     }
 
-    public TreeTableColumn<Item, Integer> getColID() {
-        return colID;
+    public TableColumn<Item, String> getColWishprice() {
+        return colWishprice;
     }
 
-    public Label getLblBalance() {
-        return lblBalance;
+    public Spinner<Integer> getSpinAmount() {
+        return spinAmount;
     }
-    
-    public Button getBtnRecharge() {
-        return btnRecharge;
+
+    public Button getBtnContribute() {
+        return btnContribute;
     }
-    
     
 }
-

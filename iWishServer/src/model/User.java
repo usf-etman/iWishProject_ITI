@@ -22,19 +22,14 @@ public class User {
     }
 
     public User(String email, String securityQuestion) {
-        //this.username = username;
         this.email = email;
-        // this.password = password;
         this.securityQuestion = securityQuestion;
-        //this.hash = hash;
     }
 
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
-        //this.securityQuestion = securityQuestion;
-        //this.hash = hash;
     }
 
     public User() {
