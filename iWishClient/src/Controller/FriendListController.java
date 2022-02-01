@@ -46,8 +46,7 @@ public class FriendListController {
         Vector<User> userVector1 = ParentController.reurnallFriend();
         //System.out.printlitmVector.size());
         for (int i = 0; i < userVector1.size(); i++) {
-            mainView.getTableFriends().getItems().add(userVector.get(i));
-
+            mainView.getTableFriends().getItems().add(userVector1.get(i));
         }
 
         mainView.getTableSuggest().setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
@@ -60,45 +59,36 @@ public class FriendListController {
             }
 
         });
-        mainView.getBtn_notifications().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+        mainView.getBtn_notifications().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-           
-           
-            
+
             }
-            
-        
-        
-        
+
         });
-        mainView.getBtn_signout().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+        mainView.getBtn_signout().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
             }
-        
-        
+
         });
-        mainView.getBtn_friends().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+        mainView.getBtn_friends().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
             }
-        
-        
+
         });
-        mainView.getBtn_items().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+        mainView.getBtn_items().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
             }
-        
-        
+
         });
         mainView.getBtn_profile().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
             }
-        
-        
+
         });
 
         mainView.getBtn_Add().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
