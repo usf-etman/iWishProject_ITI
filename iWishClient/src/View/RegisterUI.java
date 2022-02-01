@@ -111,15 +111,15 @@ public class RegisterUI extends BorderPane {
         usernameError.setStyle("-fx-background-color: transparent; -fx-border-color: #34656D; -fx-border-width: 0px 0px 2px 0px;");
 
         txt_password.setLayoutX(71.0);
-        txt_password.setLayoutY(225.0);
+        txt_password.setLayoutY(220.0);
         txt_password.setPrefHeight(27.0);
         txt_password.setPrefWidth(257.0);
         txt_password.setPromptText("Password");
         txt_password.setStyle("-fx-background-color: transparent; -fx-border-color: #34656D; -fx-border-width: 0px 0px 2px 0px;");
 
         passwordError.setFill(javafx.scene.paint.Color.valueOf("#ea1212"));
-        passwordError.setLayoutX(63.0);
-        passwordError.setLayoutY(267.0);
+        passwordError.setLayoutX(71.0);
+        passwordError.setLayoutY(262.0);
         passwordError.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         passwordError.setStrokeWidth(0.0);
         passwordError.setWrappingWidth(266.369140625);
@@ -134,14 +134,14 @@ public class RegisterUI extends BorderPane {
 
         emailError.setFill(javafx.scene.paint.Color.valueOf("#ea1212"));
         emailError.setLayoutX(71.0);
-        emailError.setLayoutY(110.0);
+        emailError.setLayoutY(215.0);
         emailError.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         emailError.setStrokeWidth(0.0);
-        emailError.setWrappingWidth(98.369140625);
+        emailError.setWrappingWidth(266.369140625);
         emailError.setFont(new Font("System Bold", 15.0));
 
         txt_security.setLayoutX(71.0);
-        txt_security.setLayoutY(277.0);
+        txt_security.setLayoutY(272.0);
         txt_security.setPrefHeight(27.0);
         txt_security.setPrefWidth(257.0);
         txt_security.setPromptText("What's your Favorite Color?");
@@ -149,7 +149,7 @@ public class RegisterUI extends BorderPane {
 
         securityError.setFill(javafx.scene.paint.Color.valueOf("#ea1212"));
         securityError.setLayoutX(71.0);
-        securityError.setLayoutY(218.0);
+        securityError.setLayoutY(310.0);
         securityError.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         securityError.setStrokeWidth(0.0);
         securityError.setFont(new Font("System Bold", 15.0));
@@ -157,7 +157,7 @@ public class RegisterUI extends BorderPane {
         
 
         btn_signup.setLayoutX(145.0);
-        btn_signup.setLayoutY(321.0);
+        btn_signup.setLayoutY(330.0);
         btn_signup.setMnemonicParsing(false);
         btn_signup.setStyle("-fx-background-color: #34656D;");
         btn_signup.setText("Sign Up");
@@ -286,6 +286,8 @@ public class RegisterUI extends BorderPane {
         return signupError;
     }
     
+    public Hyperlink getLmk_login(){
+        return lmk_login;
+    }
 
 }
-

@@ -13,6 +13,8 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.net.SocketException;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +23,9 @@ import model.DAO;
 import model.Item;
 import model.PendingRequest;
 import model.User;
+import model.Recharge;
 import model.WishList;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,9 +55,10 @@ public class ClientHandler extends Thread {
     public void run() {
         while (true) {
             try {
-                String msg = dis.readLine();
-                JSONObject jmsg = new JSONObject(msg);
-                String key = jmsg.getString("Key");
+
+                String msg = dis.readLine(); //recieve msg from client
+                JSONObject jmsg = new JSONObject(msg); //convert msg from string to JSONObject
+                String key = jmsg.getString("Key"); //parsing
                 String value;
                 Gson gson;
                 switch (key) {
@@ -67,11 +72,21 @@ public class ClientHandler extends Thread {
                         jmsg.put("Value", registerStatus);
                         ps.println(jmsg);
                         break;
+                    case "Recharge": 
+                        gson = new Gson();
+                        value = jmsg.getString("Value");
+                        Recharge recharge = gson.fromJson(value, Recharge.class);
+                        User RechargeStatus = DAO.rechargeAmount(recharge);
+                        String jsonRecharge = gson.toJson(RechargeStatus); // convert loginstatus from java object to json
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "Recharge");
+                        jmsg.put("Value", jsonRecharge);
+                        ps.println(jmsg);
+                        break;
                     case "forget":
                         gson = new Gson();
                         value = jmsg.getString("Value");
                         User user2 = gson.fromJson(value, User.class);
-                        value = jmsg.getString("Value");
                         boolean forgetStatus = DAO.selectuser(user2);
                         jmsg = new JSONObject();
                         jmsg.put("Key", "forget");
@@ -79,8 +94,8 @@ public class ClientHandler extends Thread {
                         ps.println(jmsg);
                         break;
                     case "reset":
-                        gson = new Gson();
                         value = jmsg.getString("Value");
+                        gson = new Gson();
                         User user3 = gson.fromJson(value, User.class);
                         boolean resetStatus = DAO.update(user3);
                         jmsg = new JSONObject();
@@ -116,7 +131,6 @@ public class ClientHandler extends Thread {
                             jmsg.put("Value", jsonItem);
                             ps.println(jmsg);
                         }
-
                         break;
                     case "showFriend":
                          Gson gsonuser1 = new Gson();
@@ -158,9 +172,7 @@ public class ClientHandler extends Thread {
                             jmsg.put("Value", jsonuser);
                             ps.println(jmsg);
                         }
-
                         break;
-
                     case "AddToWishList":
                         gson = new Gson();
                         value = jmsg.getString("Value");
@@ -177,11 +189,32 @@ public class ClientHandler extends Thread {
                         PendingRequest pndngRqust = gson.fromJson(value, PendingRequest.class);
                         int pendingStatus = DAO.AddToPending(pndngRqust);
                         jmsg = new JSONObject();
-                        jmsg.put("Key", "AddToWishList");                     
+                        jmsg.put("Key", "AddToWishList");
                         jmsg.put("Value", pendingStatus);
                         ps.println(jmsg);
 
-                        break;    
+                        break;
+                    case "DisplayWishlist":
+                        gson = new Gson();
+                        int userID = jmsg.getInt("Value");
+                        Vector<Item> itms = DAO.DisplayWishlist(userID);
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "VectorSize");
+                        jmsg.put("size", itms.size());
+                        ps.println(jmsg);
+                        System.out.println(jmsg);
+                        for (int i = 0; i < itms.size(); i++) {
+                            Item itm = itms.get(i);
+                            gson = new Gson();
+                            String json = gson.toJson(itm);
+                            jmsg = new JSONObject();
+                            jmsg.put("Key", "ShowItems");
+                            jmsg.put("Value", json);
+                            System.out.println(jmsg);
+                            ps.println(jmsg);
+                        }
+                        System.out.println("Done");
+                        break;
                 }
                 //root.getTxtLog().appendText(msg + "\n");
             } catch (SocketException ex) {
@@ -189,9 +222,9 @@ public class ClientHandler extends Thread {
                     dis.close();
                     ps.close();
                     waiter.close();
-                    clientsVector.remove(this);                    
-                    Platform.runLater(new Runnable(){
-                        public void run(){
+                    clientsVector.remove(this);
+                    Platform.runLater(new Runnable() {
+                        public void run() {
                             root.getTxtLog().appendText(IP + " has disconnected\n");
                             root.getLblClients().setText(ClientHandler.getClientsNum());
                         }
