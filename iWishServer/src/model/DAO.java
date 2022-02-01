@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,39 +47,13 @@ public class DAO {
         return result;
     }
 
-    public static int AddToWishlist(WishList wishlst) throws SQLException {
-        int result = -1;
-        
-        String sql = "insert into Wish_List(Wish_ID,User_ID,Item_ID,Item_Price) values(WishListSEQ.nextval,?,?,?)";
-        PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        //pst.setInt(1, wishlst.getWish_ID());
-        pst.setInt(1, wishlst.getUser_ID());
-        pst.setInt(2, wishlst.getItem_ID());
-        pst.setInt(3, wishlst.getItem_Price());
-        result = pst.executeUpdate();
-        pst.close();
-        //System.out.println(result);
-        return result;
-    }
-
-    public static Vector<Item> SelectItems() throws SQLException {
-        Vector<Item> result = new Vector<Item>();
-        PreparedStatement pst = con.prepareStatement("select * from Item", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        ResultSet rs = pst.executeQuery();
-        while (rs.next()) {
-            result.add(new Item(rs.getInt("Item_ID"), rs.getString("Item_Name"), rs.getString("Item_Price"), rs.getString("Item_Descreption")));
-        }
-        return result;
-    }
-
-
     public static Vector<User> ReturnFriend(int uid) throws SQLException {
         Vector<User> res = new Vector<User>();
-        String sql ="SELECT USER_ID, USER_NAME FROM USER_INFO WHERE USER_ID  NOT IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID=?) AND USER_ID NOT IN (SELECT  USER_ID FROM Pending_Request WHERE Sender_ID=?)  AND USER_ID != ?";
+        String sql = "SELECT USER_ID, USER_NAME FROM USER_INFO WHERE USER_ID  NOT IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID=?) AND USER_ID NOT IN (SELECT  USER_ID FROM Pending_Request WHERE Sender_ID=?)  AND USER_ID != ?";
         PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-         pst.setInt(1, uid);
+        pst.setInt(1, uid);
         pst.setInt(2, uid);
-          pst.setInt(3, uid);
+        pst.setInt(3, uid);
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
             User selected_user = new User();
@@ -177,7 +152,7 @@ public class DAO {
 
         pst.setString(1, user.getPassword());
         pst.setString(2, user.getEmail());
-         pst.setString(3,user.getUsername());
+        pst.setString(3, user.getUsername());
 
         result = pst.executeUpdate();
         //System.out.println(result);
@@ -189,18 +164,71 @@ public class DAO {
         }
 
     }
-    
+
     /////////////////////////////friend requests////////////////////////////////////////////////////////
     public static int AddToPending(PendingRequest pndngRqust) throws SQLException {
         int result = -1;
-        
+
         String sql = "insert into Pending_Request(Request_ID,User_ID,Sender_ID) values(PendingRqustSEQ.nextval,?,?)";
         PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         pst.setInt(1, pndngRqust.getUser_ID());
-        pst.setInt(2, pndngRqust.getSender_ID());       
+        pst.setInt(2, pndngRqust.getSender_ID());
         result = pst.executeUpdate();
-        pst.close();       
+        pst.close();
         return result;
     }
 
+    ////////////////////////////////Wish list//////////////////////////////////////////////////////////
+    public static Vector<Item> SelectItems() throws SQLException {
+        Vector<Item> result = new Vector<Item>();
+        PreparedStatement pst = con.prepareStatement("select * from Item", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            result.add(new Item(rs.getInt("Item_ID"), rs.getString("Item_Name"), rs.getString("Item_Price"), rs.getString("Item_Descreption")));
+        }
+        return result;
+    }
+
+    public static int AddToWishlist(WishList wishlst) throws SQLException {
+        int result = -1;
+
+        String sql = "insert into Wish_List(Wish_ID,User_ID,Item_ID,Item_Price) values(WishListSEQ.nextval,?,?,?)";
+        PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        //pst.setInt(1, wishlst.getWish_ID());
+        pst.setInt(1, wishlst.getUser_ID());
+        pst.setInt(2, wishlst.getItem_ID());
+        pst.setInt(3, wishlst.getItem_Price());
+        result = pst.executeUpdate();
+        pst.close();
+        //System.out.println(result);
+        return result;
+    }
+
+    public static Vector<Item> DisplayWishlist(int UID) throws SQLException {
+        int keyID = -1;
+        Vector<Item> itms = new Vector<>();
+        String sql = "SELECT wish_id, i.item_name, i.item_price, contributer_id, u.user_name, sum(amount)\n"
+                + "FROM contribution c NATURAL JOIN item i\n"
+                + "INNER JOIN user_info u ON U.USER_ID = C.CONTRIBUTER_ID\n"
+                + "WHERE wish_owner_id = ?\n"
+                + "GROUP BY (wish_id, i.item_name, i.item_price, contributer_id, u.user_name)\n"
+                + "ORDER BY wish_id";
+        PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst.setInt(1, UID);
+        ResultSet rs = pst.executeQuery();
+        rs.next();
+        keyID = rs.getInt(1);
+        itms.add(new Item(rs.getInt(1), rs.getString(2), String.valueOf(rs.getInt(3)), "k"));
+        do{
+            if(keyID != rs.getInt(1)){
+                keyID = rs.getInt(1);
+                itms.add(new Item(rs.getInt(1), rs.getString(2), String.valueOf(rs.getInt(3)), "k"));
+                itms.add(new Item(rs.getInt(4), rs.getString(5), String.valueOf(rs.getInt(6)), "v"));
+            } else {
+                itms.add(new Item(rs.getInt(4), rs.getString(5), String.valueOf(rs.getInt(6)), "v"));
+            }
+        }
+        while (rs.next());
+        return itms;
+    }
 }

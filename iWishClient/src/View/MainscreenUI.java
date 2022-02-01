@@ -19,7 +19,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import model.Wish;
+import model.Item;
 
 public class MainscreenUI extends BorderPane {
 
@@ -57,10 +57,10 @@ public class MainscreenUI extends BorderPane {
     protected final FlowPane flowPane;
     protected final Label label;
     protected final StackPane stackPane2;
-    protected final TreeTableView<Wish> tblWishlist;
-    protected final TreeTableColumn<Wish, String> colName;
-    protected final TreeTableColumn<Wish, String> colPrice;
-    protected final TreeTableColumn<Wish, Integer> colID;
+    protected final TreeTableView<Item> tblWishlist;
+    protected final TreeTableColumn<Item, String> colName;
+    protected final TreeTableColumn<Item, String> colPrice;
+    protected final TreeTableColumn<Item, Integer> colID;
     protected final GridPane gridPane0;
     protected final ColumnConstraints columnConstraints2;
     protected final RowConstraints rowConstraints2;
@@ -110,10 +110,10 @@ public class MainscreenUI extends BorderPane {
         flowPane = new FlowPane();
         label = new Label();
         stackPane2 = new StackPane();
-        tblWishlist = new TreeTableView<Wish>();
-        colName = new TreeTableColumn<Wish, String>();
-        colPrice = new TreeTableColumn<Wish, String>();
-        colID = new TreeTableColumn<Wish, Integer>();
+        tblWishlist = new TreeTableView<Item>();
+        colName = new TreeTableColumn<Item, String>();
+        colPrice = new TreeTableColumn<Item, String>();
+        colID = new TreeTableColumn<Item, Integer>();
         gridPane0 = new GridPane();
         columnConstraints2 = new ColumnConstraints();
         rowConstraints2 = new RowConstraints();
@@ -356,7 +356,7 @@ public class MainscreenUI extends BorderPane {
         colID.setMinWidth(0.0);
         colID.setPrefWidth(0.0);
         colID.setText("ID");
-        colID.setCellValueFactory(new TreeItemPropertyValueFactory<>("wishID"));
+        colID.setCellValueFactory(new TreeItemPropertyValueFactory<>("id"));
 
         GridPane.setColumnIndex(gridPane0, 1);
         GridPane.setRowIndex(gridPane0, 2);
@@ -451,24 +451,24 @@ public class MainscreenUI extends BorderPane {
         gridPane.getChildren().add(gridPane0);
         stackPane1.getChildren().add(gridPane);
 
-        TreeItem itm = new TreeItem(new Wish("Laptop", "750"));        
-        TreeItem cont1 = new TreeItem(new Wish("Nayra", "220"));
-        TreeItem cont2 = new TreeItem(new Wish("Jessica", "125"));
+        /*TreeItem itm = new TreeItem(new Item("Laptop", "750",""));        
+        TreeItem cont1 = new TreeItem(new Item("Nayra", "220",""));
+        TreeItem cont2 = new TreeItem(new Item("Jessica", "125",""));
         itm.getChildren().add(cont1);
         itm.getChildren().add(cont2);
         
-        TreeItem itm2 = new TreeItem(new Wish("Shirt", "225"));        
-        TreeItem cont3 = new TreeItem(new Wish("Mariem", "75"));
-        TreeItem cont4 = new TreeItem(new Wish("Salma", "95"));
+        TreeItem itm2 = new TreeItem(new Item("Shirt", "225",""));        
+        TreeItem cont3 = new TreeItem(new Item("Mariem", "75",""));
+        TreeItem cont4 = new TreeItem(new Item("Salma", "95",""));
         itm2.getChildren().add(cont3);
         itm2.getChildren().add(cont4);
         
-        TreeItem treeRoot = new TreeItem(new Wish("Wishlist & Contributors", "..."));
+        TreeItem treeRoot = new TreeItem(new Item(0, "Wishlist & Contributors", "...", ""));
         treeRoot.getChildren().add(itm);
         treeRoot.getChildren().add(itm2);
         treeRoot.setExpanded(true);
         
-        tblWishlist.setRoot(treeRoot);
+        tblWishlist.setRoot(treeRoot);*/
         tblWishlist.setEditable(true);
     }
 
@@ -496,19 +496,19 @@ public class MainscreenUI extends BorderPane {
         return lblName;
     }
 
-    public TreeTableView<Wish> getTblWishlist() {
+    public TreeTableView<Item> getTblWishlist() {
         return tblWishlist;
     }
 
-    public TreeTableColumn<Wish, String> getColName() {
+    public TreeTableColumn<Item, String> getColName() {
         return colName;
     }
 
-    public TreeTableColumn<Wish, String> getColPrice() {
+    public TreeTableColumn<Item, String> getColPrice() {
         return colPrice;
     }
 
-    public TreeTableColumn<Wish, Integer> getColID() {
+    public TreeTableColumn<Item, Integer> getColID() {
         return colID;
     }
 
