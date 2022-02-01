@@ -6,10 +6,7 @@
 package Controller;
 
 import View.ServerUI;
-import com.google.gson.Gson;
-import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
@@ -72,7 +69,6 @@ public class ServerController {
                 th.start();
                 serverFlag = 1;
             } else if (serverFlag == 1) {
-
                 root.getTxtLog().appendText("Stoping...\n");
                 root.getTxtLog().appendText("Service stopped\n");
                 th.stop();
