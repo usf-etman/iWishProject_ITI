@@ -48,7 +48,7 @@ public class DAO {
 
     public static int AddToWishlist(WishList wishlst) throws SQLException {
         int result = -1;
-        
+
         String sql = "insert into Wish_List(Wish_ID,User_ID,Item_ID,Item_Price) values(WishListSEQ.nextval,?,?,?)";
         PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         //pst.setInt(1, wishlst.getWish_ID());
@@ -71,14 +71,13 @@ public class DAO {
         return result;
     }
 
-
     public static Vector<User> ReturnFriend(int uid) throws SQLException {
         Vector<User> res = new Vector<User>();
-        String sql ="SELECT USER_ID, USER_NAME FROM USER_INFO WHERE USER_ID  NOT IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID=?) AND USER_ID NOT IN (SELECT  USER_ID FROM Pending_Request WHERE Sender_ID=?)  AND USER_ID != ?";
+        String sql = "SELECT USER_ID, USER_NAME FROM USER_INFO WHERE USER_ID  NOT IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID=?) AND USER_ID NOT IN (SELECT  USER_ID FROM Pending_Request WHERE Sender_ID=?)  AND USER_ID != ?";
         PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-         pst.setInt(1, uid);
+        pst.setInt(1, uid);
         pst.setInt(2, uid);
-          pst.setInt(3, uid);
+        pst.setInt(3, uid);
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
             User selected_user = new User();
@@ -91,10 +90,25 @@ public class DAO {
 
     }
 
-        public static Vector<User> ShowFriend(int uid1) throws SQLException {
+    public static Vector<User> PendingFriend(int uid) throws SQLException {
+        Vector<User> pr = new Vector<User>();
+        PreparedStatement pst = con.prepareStatement("select User_ID, User_Name from User_Info where User_ID IN(select Sender_ID from Pending_Request where User_ID=?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst.setInt(1, uid);
+
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            User selected_user = new User();
+            selected_user.setUsername(rs.getString("user_name"));
+            selected_user.setUID(rs.getInt("user_ID"));
+            pr.add(selected_user);
+        }
+        return pr;
+    }
+
+    public static Vector<User> ShowFriend(int uid1) throws SQLException {
         Vector<User> res1 = new Vector<User>();
         PreparedStatement pst = con.prepareStatement("SELECT USER_ID, USER_NAME FROM USER_INFO WHERE USER_ID IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID = ?) AND USER_ID !=?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-         pst.setInt(1, uid1);
+        pst.setInt(1, uid1);
         pst.setInt(2, uid1);
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
@@ -177,7 +191,7 @@ public class DAO {
 
         pst.setString(1, user.getPassword());
         pst.setString(2, user.getEmail());
-         pst.setString(3,user.getUsername());
+        pst.setString(3, user.getUsername());
 
         result = pst.executeUpdate();
         //System.out.println(result);
@@ -189,18 +203,53 @@ public class DAO {
         }
 
     }
-    
+
     /////////////////////////////friend requests////////////////////////////////////////////////////////
     public static int AddToPending(PendingRequest pndngRqust) throws SQLException {
         int result = -1;
-        
+
         String sql = "insert into Pending_Request(Request_ID,User_ID,Sender_ID) values(PendingRqustSEQ.nextval,?,?)";
         PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         pst.setInt(1, pndngRqust.getUser_ID());
-        pst.setInt(2, pndngRqust.getSender_ID());       
+        pst.setInt(2, pndngRqust.getSender_ID());
         result = pst.executeUpdate();
-        pst.close();       
+        pst.close();
         return result;
     }
 
+    public static int AddToFriendlist(PendingRequest frRqust) throws SQLException {
+        int result = -1;
+        String sql = "insert into friend_list(ID,User_ID,Friend_ID)values(FRIEND_SEQ.nextval,?,?)";
+        PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst.setInt(1, frRqust.getUser_ID());
+        pst.setInt(2, frRqust.getSender_ID());
+        result = pst.executeUpdate();
+        pst.close();
+
+        String sq2 = "DELETE FROM Pending_Request WHERE Sender_ID =? AND User_ID=?";
+        PreparedStatement pst2 = con.prepareStatement(sq2, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst2.setInt(1, frRqust.getUser_ID());
+         System.out.println(frRqust.getUser_ID()); 
+        pst2.setInt(2, frRqust.getSender_ID());
+          System.out.println(frRqust.getSender_ID()); 
+        int result2 = pst2.executeUpdate();
+        System.out.println("result" + result2);
+        pst2.close();
+
+        return result;
+
+    }
+
+    //////////////////////////////////////////////////////////////////////////////
+    public static int DeleteRequest(PendingRequest delRqust) throws SQLException {
+        int result = -1;
+        String sql = "DELETE FROM PENDING_REQUEST WHERE Sender_ID =? AND User_ID=?";
+        PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst.setInt(1, delRqust.getUser_ID());
+        pst.setInt(2, delRqust.getSender_ID());
+        result = pst.executeUpdate();
+         System.out.println("result" + result);
+        pst.close();
+        return result;
+    }
 }
