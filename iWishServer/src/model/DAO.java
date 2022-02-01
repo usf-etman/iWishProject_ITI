@@ -47,6 +47,44 @@ public class DAO {
         return result;
     }
 
+
+    public static int AddToWishlist(WishList wishlst) throws SQLException {
+        int result = -1;
+        
+        String sql = "insert into Wish_List(Wish_ID,User_ID,Item_ID,Item_Price) values(WishListSEQ.nextval,?,?,?)";
+        PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        //pst.setInt(1, wishlst.getWish_ID());
+        pst.setInt(1, wishlst.getUser_ID());
+        pst.setInt(2, wishlst.getItem_ID());
+        pst.setInt(3, wishlst.getItem_Price());
+        result = pst.executeUpdate();
+        pst.close();
+        //System.out.println(result);
+        return result;
+    }
+    public static int DeleteItem(Item itm) throws SQLException {
+        int result = -1;
+        PreparedStatement pst = con.prepareStatement("delete from Item where Item_ID =? ", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst.setInt(1,itm.getId());
+      
+        result = pst.executeUpdate();
+        pst.close();
+        return result;
+    }
+
+    public static Vector<Item> SelectItems() throws SQLException {
+        Vector<Item> result = new Vector<Item>();
+        PreparedStatement pst = con.prepareStatement("select * from Item", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            result.add(new Item(rs.getInt("Item_ID"), rs.getString("Item_Name"), rs.getString("Item_Price"), rs.getString("Item_Descreption")));
+        }
+        return result;
+    }
+    
+
+
+
     //suggested friends
     public static Vector<User> ReturnFriend(int uid) throws SQLException {
         Vector<User> res = new Vector<User>();
@@ -232,31 +270,6 @@ public class DAO {
         return result;
     }
 
-    ////////////////////////////////Wish list//////////////////////////////////////////////////////////
-    public static Vector<Item> SelectItems() throws SQLException {
-        Vector<Item> result = new Vector<Item>();
-        PreparedStatement pst = con.prepareStatement("select * from Item", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        ResultSet rs = pst.executeQuery();
-        while (rs.next()) {
-            result.add(new Item(rs.getInt("Item_ID"), rs.getString("Item_Name"), rs.getString("Item_Price"), rs.getString("Item_Descreption")));
-        }
-        return result;
-    }
-
-    public static int AddToWishlist(WishList wishlst) throws SQLException {
-        int result = -1;
-
-        String sql = "insert into Wish_List(Wish_ID,User_ID,Item_ID,Item_Price) values(WishListSEQ.nextval,?,?,?)";
-        PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        //pst.setInt(1, wishlst.getWish_ID());
-        pst.setInt(1, wishlst.getUser_ID());
-        pst.setInt(2, wishlst.getItem_ID());
-        pst.setInt(3, wishlst.getItem_Price());
-        result = pst.executeUpdate();
-        pst.close();
-        //System.out.println(result);
-        return result;
-    }
 
     public static Vector<Item> DisplayWishlist(int UID) throws SQLException {
         int keyID = -1;
