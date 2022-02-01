@@ -351,6 +351,26 @@ public class FriendsListUI extends AnchorPane {
         return btn_Add;
     }
 
+    public Button getBtn_profile() {
+        return btn_profile;
+    }
+
+    public Button getBtn_friends() {
+        return btn_friends;
+    }
+
+    public Button getBtn_items() {
+        return btn_items;
+    }
+
+    public Button getBtn_signout() {
+        return btn_signout;
+    }
+
+    public Button getBtn_notifications() {
+        return btn_notifications;
+    }
+
     public TableColumn getColSid() {
         return colSid;
     }*/

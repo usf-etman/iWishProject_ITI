@@ -38,7 +38,12 @@ public class ParentController {
     static PrintStream ps;
     static String loginStatus;
     static String status;
+
+    //private static int UID;
+    //static User my_info;
     static User friend_info;
+    static User friend_info1;
+
     private static User my_info;
     static String responseString;
     static boolean blockingFlag = true;
@@ -49,7 +54,7 @@ public class ParentController {
     static Item mapKey;
     static Vector<Item> itmVector;
     static Vector<User> uservector;
-    static HashMap<Item, Vector<Item>> hm;
+    static Vector<User> uservector1;
     static int vectorSize;
     static int mapSize;
     static int blokingCounter;
@@ -165,6 +170,29 @@ public class ParentController {
         }
         return uservector;
 
+
+    }
+
+    public static Vector<User> reurnallFriend() {
+
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "showFriend");
+        msg.addProperty("Value", my_info.getUID());
+        ps.println(msg);
+//blocking untill recieve vector size
+        while (blockingFlag) {
+            System.out.println(blockingFlag);
+
+        }
+        blockingFlag = true;
+        ///untill equal vector size
+        while (blokingCounter < vectorSize) {
+            System.out.println(blokingCounter);
+             System.out.println(vectorSize);
+        }
+        return uservector1;
+
+
     }
 
     public static User login(User user) {
@@ -208,6 +236,10 @@ public class ParentController {
                         case "VectorSize":
                             itmVector = new Vector<Item>();
                             uservector = new Vector<User>();
+
+                              uservector1 = new Vector<User>();
+
+
                             vectorSize = jmsg.getInt("size");
                             blokingCounter = 0;
                             blockingFlag = false;
@@ -225,6 +257,15 @@ public class ParentController {
                             friend_info = gson2.fromJson(friendlist, User.class);
                             uservector.add(friend_info);
                             blokingCounter++;
+                            break;
+                        case "showFriend":
+                            String allfriendlist = jmsg.getString("Value");
+                            Gson gson3 = new Gson();
+                            friend_info1 = gson3.fromJson(allfriendlist, User.class);
+                            uservector1.add(friend_info1);
+                            blokingCounter++;
+                            System.out.println(vectorSize);
+
                             break;
                         case "AddToWishList":
                             wshlstStatus = jmsg.getInt("Value");
@@ -256,7 +297,6 @@ public class ParentController {
             } catch (JSONException ex) {
                 Logger.getLogger(ParentController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
     }
 }
