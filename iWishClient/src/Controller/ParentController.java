@@ -44,6 +44,7 @@ public class ParentController {
     //static User my_info;
     static User friend_info;
     static User friend_info1;
+    static User friend_info2;
 
     private static User my_info;
     static String responseString;
@@ -55,11 +56,15 @@ public class ParentController {
     static Vector<Item> itmVector;
     static Vector<User> uservector;
     static Vector<User> uservector1;
+    static Vector<User> uservector2;
+
     static int vectorSize;
     static int mapSize;
     static int blokingCounter;
     static int wshlstStatus;
     static int pendingStatus;
+    static int pendingStatus2;
+    static int friendStatus;
 
     static {
         try {
@@ -155,6 +160,34 @@ public class ParentController {
         return pendingStatus;
     }
 
+    public static int delPndingRequest(PendingRequest delqust) {
+        Gson gson = new Gson(); // Or use new GsonBuilder().create();
+        String json = gson.toJson(delqust); // serializes target to Json
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "DeletefromPending");
+        msg.addProperty("Value", json);
+        ps.println(msg);
+        while (blockingFlag) {
+            System.out.println("");
+        }
+        blockingFlag = true;
+        return pendingStatus2;
+    }
+
+    public static int addtofriendlist(PendingRequest fr) {
+        Gson gson = new Gson(); // Or use new GsonBuilder().create();
+        String json = gson.toJson(fr); // serializes target to Json
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "AddToflist");
+        msg.addProperty("Value", json);
+        ps.println(msg);
+        while (blockingFlag) {
+            System.out.println("");
+        }
+        blockingFlag = true;
+        return friendStatus;
+    }
+
     public static Vector<Item> getAllItems() {
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "ShowItems");
@@ -208,7 +241,6 @@ public class ParentController {
         }
         return uservector;
 
-
     }
 
     public static Vector<User> reurnallFriend() {
@@ -226,10 +258,30 @@ public class ParentController {
         ///untill equal vector size
         while (blokingCounter < vectorSize) {
             System.out.println(blokingCounter);
-             System.out.println(vectorSize);
+            System.out.println(vectorSize);
         }
         return uservector1;
 
+    }
+
+    public static Vector<User> reurnapendingFriend() {
+
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "pendingfriends");
+        msg.addProperty("Value", my_info.getUID());
+        ps.println(msg);
+//blocking untill recieve vector size
+        while (blockingFlag) {
+            System.out.println(" ");
+
+        }
+        blockingFlag = true;
+        ///untill equal vector size
+        while (blokingCounter < vectorSize) {
+            System.out.println(" ");
+            //System.out.println(vectorSize);
+        }
+        return uservector2;
 
     }
     
@@ -265,6 +317,10 @@ public class ParentController {
                             itmVector = new Vector<Item>();
                             uservector = new Vector<User>();
 
+                            uservector1 = new Vector<User>();
+                            uservector2 = new Vector<User>();
+
+
                               uservector1 = new Vector<User>();
 
 
@@ -285,6 +341,7 @@ public class ParentController {
                             friend_info = gson2.fromJson(friendlist, User.class);
                             uservector.add(friend_info);
                             blokingCounter++;
+                            System.out.println(vectorSize);
                             break;
                         case "showFriend":
                             String allfriendlist = jmsg.getString("Value");
@@ -293,7 +350,14 @@ public class ParentController {
                             uservector1.add(friend_info1);
                             blokingCounter++;
                             System.out.println(vectorSize);
-
+                            break;
+                        case "pendingfriends":
+                            String peningfriendlist = jmsg.getString("Value");
+                            Gson gson4 = new Gson();
+                            friend_info2 = gson4.fromJson(peningfriendlist, User.class);
+                            uservector2.add(friend_info2);
+                            blokingCounter++;
+                            System.out.println(vectorSize);
                             break;
                         case "AddToWishList":
                             wshlstStatus = jmsg.getInt("Value");
@@ -303,6 +367,14 @@ public class ParentController {
                             pendingStatus = jmsg.getInt("Value");
                             blockingFlag = false;
                             break;
+                        case "AddToflist":
+                            friendStatus = jmsg.getInt("Value");
+                            blockingFlag = false;
+                            break;
+                        case "DeletefromPending":
+                            pendingStatus2 = jmsg.getInt("Value");
+                            blockingFlag = false;
+                            break;
                         default:
                             responseFlag = jmsg.getBoolean("Value");
                             blockingFlag = false;
@@ -310,7 +382,6 @@ public class ParentController {
                             break;
                     }
                 }
-
             } catch (SocketException ex) {
                 try {
                     dis.close();

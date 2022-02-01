@@ -59,13 +59,26 @@ public class FriendListController {
             }
 
         });
-        mainView.getBtn_notifications().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+
+        mainView.getBtn_Add().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                if (rqust != null) {
+                    int rqustStatus = ParentController.addPndingRequest(rqust);
+                    if (rqustStatus != -1) {
+                        System.out.println("added successfully");
+                        mainView.getTableSuggest().getItems().remove(selectedItm);
+                    } else {
 
+                        System.out.println("try again");
+                    }
+                } else {
+                    System.out.println("try again");
+                }
             }
 
         });
+
         mainView.getBtn_signout().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -87,25 +100,6 @@ public class FriendListController {
         mainView.getBtn_profile().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-            }
-
-        });
-
-        mainView.getBtn_Add().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (rqust != null) {
-                    int rqustStatus = ParentController.addPndingRequest(rqust);
-                    if (rqustStatus != -1) {
-                        System.out.println("added successfully");
-                        mainView.getTableSuggest().getItems().remove(selectedItm);
-                    } else {
-
-                        System.out.println("try again");
-                    }
-                } else {
-                    System.out.println("try again");
-                }
             }
 
         });

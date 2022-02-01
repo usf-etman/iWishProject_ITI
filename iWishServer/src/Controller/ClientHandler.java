@@ -72,7 +72,7 @@ public class ClientHandler extends Thread {
                         jmsg.put("Value", registerStatus);
                         ps.println(jmsg);
                         break;
-                    case "Recharge": 
+                    case "Recharge":
                         gson = new Gson();
                         value = jmsg.getString("Value");
                         Recharge recharge = gson.fromJson(value, Recharge.class);
@@ -133,7 +133,7 @@ public class ClientHandler extends Thread {
                         }
                         break;
                     case "showFriend":
-                         Gson gsonuser1 = new Gson();
+                        Gson gsonuser1 = new Gson();
                         // String value1;
                         int UID1 = jmsg.getInt("Value");
                         Vector<User> userinfo1 = DAO.ShowFriend(UID1);
@@ -173,6 +173,24 @@ public class ClientHandler extends Thread {
                             ps.println(jmsg);
                         }
                         break;
+                    case "pendingfriends":
+                        int UIDP = jmsg.getInt("Value");
+                        Vector<User> userpending = DAO.PendingFriend(UIDP);
+                        System.out.println(userpending.size());
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "VectorSize");
+                        jmsg.put("size", userpending.size());
+                        ps.println(jmsg);
+                        for (int i = 0; i < userpending.size(); i++) {
+                            gson = new Gson();
+                            String jsonuser = gson.toJson(userpending.get(i));
+                            jmsg = new JSONObject();
+                            jmsg.put("Key", "pendingfriends");
+                            jmsg.put("size", userpending.size());
+                            jmsg.put("Value", jsonuser);
+                            ps.println(jmsg);
+                        }
+                        break;
                     case "AddToWishList":
                         gson = new Gson();
                         value = jmsg.getString("Value");
@@ -192,7 +210,26 @@ public class ClientHandler extends Thread {
                         jmsg.put("Key", "AddToWishList");
                         jmsg.put("Value", pendingStatus);
                         ps.println(jmsg);
-
+                        break;
+                    case "DeletefromPending":
+                        gson = new Gson();
+                        value = jmsg.getString("Value");
+                        PendingRequest delRqust = gson.fromJson(value, PendingRequest.class);
+                        int delStatus = DAO.DeleteRequest(delRqust);
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "DeletefromPending");
+                        jmsg.put("Value", delStatus);
+                        ps.println(jmsg);
+                        break;
+                    case "AddToflist":
+                        gson = new Gson();
+                        value = jmsg.getString("Value");
+                        PendingRequest FriendRqust = gson.fromJson(value, PendingRequest.class);
+                        int friendStatus = DAO.AddToFriendlist(FriendRqust);
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "AddToflist");
+                        jmsg.put("Value", friendStatus);
+                        ps.println(jmsg);
                         break;
                     case "DisplayWishlist":
                         gson = new Gson();
