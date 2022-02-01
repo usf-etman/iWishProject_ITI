@@ -76,7 +76,7 @@ public class DAO {
 
     public static Vector<User> ShowFriend(int uid1) throws SQLException {
         Vector<User> res1 = new Vector<User>();
-        PreparedStatement pst = con.prepareStatement("FROM USER_INFO \n"
+        PreparedStatement pst = con.prepareStatement("SELECT USER_ID, USER_NAME FROM USER_INFO \n"
                 + "WHERE (USER_ID IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID = ?) \n"
                 + "OR USER_ID IN (SELECT USER_ID FROM FRIEND_LIST WHERE FRIEND_ID = ?))\n"
                 + "AND USER_ID !=?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
