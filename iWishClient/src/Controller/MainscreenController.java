@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import View.RechargeUI;
 import View.FriendsListUI;
 import View.MainscreenUI;
 import View.ResetPasswordUI;
@@ -26,6 +27,7 @@ public class MainscreenController {
 
     MainscreenController(Stage stage)
     {
+   
         MainscreenUI mainView = new MainscreenUI();
         Scene scene = new Scene(mainView);
 
@@ -34,6 +36,7 @@ public class MainscreenController {
         
         mainView.getLblName().setText(ParentController.getMy_info().getUsername());
         mainView.getLblBalance().setText(String.valueOf(ParentController.getMy_info().getBalance()));
+
         
         Vector<Item> itms = ParentController.displayWishlist();
         TreeItem treeRoot = new TreeItem(new Item(0, "Wishlist & Contributors", "...", ""));
@@ -72,6 +75,20 @@ public class MainscreenController {
                 PendingFriendController pf=new PendingFriendController(stage);
             }
         
+        });
+        
+         mainView.getBtnRecharge().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                    
+                RechargeUI rechargeView = new RechargeUI();
+                Scene scene = new Scene(rechargeView);
+
+                stage.setScene(scene);
+                stage.show();
+                
+                RechargeController rc = new RechargeController(stage, rechargeView);
+            }
         });
     }
 }

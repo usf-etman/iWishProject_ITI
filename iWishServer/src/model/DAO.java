@@ -176,6 +176,48 @@ public class DAO {
         }
 
     }
+    
+    public static User rechargeAmount(Recharge recharge) throws SQLException {
+       int result = -1;
+
+        DriverManager.registerDriver(new OracleDriver());
+
+        PreparedStatement pst = con.prepareStatement("update User_Info set User_Balance=User_Balance+?  where USER_ID=? ", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+        pst.setString(1, recharge.getAmount());
+        pst.setInt(2, recharge.getUserId());
+
+        result = pst.executeUpdate();
+        if (result == 1) {
+            return updateUserAmount(recharge.getUserId());
+
+        } else {
+
+            return null;
+        }
+    }
+    
+     public static User updateUserAmount(int userId) throws SQLException { //user object
+   
+        DriverManager.registerDriver(new OracleDriver());
+        PreparedStatement pst = con.prepareStatement("select USER_ID, User_Name, User_Balance from User_Info where USER_ID = ?", ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY);
+
+        pst.setInt(1, userId);
+       
+        ResultSet resultSet = pst.executeQuery();
+        User resultUser = new User();
+        
+        if (resultSet.next()) {
+            resultUser.setUID(resultSet.getInt(1));
+            resultUser.setUsername(resultSet.getString(2));
+            resultUser.setBalance(resultSet.getInt(3));
+            return resultUser;
+        } else {
+            return null;
+        }
+
+    }
 
     /////////////////////////////friend requests////////////////////////////////////////////////////////
     public static int AddToPending(PendingRequest pndngRqust) throws SQLException {

@@ -21,6 +21,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import model.Item;
 
+
 public class MainscreenUI extends BorderPane {
 
     protected final StackPane stackPane;
@@ -397,7 +398,6 @@ public class MainscreenUI extends BorderPane {
         GridPane.setRowIndex(borderPane2, 2);
         borderPane2.setPrefHeight(200.0);
         borderPane2.setPrefWidth(200.0);
-
         BorderPane.setAlignment(btnRecharge, javafx.geometry.Pos.CENTER);
         btnRecharge.setMnemonicParsing(false);
         btnRecharge.setStyle("-fx-background-color: #f1faee;");
@@ -450,25 +450,6 @@ public class MainscreenUI extends BorderPane {
         gridPane0.getChildren().add(borderPane2);
         gridPane.getChildren().add(gridPane0);
         stackPane1.getChildren().add(gridPane);
-
-        /*TreeItem itm = new TreeItem(new Item("Laptop", "750",""));        
-        TreeItem cont1 = new TreeItem(new Item("Nayra", "220",""));
-        TreeItem cont2 = new TreeItem(new Item("Jessica", "125",""));
-        itm.getChildren().add(cont1);
-        itm.getChildren().add(cont2);
-        
-        TreeItem itm2 = new TreeItem(new Item("Shirt", "225",""));        
-        TreeItem cont3 = new TreeItem(new Item("Mariem", "75",""));
-        TreeItem cont4 = new TreeItem(new Item("Salma", "95",""));
-        itm2.getChildren().add(cont3);
-        itm2.getChildren().add(cont4);
-        
-        TreeItem treeRoot = new TreeItem(new Item(0, "Wishlist & Contributors", "...", ""));
-        treeRoot.getChildren().add(itm);
-        treeRoot.getChildren().add(itm2);
-        treeRoot.setExpanded(true);
-        
-        tblWishlist.setRoot(treeRoot);*/
         tblWishlist.setEditable(true);
     }
 
@@ -515,10 +496,11 @@ public class MainscreenUI extends BorderPane {
     public Label getLblBalance() {
         return lblBalance;
     }
-
+    
     public Button getBtnRecharge() {
         return btnRecharge;
     }
     
     
 }
+

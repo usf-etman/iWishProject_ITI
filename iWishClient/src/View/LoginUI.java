@@ -54,6 +54,7 @@ public class LoginUI extends BorderPane {
         txtPassError = new Text();
         loginError = new Text();
 
+ 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);

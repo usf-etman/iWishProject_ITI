@@ -7,6 +7,7 @@ package Controller;
 
 import View.ForgetPassUI;
 import View.LoginUI;
+import View.RegisterUI;
 import java.util.regex.Pattern;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -86,7 +87,12 @@ public class LoginController{
         root.getLnkSignup().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                AddItemController AIC = new AddItemController(stage);
+                //AddItemController AIC = new AddItemController(stage);
+                RegisterUI registerView = new RegisterUI();
+                Scene scene = new Scene(registerView);
+                stage.setScene(scene);
+                stage.show();
+                RegisterController rc = new RegisterController(stage, registerView);
             }
         });
         root.getBtnForget().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
