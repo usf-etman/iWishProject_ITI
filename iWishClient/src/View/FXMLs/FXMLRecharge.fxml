@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.RechargeController">
+   <left>
+      <AnchorPane prefHeight="400.0" prefWidth="172.0" style="-fx-background-color: #F1FAEE;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="82.0" fitWidth="177.0" layoutX="9.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/iwishh.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </left>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text fx:id="cardNumberError" fill="#34656d" layoutX="81.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="234.369140625" />
+                        <Text fx:id="firstNameError" fill="#34656d" layoutX="79.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="117.369140625" />
+                        <Text fx:id="lastNameError" fill="#34656d" layoutX="206.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="133.369140625" />
+          
+            <Button fx:id="btn_confirm" layoutX="85.0" layoutY="333.0" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #34656D;" text="Confirm" textFill="WHITE" />
+                        <Text fx:id="rechargeError" fill="#34656d" layoutX="87.0" layoutY="375.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="167.369140625" />
+            <TextField fx:id="txt_yy" layoutX="139.0" layoutY="175.0" prefHeight="25.0" prefWidth="54.0" promptText="YY" />
+            <TextField fx:id="txt_cvv" layoutX="205.0" layoutY="175.0" prefHeight="25.0" prefWidth="112.0" promptText="CVV" />
+            <TextField fx:id="txt_mm" layoutX="81.0" layoutY="175.0" prefHeight="25.0" prefWidth="50.0" promptText="MM" />
+            <TextField fx:id="txt_card_number" layoutX="81.0" layoutY="123.0" prefHeight="25.0" prefWidth="235.0" promptText="Card Number" />
+            <TextField fx:id="txt_first_name" layoutX="81.0" layoutY="227.0" prefHeight="25.0" prefWidth="114.0" promptText="First Name" />
+            <TextField fx:id="txt_last_name" layoutX="205.0" layoutY="227.0" prefHeight="25.0" prefWidth="112.0" promptText="Last Name" />
+            <Text fx:id="mmError" fill="#34656d" layoutX="80.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="53.369140625" />
+            <Text fx:id="yyError" fill="#34656d" layoutX="139.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="53.369140625" />
+            <Text fx:id="cvvError" fill="#34656d" layoutX="205.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="113.369140625" />
+            <TextField fx:id="txt_amount" layoutX="81.0" layoutY="273.0" prefHeight="25.0" prefWidth="114.0" promptText="Amount" />
+            <Text fx:id="amountError" fill="#34656d" layoutX="81.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="117.369140625" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

@@ -5,8 +5,8 @@
  */
 package Controller;
 
+import View.RechargeUI;
 import View.MainscreenUI;
-import View.ResetPasswordUI;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -20,6 +20,7 @@ public class MainscreenController {
 
     MainscreenController(Stage stage)
     {
+   
         MainscreenUI mainView = new MainscreenUI();
         Scene scene = new Scene(mainView);
 
@@ -28,11 +29,26 @@ public class MainscreenController {
         
         mainView.getLblName().setText(ParentController.getMy_info().getUsername());
         mainView.getLblBalance().setText(String.valueOf(ParentController.getMy_info().getBalance()));
+
         
         mainView.getBtnItems().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 AddItemController AIC = new AddItemController(stage);
+            }
+        });
+        
+         mainView.getBtn_Recharge().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                    
+                RechargeUI rechargeView = new RechargeUI();
+                Scene scene = new Scene(rechargeView);
+
+                stage.setScene(scene);
+                stage.show();
+                
+                RechargeController rc = new RechargeController(stage, rechargeView);
             }
         });
     }

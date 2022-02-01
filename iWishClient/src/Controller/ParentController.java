@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Item;
 import model.User;
+import model.Recharge;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,6 +35,7 @@ public class ParentController {
     private static User my_info;
     static String responseString;
     static boolean blockingFlag = true;
+    static boolean rechargeFlag = false;
     static boolean responseFlag;
     static Item itm;
     static Vector<Item> itmVector;
@@ -65,7 +67,46 @@ public class ParentController {
         blockingFlag = true;
         return responseFlag; // return flag
     }
+    
+      public static User getRechargeInfo(Recharge recharge, String key) {  //reset password + register + forget password
+       
+        
+        Gson gson = new Gson(); // Or use new GsonBuilder().create();
+        String json = gson.toJson(recharge); // serializes target to Json
+        System.out.println("Reg"+json);
+                
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", key);
+        msg.addProperty("Value", json);
+        ps.println(msg);
+        while (blockingFlag) {
+            System.out.println("");
+        }
+        blockingFlag = true;
+      
+        User userjava = gson.fromJson(responseString,User.class); 
+        return userjava; 
+        
 
+ 
+    }
+
+         public static User login(User user) {
+        Gson gson = new Gson(); // Or use new GsonBuilder().create();
+        String json = gson.toJson(user); // serializes target to Json
+        
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "login");
+        msg.addProperty("Value", json);
+        ps.println(msg);
+        while (blockingFlag) {
+            System.out.println("");
+        }
+        blockingFlag = true;
+        User userjava = gson.fromJson(responseString,User.class); 
+        return userjava; 
+    }
+         
     public static Vector<Item> getAllItems() {
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "ShowItems");
@@ -83,27 +124,14 @@ public class ParentController {
 
     }
 
-    public static User login(User user) {
-        Gson gson = new Gson(); // Or use new GsonBuilder().create();
-        String json = gson.toJson(user); // serializes target to Json
-        
-        JsonObject msg = new JsonObject();
-        msg.addProperty("Key", "login");
-        msg.addProperty("Value", json);
-        ps.println(msg);
-        while (blockingFlag) {
-            System.out.println("");
-        }
-        blockingFlag = true;
-        User userjava = gson.fromJson(responseString,User.class); 
-        return userjava; 
-    }
+ 
 
     public static User getMy_info() {
         return my_info;
     }
 
     public static void setMy_info(User my_info) {
+        
         ParentController.my_info = my_info;
     }
 
@@ -119,6 +147,11 @@ public class ParentController {
                         case "login":
                             responseString = jmsg.getString("Value"); //from server to client
                             blockingFlag = false;
+                            break;
+                        case "Recharge":
+                            responseString = jmsg.getString("Value");
+                            blockingFlag = false;
+                            break;
                         case "VectorSize":
                             itmVector = new Vector<Item>();
                             vectorSize = jmsg.getInt("size");
@@ -140,6 +173,7 @@ public class ParentController {
                         default:
                             responseFlag = jmsg.getBoolean("Value");
                             blockingFlag = false;
+                            System.out.println("responseFlag "+responseFlag);
                             break;
                     }
                 }
