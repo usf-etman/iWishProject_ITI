@@ -173,7 +173,7 @@
                         </BorderPane>
                         <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                            <center>
-                              <Button fx:id="btnContribute" mnemonicParsing="false" prefHeight="39.0" prefWidth="129.0" style="-fx-background-color: #f1faee;" text="Contribute" textFill="#226e9a" BorderPane.alignment="CENTER">
+                              <Button fx:id="btnContribute" mnemonicParsing="false" prefHeight="46.0" prefWidth="129.0" style="-fx-background-color: #f1faee;" text="Contribute" textFill="#226e9a" BorderPane.alignment="CENTER">
                                  <effect>
                                     <DropShadow blurType="ONE_PASS_BOX" />
                                  </effect>
@@ -182,6 +182,13 @@
                                  </font>
                               </Button>
                            </center>
+                           <right>
+                              <Label fx:id="lblResult" textFill="#2883b8" BorderPane.alignment="CENTER">
+                                 <font>
+                                    <Font name="Edwardian Script ITC" size="25.0" />
+                                 </font>
+                              </Label>
+                           </right>
                         </BorderPane>
                      </children>
                   </GridPane>
