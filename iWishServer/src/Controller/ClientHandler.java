@@ -19,6 +19,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import model.Countribution;
 import model.DAO;
 import model.Item;
 import model.PendingRequest;
@@ -173,6 +174,12 @@ public class ClientHandler extends Thread {
                             ps.println(jmsg);
                         }
                         break;
+                    case "removeFriend":
+
+                        int userid = jmsg.getInt("Value");
+                        int friendid = jmsg.getInt("friend");
+                        int deletedvector = DAO.DeleteUser(friendid, userid);
+                        break;
                     case "pendingfriends":
                         int UIDP = jmsg.getInt("Value");
                         Vector<User> userpending = DAO.PendingFriend(UIDP);
@@ -252,6 +259,39 @@ public class ClientHandler extends Thread {
                         }
                         System.out.println("Done");
                         break;
+                    case "Friendwishlist":
+                        Gson gsonwish = new Gson();
+                        int uid = jmsg.getInt("Value");
+                        Vector<Item> wishResult = DAO.SelectFriendwishlist(uid);
+                        System.out.println(wishResult.size());
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "VectorSize");
+                        jmsg.put("size", wishResult.size());
+                        ps.println(jmsg);
+                        for (int i = 0; i < wishResult.size(); i++) {
+                            gson = new Gson();
+                            String jsonwish = gson.toJson(wishResult.get(i));
+                            jmsg = new JSONObject();
+                            jmsg.put("Key", "Friendwishlist");
+                            jmsg.put("size", wishResult.size());
+                            jmsg.put("Value", jsonwish);
+                            ps.println(jmsg);
+                        }
+                        break;
+                    case "addCountribution":
+                        gson = new Gson();
+                        value = jmsg.getString("Value");
+                        Countribution countribution = gson.fromJson(value, Countribution.class);
+                        int countributionrslt = DAO.addCountribution(countribution);
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "addCountribution");
+                        jmsg.put("Value", countributionrslt);
+                        ps.println(jmsg);
+                        break;
+                    case "removeWish":
+                        gson = new Gson();
+                        int wishID = jmsg.getInt("Value");
+                        DAO.removeWish(wishID);
                 }
                 //root.getTxtLog().appendText(msg + "\n");
             } catch (SocketException ex) {
@@ -282,5 +322,14 @@ public class ClientHandler extends Thread {
 
     public static String getClientsNum() {
         return (String.valueOf(clientsVector.size()));
+    }
+    
+    public static void closeConnections() throws IOException{
+        for(int i=0; i<clientsVector.size(); i++){
+            clientsVector.get(i).dis.close();
+            clientsVector.get(i).ps.close();
+            clientsVector.get(i).waiter.close();
+            clientsVector.get(i).stop();
+        }
     }
 }
