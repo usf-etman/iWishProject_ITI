@@ -5,7 +5,6 @@
  */
 package Controller;
 
-import View.LoginUI;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.io.DataInputStream;
@@ -14,18 +13,17 @@ import java.io.PrintStream;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.HashMap;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javax.swing.JOptionPane;
+import model.Countribution;
 import model.Item;
 import model.PendingRequest;
 import model.User;
 import model.Recharge;
 import model.WishList;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,12 +38,13 @@ public class ParentController {
     static PrintStream ps;
     static String loginStatus;
     static String status;
-
-    //private static int UID;
-    //static User my_info;
     static User friend_info;
     static User friend_info1;
+
     static User deleted_friend;
+
+
+    static User friend_info2;
 
     private static User my_info;
     static String responseString;
@@ -58,12 +57,17 @@ public class ParentController {
     static Vector<User> uservector;
     static Vector<User> uservector1;
     static Vector<User> deleted_friend_vector;
+    static Vector<User> uservector2;
     static int vectorSize;
-    static int mapSize;
     static int blokingCounter;
     static int wshlstStatus;
     static int pendingStatus;
 static int deletedfriend;
+
+    static int pendingStatus2;
+    static int friendStatus;
+    static int countributionStatus;
+
     static {
         try {
             socket = new Socket("127.0.0.1", 5566);
@@ -107,6 +111,8 @@ static int deletedfriend;
         }
         blockingFlag = true;
 
+
+
         User userjava = gson.fromJson(responseString, User.class);
         return userjava;
 
@@ -115,6 +121,7 @@ static int deletedfriend;
     public static User login(User user) {
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         String json = gson.toJson(user); // serializes target to Json
+
 
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "login");
@@ -165,15 +172,56 @@ static int deletedfriend;
         ps.println(msg);
         return deletedfriend;
     }
+    public static int delPndingRequest(PendingRequest delqust) {
+        Gson gson = new Gson(); // Or use new GsonBuilder().create();
+        String json = gson.toJson(delqust); // serializes target to Json
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "DeletefromPending");
+        msg.addProperty("Value", json);
+        ps.println(msg);
+        while (blockingFlag) {
+            System.out.println("");
+        }
+        blockingFlag = true;
+        return pendingStatus2;
+    }
+
+    public static int addtofriendlist(PendingRequest fr) {
+        Gson gson = new Gson(); // Or use new GsonBuilder().create();
+        String json = gson.toJson(fr); // serializes target to Json
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "AddToflist");
+        msg.addProperty("Value", json);
+        ps.println(msg);
+        while (blockingFlag) {
+            System.out.println("");
+        }
+        blockingFlag = true;
+        return friendStatus;
+    }
+    
+     public static int addCountribution(Countribution countribution) {
+        Gson gson = new Gson(); // Or use new GsonBuilder().create();
+        String json = gson.toJson(countribution); // serializes target to Json
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "addCountribution");
+        msg.addProperty("Value", json);
+        ps.println(msg);
+        while (blockingFlag) {
+            System.out.println("");
+        }
+        blockingFlag = true;
+        return countributionStatus;
+    }
+    
+    
 
     public static Vector<Item> getAllItems() {
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "ShowItems");
         ps.println(msg);
-
         while (blockingFlag) {
             System.out.println(" ");
-
         }
         blockingFlag = true;
         while (blokingCounter < vectorSize) {
@@ -183,15 +231,30 @@ static int deletedfriend;
 
     }
 
+    public static Vector<Item> getFriendwishlist(int FID) {
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "Friendwishlist");
+        msg.addProperty("Value", FID);
+        ps.println(msg);
+        while (blockingFlag) {
+            System.out.println(" ");
+        }
+        blockingFlag = true;
+        while (blokingCounter < vectorSize) {
+            System.out.println(blokingCounter + " " + vectorSize);
+        }
+        System.out.println(itmVector.size());
+        return itmVector;
+
+    }
+
     public static Vector<Item> displayWishlist() {
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "DisplayWishlist");
         msg.addProperty("Value", my_info.getUID());
         ps.println(msg);
-
         while (blockingFlag) {
             System.out.println(" ");
-
         }
         blockingFlag = true;
         while (blokingCounter < vectorSize) {
@@ -202,7 +265,6 @@ static int deletedfriend;
     }
 
     public static Vector<User> reurnSuggestFriend() {
-
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "DisplayFriend");
         msg.addProperty("Value", my_info.getUID());
@@ -210,7 +272,6 @@ static int deletedfriend;
 //blocking untill recieve vector size
         while (blockingFlag) {
             System.out.println(" ");
-
         }
         blockingFlag = true;
         ///untill equal vector size
@@ -222,7 +283,6 @@ static int deletedfriend;
     }
 
     public static Vector<User> reurnallFriend() {
-
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "showFriend");
         msg.addProperty("Value", my_info.getUID());
@@ -230,7 +290,6 @@ static int deletedfriend;
         //blocking untill recieve vector size
         while (blockingFlag) {
             System.out.println(blockingFlag);
-
         }
         blockingFlag = true;
         ///untill equal vector size
@@ -239,7 +298,33 @@ static int deletedfriend;
             System.out.println(vectorSize);
         }
         return uservector1;
+    }
 
+
+    public static Vector<User> reurnapendingFriend() {
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "pendingfriends");
+        msg.addProperty("Value", my_info.getUID());
+        ps.println(msg);
+//blocking untill recieve vector size
+        while (blockingFlag) {
+            System.out.println(" ");
+        }
+        blockingFlag = true;
+        ///untill equal vector size
+        while (blokingCounter < vectorSize) {
+            System.out.println(" ");
+            //System.out.println(vectorSize);
+        }
+        return uservector2;
+    }
+
+    
+    public static void removeWish(int wishID){
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "removeWish");
+        msg.addProperty("Value", wishID);
+        ps.println(msg);
     }
 
     public static User getMy_info() {
@@ -268,16 +353,24 @@ static int deletedfriend;
                         case "Recharge":
                             responseString = jmsg.getString("Value");
                             blockingFlag = false;
-                            break;
-
+    
                         case "VectorSize":
                             itmVector = new Vector<Item>();
                             uservector = new Vector<User>();
                             uservector1 = new Vector<User>();
                             deleted_friend_vector = new Vector<User>();
+
+                            uservector2 = new Vector<User>();
                             vectorSize = jmsg.getInt("size");
                             blokingCounter = 0;
                             blockingFlag = false;
+                            break;
+                        case "Friendwishlist":
+                            String wshslt = jmsg.getString("Value");
+                            gson = new Gson();
+                            itm = gson.fromJson(wshslt, Item.class);
+                            itmVector.add(itm);
+                            blokingCounter++;
                             break;
                         case "ShowItems":
                             String itmrslt = jmsg.getString("Value");
@@ -292,6 +385,7 @@ static int deletedfriend;
                             friend_info = gson2.fromJson(friendlist, User.class);
                             uservector.add(friend_info);
                             blokingCounter++;
+                            System.out.println(vectorSize);
                             break;
                         case "showFriend":
                             String allfriendlist = jmsg.getString("Value");
@@ -300,7 +394,14 @@ static int deletedfriend;
                             uservector1.add(friend_info1);
                             blokingCounter++;
                             System.out.println(vectorSize);
-
+                            break;
+                        case "pendingfriends":
+                            String peningfriendlist = jmsg.getString("Value");
+                            Gson gson4 = new Gson();
+                            friend_info2 = gson4.fromJson(peningfriendlist, User.class);
+                            uservector2.add(friend_info2);
+                            blokingCounter++;
+                            System.out.println(vectorSize);
                             break;
                         case "AddToWishList":
                             wshlstStatus = jmsg.getInt("Value");
@@ -310,7 +411,19 @@ static int deletedfriend;
                             pendingStatus = jmsg.getInt("Value");
                             blockingFlag = false;
                             break;
-                       
+
+                        case "AddToflist":
+                            friendStatus = jmsg.getInt("Value");
+                            blockingFlag = false;
+                            break;
+                        case "DeletefromPending":
+                            pendingStatus2 = jmsg.getInt("Value");
+                            blockingFlag = false;
+                            break;
+                              case "addCountribution":
+                            countributionStatus = jmsg.getInt("Value");
+                            blockingFlag = false;
+                            break;
                         default:
                             responseFlag = jmsg.getBoolean("Value");
                             blockingFlag = false;
@@ -318,7 +431,6 @@ static int deletedfriend;
                             break;
                     }
                 }
-
             } catch (SocketException ex) {
                 try {
                     dis.close();
@@ -337,7 +449,7 @@ static int deletedfriend;
                 Logger.getLogger(ParentController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (JSONException ex) {
                 Logger.getLogger(ParentController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } 
         }
     }
 }

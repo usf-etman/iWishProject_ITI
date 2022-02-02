@@ -193,10 +193,11 @@ public class FriendsListUI extends AnchorPane {
 
         colFriend.setMinWidth(0.0);
         colFriend.setPrefWidth(329.0);
-        colFriend.setStyle("-fx-background-color: #34656d;");
+       // colFriend.setStyle("-fx-background-color: #34656d;");
         colFriend.setText("Name");
         colFriend.setCellValueFactory(new PropertyValueFactory("username"));
 
+        
         text.setFill(javafx.scene.paint.Color.valueOf("#34656d"));
         text.setFontSmoothingType(javafx.scene.text.FontSmoothingType.LCD);
         text.setLayoutX(248.0);
@@ -283,7 +284,7 @@ public class FriendsListUI extends AnchorPane {
         colSid.setCellValueFactory(new PropertyValueFactory("UID"));
 
         colSuggest.setPrefWidth(328.0);
-        colSuggest.setStyle("-fx-background-color: #34656d;");
+       // colSuggest.setStyle("-fx-background-color: #34656d;");
         colSuggest.setText("Name");
         colSuggest.setCellValueFactory(new PropertyValueFactory("username"));
         stackPane.getChildren().add(rectangle);

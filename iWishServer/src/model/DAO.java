@@ -5,14 +5,16 @@
  */
 package model;
 
-import com.google.gson.JsonObject;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
+
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -76,6 +78,9 @@ public class DAO {
             JOptionPane.showMessageDialog(null, "items is already in wishlist , you can't remove this from items");
 
         }
+
+
+        result = pst.executeUpdate();
         pst.close();
         return result;
     }
@@ -93,12 +98,14 @@ public class DAO {
     //suggested friends
     public static Vector<User> ReturnFriend(int uid) throws SQLException {
         Vector<User> res = new Vector<User>();
+
         String sql = "SELECT USER_ID, USER_NAME \n"
                 + "FROM USER_INFO \n"
                 + "WHERE USER_ID  NOT IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID=?) \n"
                 + "AND USER_ID NOT IN (SELECT USER_ID FROM Pending_Request WHERE Sender_ID=?) \n"
                 + "AND USER_ID NOT IN (SELECT sender_id FROM Pending_Request WHERE user_id=?)\n"
                 + "AND USER_ID != ?";
+
         PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         pst.setInt(1, uid);
         pst.setInt(2, uid);
@@ -116,6 +123,21 @@ public class DAO {
 
     }
     //friends
+
+    public static Vector<User> PendingFriend(int uid) throws SQLException {
+        Vector<User> pr = new Vector<User>();
+        PreparedStatement pst = con.prepareStatement("select User_ID, User_Name from User_Info where User_ID IN(select Sender_ID from Pending_Request where User_ID=?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst.setInt(1, uid);
+
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            User selected_user = new User();
+            selected_user.setUsername(rs.getString("user_name"));
+            selected_user.setUID(rs.getInt("user_ID"));
+            pr.add(selected_user);
+        }
+        return pr;
+    }
 
     public static Vector<User> ShowFriend(int uid1) throws SQLException {
         Vector<User> res1 = new Vector<User>();
@@ -285,30 +307,133 @@ public class DAO {
         return result;
     }
 
+
+    public static int AddToFriendlist(PendingRequest frRqust) throws SQLException {
+        int result = -1;
+        String sql = "insert into friend_list(ID,User_ID,Friend_ID)values(FRIEND_SEQ.nextval,?,?)";
+        PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst.setInt(1, frRqust.getUser_ID());
+        pst.setInt(2, frRqust.getSender_ID());
+        result = pst.executeUpdate();
+        pst.close();
+
+        String sq2 = "DELETE FROM Pending_Request WHERE Sender_ID =? AND User_ID=?";
+        PreparedStatement pst2 = con.prepareStatement(sq2, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst2.setInt(1, frRqust.getUser_ID());
+        System.out.println(frRqust.getUser_ID());
+        pst2.setInt(2, frRqust.getSender_ID());
+        System.out.println(frRqust.getSender_ID());
+        int result2 = pst2.executeUpdate();
+        System.out.println("result" + result2);
+        pst2.close();
+
+        return result;
+
+    }
+
+    //////////////////////////////////////////////////////////////////////////////
+    public static int DeleteRequest(PendingRequest delRqust) throws SQLException {
+        int result = -1;
+        String sql = "DELETE FROM PENDING_REQUEST WHERE Sender_ID =? AND User_ID=?";
+        PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst.setInt(1, delRqust.getUser_ID());
+        pst.setInt(2, delRqust.getSender_ID());
+        result = pst.executeUpdate();
+        System.out.println("result" + result);
+        pst.close();
+        return result;
+    }
+
     public static Vector<Item> DisplayWishlist(int UID) throws SQLException {
         int keyID = -1;
         Vector<Item> itms = new Vector<>();
-        String sql = "SELECT wish_id, i.item_name, i.item_price, contributer_id, u.user_name, sum(amount)\n"
-                + "FROM contribution c NATURAL JOIN item i\n"
+        String sql = "SELECT w.wish_id, i.item_name, i.item_price, contributer_id, u.user_name, sum(c.amount)\n"
+                + "FROM contribution c\n"
                 + "INNER JOIN user_info u ON U.USER_ID = C.CONTRIBUTER_ID\n"
-                + "WHERE wish_owner_id = ?\n"
-                + "GROUP BY (wish_id, i.item_name, i.item_price, contributer_id, u.user_name)\n"
+                + "RIGHT JOIN wish_list w ON c.wish_id = w.wish_id\n"
+                + "INNER JOIN item i ON w.item_id = i.item_id\n"
+                + "WHERE w.user_id = ?\n"
+                + "GROUP BY (w.wish_id, i.item_name, i.item_price, contributer_id, u.user_name)\n"
                 + "ORDER BY wish_id";
         PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         pst.setInt(1, UID);
         ResultSet rs = pst.executeQuery();
-        rs.next();
-        keyID = rs.getInt(1);
-        itms.add(new Item(rs.getInt(1), rs.getString(2), String.valueOf(rs.getInt(3)), "k"));
-        do {
-            if (keyID != rs.getInt(1)) {
-                keyID = rs.getInt(1);
-                itms.add(new Item(rs.getInt(1), rs.getString(2), String.valueOf(rs.getInt(3)), "k"));
-                itms.add(new Item(rs.getInt(4), rs.getString(5), String.valueOf(rs.getInt(6)), "v"));
-            } else {
-                itms.add(new Item(rs.getInt(4), rs.getString(5), String.valueOf(rs.getInt(6)), "v"));
-            }
-        } while (rs.next());
+        if (rs.next()) {
+            keyID = rs.getInt(1);
+            itms.add(new Item(rs.getInt(1), rs.getString(2), String.valueOf(rs.getInt(3)), "k"));
+            do {
+                if (keyID != rs.getInt(1)) {
+                    keyID = rs.getInt(1);
+                    itms.add(new Item(rs.getInt(1), rs.getString(2), String.valueOf(rs.getInt(3)), "k"));
+                    itms.add(new Item(rs.getInt(4), rs.getString(5), String.valueOf(rs.getInt(6)), "v"));
+                } else {
+                    if (rs.getInt(4) != 0) {
+                        itms.add(new Item(rs.getInt(4), rs.getString(5), String.valueOf(rs.getInt(6)), "v"));
+                    }
+                }
+            } while (rs.next());
+        }
         return itms;
+
     }
+
+    public static Vector<Item> SelectFriendwishlist(int uid) throws SQLException {
+        Vector<Item> result = new Vector<Item>();
+        String sql = "select w.WISH_ID,i.ITEM_NAME,w.ITEM_PRICE\n"
+                + "from item i, wish_list w\n"
+                + "where I.ITEM_ID=W.ITEM_ID\n"
+                + "and w.USER_ID=?";
+        PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst.setInt(1, uid);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            result.add(new Item(rs.getInt("WISH_ID"), rs.getString("Item_Name"), rs.getString("Item_Price")));
+        }
+        return result;
+    }
+
+    public static int addCountribution(Countribution contribution) throws SQLException {
+        int result = -1;
+        String sql = "  update wish_list\n"
+                + "  set  ITEM_PRICE = (ITEM_PRICE-?)\n"
+                + "  where WISH_ID = ? \n"
+                + "  and USER_ID = ?";
+        PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst.setInt(1, contribution.getAmount());
+        pst.setInt(2, contribution.getItem_ID());
+        pst.setInt(3, contribution.getWish_Owner_ID());
+        result = pst.executeUpdate();
+        pst.close();
+
+        String sql2 = "insert into contribution (CONTRIBUTION_ID , CONTRIBUTER_ID , WISH_OWNER_ID , WISH_ID,AMOUNT )\n"
+                + "  values ( Countribution_SEQ.nextval ,? ,? ,? ,?)";
+        PreparedStatement pst2 = con.prepareStatement(sql2, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst2.setInt(1, contribution.getContributer_ID());
+        pst2.setInt(2, contribution.getWish_Owner_ID());
+        pst2.setInt(3, contribution.getItem_ID());
+        pst2.setInt(4, contribution.getAmount());
+        int result2 = pst2.executeUpdate();
+        pst2.close();
+
+        String sql3 = "update user_info\n"
+                + "set user_balance = (user_balance-?)\n"
+                + "where user_id = ?";
+        PreparedStatement pst3 = con.prepareStatement(sql3, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst3.setInt(1, contribution.getAmount());
+        pst3.setInt(2, contribution.getContributer_ID());
+        int result3 = pst3.executeUpdate();
+        pst3.close();
+
+        return result;
+
+    }
+    
+    public static void removeWish(int wishID) throws SQLException{
+        String sql = "{call removeWish(?)}";
+        CallableStatement cst = con.prepareCall(sql);
+        cst.setInt(1, wishID);
+        cst.execute();
+        cst.close();
+    }
+
 }

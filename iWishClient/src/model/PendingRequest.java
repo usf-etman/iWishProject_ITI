@@ -10,9 +10,13 @@ package model;
  * @author JESSY
  */
 public class PendingRequest {
+
     private int Request_ID;
     private int User_ID;
     private int Sender_ID;
+
+    PendingRequest() {
+    }
 
     public PendingRequest(int User_ID, int Sender_ID) {
         this.User_ID = User_ID;
@@ -42,7 +46,5 @@ public class PendingRequest {
     public void setSender_ID(int Sender_ID) {
         this.Sender_ID = Sender_ID;
     }
-    
-    
-    
+
 }
