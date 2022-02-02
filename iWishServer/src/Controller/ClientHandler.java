@@ -19,6 +19,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import model.Countribution;
 import model.DAO;
 import model.Item;
 import model.PendingRequest;
@@ -252,9 +253,9 @@ public class ClientHandler extends Thread {
                         }
                         System.out.println("Done");
                         break;
-                           case "Friendwishlist":
-                            Gson gsonwish = new Gson();
-                            int uid = jmsg.getInt("Value");
+                    case "Friendwishlist":
+                        Gson gsonwish = new Gson();
+                        int uid = jmsg.getInt("Value");
                         Vector<Item> wishResult = DAO.SelectFriendwishlist(uid);
                         System.out.println(wishResult.size());
                         jmsg = new JSONObject();
@@ -270,6 +271,16 @@ public class ClientHandler extends Thread {
                             jmsg.put("Value", jsonwish);
                             ps.println(jmsg);
                         }
+                        break;
+                    case "addCountribution":
+                        gson = new Gson();
+                        value = jmsg.getString("Value");
+                        Countribution countribution = gson.fromJson(value, Countribution.class);
+                        int countributionrslt = DAO.addCountribution(countribution);
+                        jmsg = new JSONObject();
+                        jmsg.put("Key", "addCountribution");
+                        jmsg.put("Value", countributionrslt);
+                        ps.println(jmsg);
                         break;
                 }
                 //root.getTxtLog().appendText(msg + "\n");

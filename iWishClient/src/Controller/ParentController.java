@@ -17,6 +17,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.Countribution;
 import model.Item;
 import model.PendingRequest;
 import model.User;
@@ -56,6 +57,7 @@ public class ParentController {
     static int pendingStatus;
     static int pendingStatus2;
     static int friendStatus;
+    static int countributionStatus;
 
     static {
         try {
@@ -172,6 +174,22 @@ public class ParentController {
         blockingFlag = true;
         return friendStatus;
     }
+    
+     public static int addCountribution(Countribution countribution) {
+        Gson gson = new Gson(); // Or use new GsonBuilder().create();
+        String json = gson.toJson(countribution); // serializes target to Json
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "addCountribution");
+        msg.addProperty("Value", json);
+        ps.println(msg);
+        while (blockingFlag) {
+            System.out.println("");
+        }
+        blockingFlag = true;
+        return countributionStatus;
+    }
+    
+    
 
     public static Vector<Item> getAllItems() {
         JsonObject msg = new JsonObject();
@@ -363,6 +381,10 @@ public class ParentController {
                             break;
                         case "DeletefromPending":
                             pendingStatus2 = jmsg.getInt("Value");
+                            blockingFlag = false;
+                            break;
+                              case "addCountribution":
+                            countributionStatus = jmsg.getInt("Value");
                             blockingFlag = false;
                             break;
                         default:

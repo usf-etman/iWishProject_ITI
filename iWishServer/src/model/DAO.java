@@ -361,4 +361,31 @@ public class DAO {
         }
         return result;
     }
+
+    public static int addCountribution(Countribution contribution) throws SQLException {
+        int result = -1;
+        String sql = "  update wish_list\n"
+                + "  set  ITEM_PRICE = (ITEM_PRICE-?)\n"
+                + "  where ITEM_ID = ? \n"
+                + "  and USER_ID = ?";
+        PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst.setInt(1, contribution.getAmount());
+        pst.setInt(2, contribution.getItem_ID());
+        pst.setInt(3, contribution.getWish_Owner_ID());
+        result = pst.executeUpdate();
+        pst.close();
+
+        String sql2 = "insert into contribution (CONTRIBUTION_ID , CONTRIBUTER_ID , WISH_OWNER_ID , ITEM_ID,AMOUNT )\n"
+                + "  values ( Countribution_SEQ.nextval ,? ,? ,? ,?)";
+        PreparedStatement pst2 = con.prepareStatement(sql2, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst2.setInt(1, contribution.getContributer_ID());
+        pst2.setInt(2, contribution.getWish_Owner_ID());
+        pst2.setInt(3, contribution.getItem_ID());
+        pst2.setInt(4, contribution.getAmount());
+        int result2 = pst2.executeUpdate();
+        pst2.close();
+        return result;
+
+    }
+
 }

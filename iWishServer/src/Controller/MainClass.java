@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import model.Countribution;
 import model.DAO;
 import model.PendingRequest;
 import model.User;
@@ -34,7 +35,9 @@ public class MainClass extends Application {
         //DAO.AddToPending(rqst);
       //   user =DAO.PendingFriend(230);
         //System.out.println(user.get(0).getUsername());
-  
+  /*Countribution cont = new Countribution(3, 262, 263,61, 10);
+  int res = DAO.addCountribution(cont);
+        System.out.println(res);*/
         
         ServerController sc = new ServerController(stage);
         stage.setOnCloseRequest(e -> {
