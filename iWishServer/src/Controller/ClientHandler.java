@@ -72,7 +72,7 @@ public class ClientHandler extends Thread {
                         jmsg.put("Value", registerStatus);
                         ps.println(jmsg);
                         break;
-                    case "Recharge": 
+                    case "Recharge":
                         gson = new Gson();
                         value = jmsg.getString("Value");
                         Recharge recharge = gson.fromJson(value, Recharge.class);
@@ -133,7 +133,7 @@ public class ClientHandler extends Thread {
                         }
                         break;
                     case "showFriend":
-                         Gson gsonuser1 = new Gson();
+                        Gson gsonuser1 = new Gson();
                         // String value1;
                         int UID1 = jmsg.getInt("Value");
                         Vector<User> userinfo1 = DAO.ShowFriend(UID1);
@@ -172,6 +172,13 @@ public class ClientHandler extends Thread {
                             jmsg.put("Value", jsonuser);
                             ps.println(jmsg);
                         }
+                        break;
+                    case "removeFriend":
+
+                        int userid = jmsg.getInt("Value");
+                        int friendid = jmsg.getInt("friend");
+                        int deletedvector = DAO.DeleteUser(friendid, userid);
+
                         break;
                     case "AddToWishList":
                         gson = new Gson();

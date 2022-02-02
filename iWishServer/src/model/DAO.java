@@ -11,10 +11,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import oracle.jdbc.OracleDriver;
 
 /**
@@ -47,10 +49,9 @@ public class DAO {
         return result;
     }
 
-
     public static int AddToWishlist(WishList wishlst) throws SQLException {
         int result = -1;
-        
+
         String sql = "insert into Wish_List(Wish_ID,User_ID,Item_ID,Item_Price) values(WishListSEQ.nextval,?,?,?)";
         PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         //pst.setInt(1, wishlst.getWish_ID());
@@ -62,12 +63,19 @@ public class DAO {
         //System.out.println(result);
         return result;
     }
+
     public static int DeleteItem(Item itm) throws SQLException {
         int result = -1;
         PreparedStatement pst = con.prepareStatement("delete from Item where Item_ID =? ", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        pst.setInt(1,itm.getId());
-      
-        result = pst.executeUpdate();
+        pst.setInt(1, itm.getId());
+        try {
+            result = pst.executeUpdate();
+
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            System.out.println("try again");
+            JOptionPane.showMessageDialog(null, "items is already in wishlist , you can't remove this from items");
+
+        }
         pst.close();
         return result;
     }
@@ -81,9 +89,6 @@ public class DAO {
         }
         return result;
     }
-    
-
-
 
     //suggested friends
     public static Vector<User> ReturnFriend(int uid) throws SQLException {
@@ -114,7 +119,7 @@ public class DAO {
 
     public static Vector<User> ShowFriend(int uid1) throws SQLException {
         Vector<User> res1 = new Vector<User>();
-        PreparedStatement pst = con.prepareStatement("FROM USER_INFO \n"
+        PreparedStatement pst = con.prepareStatement("SELECT USER_ID, USER_NAME FROM USER_INFO \n"
                 + "WHERE (USER_ID IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID = ?) \n"
                 + "OR USER_ID IN (SELECT USER_ID FROM FRIEND_LIST WHERE FRIEND_ID = ?))\n"
                 + "AND USER_ID !=?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -131,6 +136,16 @@ public class DAO {
         }
         return res1;
 
+    }
+
+    public static  int  DeleteUser(int friend_id, int user_id) throws SQLException {
+         int result = -1;  
+        PreparedStatement pst = con.prepareStatement("delete from FRIEND_LIST where FRIEND_ID=? and user_id=? ", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst.setInt(1,friend_id);
+                pst.setInt(2,user_id);
+        result = pst.executeUpdate();
+        pst.close();
+             return result;
     }
 
     public static boolean AddUser(User user) throws SQLException {
@@ -214,9 +229,9 @@ public class DAO {
         }
 
     }
-    
+
     public static User rechargeAmount(Recharge recharge) throws SQLException {
-       int result = -1;
+        int result = -1;
 
         DriverManager.registerDriver(new OracleDriver());
 
@@ -234,18 +249,18 @@ public class DAO {
             return null;
         }
     }
-    
-     public static User updateUserAmount(int userId) throws SQLException { //user object
-   
+
+    public static User updateUserAmount(int userId) throws SQLException { //user object
+
         DriverManager.registerDriver(new OracleDriver());
         PreparedStatement pst = con.prepareStatement("select USER_ID, User_Name, User_Balance from User_Info where USER_ID = ?", ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY);
 
         pst.setInt(1, userId);
-       
+
         ResultSet resultSet = pst.executeQuery();
         User resultUser = new User();
-        
+
         if (resultSet.next()) {
             resultUser.setUID(resultSet.getInt(1));
             resultUser.setUsername(resultSet.getString(2));
@@ -269,7 +284,6 @@ public class DAO {
         pst.close();
         return result;
     }
-
 
     public static Vector<Item> DisplayWishlist(int UID) throws SQLException {
         int keyID = -1;

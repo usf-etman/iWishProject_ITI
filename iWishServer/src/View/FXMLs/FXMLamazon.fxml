@@ -4,20 +4,28 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane fx:id="btnElectronics" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="765.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView fx:id="tableItems" layoutX="8.0" layoutY="60.0" prefHeight="493.0" prefWidth="750.0">
+      <TableView fx:id="tableItems" layoutX="8.0" layoutY="75.0" prefHeight="493.0" prefWidth="750.0">
         <columns>
           <TableColumn fx:id="colName" maxWidth="250.0" prefWidth="250.0" text="Name" />
           <TableColumn fx:id="colPrice" maxWidth="90.0" minWidth="0.0" prefWidth="90.0" text="Price" />
             <TableColumn fx:id="colDesc" maxWidth="410.0" prefWidth="410.0" text="Description" />
         </columns>
       </TableView>
-      <Button fx:id="btnDelete" layoutX="196.0" layoutY="25.0" mnemonicParsing="false" text="Amazon Electronics" />
-      <Button fx:id="btnFashion" layoutX="447.0" layoutY="25.0" mnemonicParsing="false" text="Amazon Fashion" />
-      <Button fx:id="btnAdd" layoutX="357.0" layoutY="562.0" mnemonicParsing="false" text="Add" />
-      <Label fx:id="lblAdded" layoutX="375.0" layoutY="588.0" prefHeight="17.0" prefWidth="0.0" />
+      <Button fx:id="btnElectronics" layoutX="171.0" layoutY="25.0" mnemonicParsing="false" text="Amazon Electronics" textFill="#114e86" />
+      <Button fx:id="btnFashion" layoutX="465.0" layoutY="25.0" mnemonicParsing="false" text="Amazon Fashion" textFill="#114e86" />
+      <Button fx:id="btnAdd" layoutX="77.0" layoutY="573.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="85.0" text="Add" textFill="#114e86" />
+      <Label fx:id="lblAdded" layoutX="341.0" layoutY="588.0" prefHeight="21.0" prefWidth="156.0" />
+      <Button fx:id="btnback" layoutX="577.0" layoutY="568.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="71.0" text="BACK" textFill="#114e86" />
+      <ImageView fitHeight="69.0" fitWidth="85.0" layoutX="25.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Logo.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

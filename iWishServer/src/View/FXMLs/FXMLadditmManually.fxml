@@ -10,8 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="508.0" prefWidth="750.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
+<AnchorPane id="AnchorPane" prefHeight="508.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="119.0" fitWidth="126.0" layoutX="664.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -46,8 +45,9 @@
             <Font name="Chiller" size="38.0" />
          </font>
       </Text>
-      <Button fx:id="additmBTN" layoutX="313.0" layoutY="429.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="153.0" text="Add Item" textFill="#114e86" />
+      <Button fx:id="additmBTN" layoutX="76.0" layoutY="448.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="153.0" text="Add Item" textFill="#114e86" />
       <Pane layoutY="423.0" prefHeight="6.0" prefWidth="779.0" style="-fx-background-color: #5681ab;" />
       <Label fx:id="rsltLBL" layoutX="313.0" layoutY="480.0" prefHeight="21.0" prefWidth="220.0" textFill="#245582" />
+      <Button fx:id="btnback" layoutX="520.0" layoutY="449.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="133.0" text="Back" textFill="#114e86" />
    </children>
 </AnchorPane>
