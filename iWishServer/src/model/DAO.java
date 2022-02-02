@@ -321,14 +321,14 @@ public class DAO {
     public static Vector<Item> DisplayWishlist(int UID) throws SQLException {
         int keyID = -1;
         Vector<Item> itms = new Vector<>();
-        String sql = "SELECT w.wish_id, i.item_name, i.item_price, contributer_id, u.user_name, sum(c.amount)\n" +
-                "FROM contribution c\n" +
-                "INNER JOIN user_info u ON U.USER_ID = C.CONTRIBUTER_ID\n" +
-                "RIGHT JOIN wish_list w ON c.wish_id = w.wish_id\n" +
-                "INNER JOIN item i ON w.item_id = i.item_id\n" +
-                "WHERE w.user_id = ?\n" +
-                "GROUP BY (w.wish_id, i.item_name, i.item_price, contributer_id, u.user_name)\n" +
-                "ORDER BY wish_id";
+        String sql = "SELECT w.wish_id, i.item_name, i.item_price, contributer_id, u.user_name, sum(c.amount)\n"
+                + "FROM contribution c\n"
+                + "INNER JOIN user_info u ON U.USER_ID = C.CONTRIBUTER_ID\n"
+                + "RIGHT JOIN wish_list w ON c.wish_id = w.wish_id\n"
+                + "INNER JOIN item i ON w.item_id = i.item_id\n"
+                + "WHERE w.user_id = ?\n"
+                + "GROUP BY (w.wish_id, i.item_name, i.item_price, contributer_id, u.user_name)\n"
+                + "ORDER BY wish_id";
         PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         pst.setInt(1, UID);
         ResultSet rs = pst.executeQuery();
@@ -341,8 +341,8 @@ public class DAO {
                     itms.add(new Item(rs.getInt(1), rs.getString(2), String.valueOf(rs.getInt(3)), "k"));
                     itms.add(new Item(rs.getInt(4), rs.getString(5), String.valueOf(rs.getInt(6)), "v"));
                 } else {
-                    if(rs.getInt(4) != 0){
-                    itms.add(new Item(rs.getInt(4), rs.getString(5), String.valueOf(rs.getInt(6)), "v"));
+                    if (rs.getInt(4) != 0) {
+                        itms.add(new Item(rs.getInt(4), rs.getString(5), String.valueOf(rs.getInt(6)), "v"));
                     }
                 }
             } while (rs.next());
@@ -388,9 +388,14 @@ public class DAO {
         pst2.setInt(4, contribution.getAmount());
         int result2 = pst2.executeUpdate();
         pst2.close();
-        
-        
-        
+
+        String sql3 = "update user_info\n"
+                + "set user_balance = (user_balance-?)\n"
+                + "where user_id = ?";
+        PreparedStatement pst3 = con.prepareStatement(sql3, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst3.setInt(1, contribution.getAmount());
+        pst3.setInt(2, contribution.getContributer_ID());
+
         return result;
 
     }
