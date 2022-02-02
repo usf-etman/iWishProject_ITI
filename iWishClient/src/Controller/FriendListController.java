@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
  */
 package Controller;
 
@@ -31,22 +31,19 @@ public class FriendListController {
     FriendListController(Stage stage) {
 
         FriendsListUI mainView = new FriendsListUI();
-        //  FriendsListUI mainView2 = new FriendsListUI();
-
         Scene scene = new Scene(mainView);
-
         stage.setScene(scene);
         stage.show();
 
         Vector<User> userVector = ParentController.reurnSuggestFriend();
-        //System.out.printlitmVector.size());
+//System.out.printlitmVector.size());
         for (int i = 0; i < userVector.size(); i++) {
             mainView.getTableSuggest().getItems().add(userVector.get(i));
 
         }
 
         Vector<User> userVector1 = ParentController.reurnallFriend();
-        //System.out.printlitmVector.size());
+//System.out.printlitmVector.size());
         for (int i = 0; i < userVector1.size(); i++) {
             mainView.getTableFriends().getItems().add(userVector1.get(i));
         }
@@ -58,6 +55,27 @@ public class FriendListController {
 
             }
         });
+         mainView.getBtn_Remove().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                if (selectedItm != null) {
+
+                    int rqustStatus = ParentController.removeFriend(friendid);
+                    if (rqustStatus != -1) {
+                        System.out.println("removed successfully");
+                        mainView.getTableFriends().getItems().remove(selectedItm);
+                    } else {
+
+                        System.out.println("try again");
+                    }
+                } else {
+                        System.out.println("try again");
+
+                }
+
+            } });
+
         mainView.getTableSuggest().setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
 
@@ -92,25 +110,36 @@ public class FriendListController {
         mainView.getBtn_signout().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                 LoginController lc = new LoginController(stage);
             }
 
         });
         mainView.getBtn_friends().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+              FriendListController flc=new FriendListController(stage);
             }
 
         });
         mainView.getBtn_items().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                AddItemController AIC = new AddItemController(stage);
             }
 
         });
         mainView.getBtn_profile().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                MainscreenController MC = new MainscreenController(stage);
+            }
 
+        });
+        mainView.getBtn_notifications().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                PendingFriendController pf = new PendingFriendController(stage);
             }
 
         });
@@ -119,7 +148,7 @@ public class FriendListController {
             @Override
             public void handle(ActionEvent event) {
 
-                //int id = rqust.getUser_ID();
+//int id = rqust.getUser_ID();
                 FriendWishlistController fwc = new FriendWishlistController(stage, friendid);
             }
         });

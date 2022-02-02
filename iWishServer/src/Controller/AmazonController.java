@@ -83,6 +83,14 @@ public class AmazonController {
                 }
             }
         });
+         amznUI.getBtnback().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+          ServerController n= new ServerController(stage);
+            }
+         
+         
+         });
     }
 
     class ItemThread extends Thread {

@@ -3,20 +3,35 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane id="AnchorPane" prefHeight="892.0" prefWidth="1266.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="items.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="813.0" prefWidth="979.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="items.FXMLDocumentController">
    <children>
-      <TableView fx:id="tableItems" layoutX="18.0" layoutY="70.0" prefHeight="676.0" prefWidth="900.0">
+      <TableView fx:id="tableItems" layoutX="257.0" layoutY="70.0" prefHeight="758.0" prefWidth="916.0">
          <columns>
-            <TableColumn fx:id="colID" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text="ID" />
-            <TableColumn fx:id="colName" maxWidth="90.0" minWidth="0.0" prefWidth="90.0" text="Name" />
-            <TableColumn fx:id="colPrice" maxWidth="410.0" prefWidth="410.0" text="Price" />
+            <TableColumn fx:id="colID" maxWidth="65.0" minWidth="0.0" prefWidth="0.0" text="ID" />
+            <TableColumn fx:id="colName" maxWidth="90.0" minWidth="0.0" prefWidth="89.99996948242188" text="Name" />
             <TableColumn fx:id="colDesc" maxWidth="410.0" prefWidth="410.0" text="Description" />
+            <TableColumn fx:id="colPrice" maxWidth="410.0" prefWidth="399.0" text="Price" />
          </columns>
       </TableView>
-      <Button fx:id="btnAmazon" layoutX="986.0" layoutY="564.0" mnemonicParsing="false" prefWidth="183.0" text="Add items from Amazon Egypt" />
-      <Button fx:id="btnDelete" layoutX="964.0" layoutY="408.0" mnemonicParsing="false" text="Remove" />
-      <Button fx:id="btnInsert" layoutX="1124.0" layoutY="408.0" mnemonicParsing="false" text="Insert" />
+      <Button fx:id="btnAmazon" layoutX="14.0" layoutY="544.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="241.0" text="Add items from Amazon Egypt" textFill="#114e86" />
+      <Button fx:id="btnDelete" layoutX="34.0" layoutY="371.0" mnemonicParsing="false" text="Remove" textFill="#114e86" />
+      <Button fx:id="btnInsert" layoutX="162.0" layoutY="371.0" mnemonicParsing="false" text="Insert" textFill="#114e86" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#114e86" height="76.0" layoutX="252.0" layoutY="-5.0" stroke="BLACK" strokeType="INSIDE" width="925.0" />
+      <ImageView fitHeight="70.0" fitWidth="108.0" layoutX="17.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Logo.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="97.0" fitWidth="167.0" layoutX="79.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/iwishh.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnback" layoutX="102.0" layoutY="688.0" mnemonicParsing="false" text="BACK" textFill="#114e86" />
    </children>
 </AnchorPane>

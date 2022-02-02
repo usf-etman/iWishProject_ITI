@@ -11,9 +11,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.HashMap;
+
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import oracle.jdbc.OracleDriver;
 
 /**
@@ -65,6 +70,15 @@ public class DAO {
         int result = -1;
         PreparedStatement pst = con.prepareStatement("delete from Item where Item_ID =? ", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         pst.setInt(1, itm.getId());
+        try {
+            result = pst.executeUpdate();
+
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            System.out.println("try again");
+            JOptionPane.showMessageDialog(null, "items is already in wishlist , you can't remove this from items");
+
+        }
+
 
         result = pst.executeUpdate();
         pst.close();
@@ -144,6 +158,16 @@ public class DAO {
         }
         return res1;
 
+    }
+
+    public static  int  DeleteUser(int friend_id, int user_id) throws SQLException {
+         int result = -1;  
+        PreparedStatement pst = con.prepareStatement("delete from FRIEND_LIST where FRIEND_ID=? and user_id=? ", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pst.setInt(1,friend_id);
+                pst.setInt(2,user_id);
+        result = pst.executeUpdate();
+        pst.close();
+             return result;
     }
 
     public static boolean AddUser(User user) throws SQLException {
@@ -282,6 +306,7 @@ public class DAO {
         pst.close();
         return result;
     }
+
 
     public static int AddToFriendlist(PendingRequest frRqust) throws SQLException {
         int result = -1;

@@ -186,15 +186,20 @@ public class PendingFriendUI extends AnchorPane {
         pendingTable.setLayoutY(146.0);
         pendingTable.setPrefHeight(358.0);
         pendingTable.setPrefWidth(293.0);
-
+        pendingTable.setStyle("-fx-font-size: 20;");
+       // pendingTable.setStyle("-fx-background-color: #34656d;");
+      
         colid.setMinWidth(0.0);
         colid.setPrefWidth(7.0);
-           colid.setCellValueFactory(new PropertyValueFactory("UID"));
+        colid.setCellValueFactory(new PropertyValueFactory("UID"));
+        
+        
 
         
         
         colname.setPrefWidth(285.0);
         colname.setText("Name");
+        colname.setStyle("-fx-text-fill: #34656d;  -fx-font-weight: 800;");
         colname.setCellValueFactory(new PropertyValueFactory("username"));
 
         getChildren().add(Btn_accept);
