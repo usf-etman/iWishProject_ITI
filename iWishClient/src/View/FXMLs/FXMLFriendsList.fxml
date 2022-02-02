@@ -6,85 +6,100 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="844.0" prefWidth="1168.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="add_friends.FXMLDocumentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="607.0" prefWidth="1095.0" style="-fx-background-color: #F1FAEE;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <StackPane layoutX="270.0" layoutY="-4.0" prefHeight="82.0" prefWidth="794.0">
+      <Button fx:id="btn_Show" layoutX="26.0" layoutY="278.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="170.0" style="-fx-background-color: #34656D; -fx-border-radius: 80;" text="     Show Profile" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="btn_Remove" layoutX="26.0" layoutY="364.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="170.0" style="-fx-background-color: #34656D; -fx-border-radius: 80;" text=" Remove" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <AnchorPane layoutX="-20.0" layoutY="-2.0" prefHeight="51.0" prefWidth="1117.0" style="-fx-background-color: #34656D;">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#34656d" height="75.0" stroke="BLACK" strokeType="INSIDE" width="877.0" />
-            <AnchorPane prefHeight="82.0" prefWidth="935.0">
+            <Button fx:id="btn_profile" layoutX="181.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #34656D;" text="Profile" textFill="WHITE" />
+            <Button fx:id="btn_friends" layoutX="244.0" layoutY="7.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="78.0" style="-fx-background-color: #34656D;" text="Friends" textFill="WHITE" />
+            <Button fx:id="btn_items" layoutX="322.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #34656D;" text="Items" textFill="WHITE" />
+            <Button fx:id="btn_signout" layoutX="483.0" layoutY="7.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="78.0" style="-fx-background-color: #34656D;" text="Sign Out" textFill="WHITE" />
+            <Button fx:id="btn_notifications" layoutX="379.0" layoutY="7.0" mnemonicParsing="false" prefHeight="1.0" prefWidth="104.0" style="-fx-background-color: #34656D;" text="Notifications" textFill="WHITE" />
+            <AnchorPane layoutX="79.0" layoutY="9.0" prefHeight="34.0" prefWidth="78.0">
                <children>
-                  <Button fx:id="btn_profile" layoutX="53.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #34656D;" text="Profile" textFill="WHITE" />
-                  <Button fx:id="btn_friends" layoutX="138.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #34656D;" text="Friends" textFill="WHITE" />
-                  <Button fx:id="btn_items" layoutX="236.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #34656D;" text="Items" textFill="WHITE" />
-                  <Button fx:id="btn_signout" layoutX="439.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #34656D;" text="Sign Out" textFill="WHITE" />
-                  <Button fx:id="btn_notifications" layoutX="310.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #34656D;" text="Notifications" textFill="WHITE" />
+                  <ImageView fitHeight="32.0" fitWidth="78.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/iwishh.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
-         </children>
-      </StackPane>
-      <StackPane layoutX="-15.0" layoutY="-4.0" prefHeight="75.0" prefWidth="283.0">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f1faee" height="79.0" stroke="BLACK" strokeType="INSIDE" width="293.0" />
-         </children>
-      </StackPane>
-      <AnchorPane layoutX="2.0" layoutY="3.0" prefHeight="75.0" prefWidth="274.0">
-         <children>
-            <ImageView fitHeight="62.0" fitWidth="76.0" layoutX="13.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="46.0" fitWidth="45.0" layoutX="37.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/Logo.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="75.0" fitWidth="210.0" layoutX="66.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/iwishh.png" />
-               </image>
-            </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="-5.0" layoutY="78.0" prefHeight="727.0" prefWidth="1244.0">
-         <children>
-            <TableView layoutX="190.0" layoutY="130.0" prefHeight="590.0" prefWidth="330.0">
-              <columns>
-                  <TableColumn fx:id="colFid" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text="ID" />
-                <TableColumn fx:id="table_Friends" minWidth="0.0" prefWidth="329.0" style="-fx-background-color: #34656d;" text="Name" />
-              </columns>
-            </TableView>
-            <Text fill="#34656d" fontSmoothingType="LCD" layoutX="248.0" layoutY="107.0" strokeLineCap="ROUND" strokeLineJoin="BEVEL" strokeType="OUTSIDE" strokeWidth="0.0" text="Friends List" textAlignment="CENTER" wrappingWidth="161.20263671875">
-               <font>
-                  <Font name="System Bold Italic" size="26.0" />
-               </font>
-            </Text>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#34656d" height="47.0" layoutY="717.0" stroke="BLACK" strokeType="INSIDE" width="1264.0" />
-            <Text fill="#34656d" layoutX="697.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Suggestions">
-               <font>
-                  <Font name="System Bold Italic" size="28.0" />
-               </font>
-            </Text>
-            <ImageView fitHeight="279.0" fitWidth="171.0" layoutX="14.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/dandelions.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="331.0" fitWidth="187.0" layoutX="1063.0" layoutY="353.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/dandelions.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="btn_Show" layoutX="89.0" layoutY="495.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="88.0" style="-fx-background-color: #34656d;" text="SHOW" textFill="WHITE" />
-            <Button fx:id="btn_Remove" layoutX="89.0" layoutY="572.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="88.0" style="-fx-background-color: #34656d;" text="Remove" textFill="WHITE" />
-            <Button fx:id="btn_Add" layoutX="959.0" layoutY="382.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="104.0" style="-fx-background-color: #34656d;" text="ADD" textFill="WHITE" />
-            <TableView layoutX="617.0" layoutY="130.0" prefHeight="587.0" prefWidth="330.0">
-              <columns>
-                  <TableColumn fx:id="colSid" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text="ID" />
-                <TableColumn fx:id="table_suggest" prefWidth="328.0" style="-fx-background-color: #34656d;" text="Name" />
-              </columns>
-            </TableView>
-         </children>
-      </AnchorPane>
+      <TableView fx:id="tableFriends" layoutX="208.0" layoutY="128.0" prefHeight="424.0" prefWidth="293.0">
+        <columns>
+          <TableColumn fx:id="colFid" minWidth="0.0" prefWidth="0.0" />
+          <TableColumn fx:id="colFriend" prefWidth="292.0" text="Name" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tableSuggest" layoutX="590.0" layoutY="124.0" prefHeight="417.0" prefWidth="293.0">
+         <columns>
+            <TableColumn fx:id="colSid" minWidth="0.0" prefWidth="0.0" />
+            <TableColumn fx:id="colSuggest" prefWidth="292.0" text="Name" />
+         </columns>
+      </TableView>
+      <Text fill="#34656d" layoutX="607.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Suggestion Friends">
+         <font>
+            <Font name="System Italic" size="28.0" />
+         </font>
+      </Text>
+      <Text fill="#34656d" fontSmoothingType="LCD" layoutX="235.0" layoutY="102.0" strokeLineCap="ROUND" strokeLineJoin="BEVEL" strokeType="OUTSIDE" strokeWidth="0.0" text="Friends List" textAlignment="CENTER" wrappingWidth="161.20263671875">
+         <font>
+            <Font name="System Italic" size="26.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="34.0" fitWidth="37.0" layoutX="31.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/eye-recognition.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="37.0" layoutX="33.0" layoutY="367.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/delete.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btn_Add" layoutX="911.0" layoutY="303.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="156.0" style="-fx-background-color: #34656D; -fx-border-radius: 80;" text="   Add Friend" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="37.0" fitWidth="37.0" layoutX="918.0" layoutY="303.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/friend.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="68.0" fitWidth="57.0" layoutX="389.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/people.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="57.0" fitWidth="57.0" layoutX="855.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/friendship.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="186.0" fitWidth="88.0" layoutX="501.0" layoutY="254.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/dandelions.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

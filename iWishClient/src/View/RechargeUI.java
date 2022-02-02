@@ -18,6 +18,7 @@ public class RechargeUI extends BorderPane {
     protected final Text firstNameError;
     protected final Text lastNameError;
     protected final Button btn_confirm;
+    protected final Button back;
     protected final Text rechargeError;
     protected final TextField txt_yy;
     protected final TextField txt_cvv;
@@ -28,9 +29,9 @@ public class RechargeUI extends BorderPane {
     protected final Text mmError;
     protected final Text yyError;
     protected final Text cvvError;
-    
+   
     protected final TextField txt_Amount;
-     protected final Text amountError;
+    protected final Text amountError;
 
     public RechargeUI() {
 
@@ -41,6 +42,7 @@ public class RechargeUI extends BorderPane {
         firstNameError = new Text();
         lastNameError = new Text();
         btn_confirm = new Button();
+         back = new Button();
         rechargeError = new Text();
         txt_yy = new TextField();
         txt_cvv = new TextField();
@@ -106,6 +108,20 @@ public class RechargeUI extends BorderPane {
         btn_confirm.setStyle("-fx-background-color: #34656D;");
         btn_confirm.setText("Confirm");
         btn_confirm.setTextFill(javafx.scene.paint.Color.WHITE);
+        
+        back.setLayoutX(170.0);
+        back.setLayoutY(345.0);
+        back.setMinHeight(40);
+        back.setMnemonicParsing(false);
+        back.setStyle("-fx-background-color: #34656D;");
+        back.setText("Back");
+        back.setTextFill(javafx.scene.paint.Color.WHITE);
+        
+        
+        
+        
+        
+        
 
         rechargeError.setFill(javafx.scene.paint.Color.valueOf("#34656d"));
         rechargeError.setLayoutX(87.0);
@@ -194,6 +210,7 @@ public class RechargeUI extends BorderPane {
         anchorPane0.getChildren().add(firstNameError);
         anchorPane0.getChildren().add(lastNameError);
         anchorPane0.getChildren().add(btn_confirm);
+         anchorPane0.getChildren().add(back);
         anchorPane0.getChildren().add(rechargeError);
         anchorPane0.getChildren().add(txt_yy);
         anchorPane0.getChildren().add(txt_cvv);
@@ -223,6 +240,10 @@ public class RechargeUI extends BorderPane {
 
     public Button getBtn_confirm() {
         return btn_confirm;
+    }
+
+    public Button getBack() {
+        return back;
     }
 
     public Text getRechargeError() {

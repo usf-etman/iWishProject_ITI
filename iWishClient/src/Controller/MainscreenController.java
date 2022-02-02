@@ -6,7 +6,6 @@
 package Controller;
 
 import View.RechargeUI;
-import View.FriendsListUI;
 import View.MainscreenUI;
 import View.ResetPasswordUI;
 import java.util.HashMap;
@@ -30,7 +29,6 @@ public class MainscreenController {
    
         MainscreenUI mainView = new MainscreenUI();
         Scene scene = new Scene(mainView);
-
         stage.setScene(scene);
         stage.show();
         
@@ -76,18 +74,20 @@ public class MainscreenController {
             }
         
         });
+          mainView.getBtnSignout().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                
+                LoginController lc = new LoginController(stage);
+            }
+        
+        });
+        
         
          mainView.getBtnRecharge().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                    
-                RechargeUI rechargeView = new RechargeUI();
-                Scene scene = new Scene(rechargeView);
-
-                stage.setScene(scene);
-                stage.show();
-                
-                RechargeController rc = new RechargeController(stage, rechargeView);
+                RechargeController rc = new RechargeController(stage);
             }
         });
     }

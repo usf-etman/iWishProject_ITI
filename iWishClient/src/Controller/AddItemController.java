@@ -85,7 +85,6 @@ public class AddItemController {
         additmView.getBtnProfile().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("hello profile");
                 MainscreenController msc = new MainscreenController(stage);
             }
         });
@@ -94,6 +93,32 @@ public class AddItemController {
             public void handle(ActionEvent event) {
                 AddItemController AIC = new AddItemController(stage);
             }
+        });
+        
+        additmView.getBtnFriends().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                
+                FriendListController flc=new FriendListController(stage);
+            }
+        });
+        
+         additmView.getBtnNotifications().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                
+                PendingFriendController pf=new PendingFriendController(stage);
+            }
+        
+        });
+         
+         additmView.getBtnSignout().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                
+                LoginController lc = new LoginController(stage);
+            }
+        
         });
 
     }

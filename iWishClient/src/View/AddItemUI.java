@@ -224,6 +224,7 @@ public class AddItemUI extends BorderPane {
         tableView.setLayoutY(80.0);
         tableView.setPrefHeight(502.0);
         tableView.setPrefWidth(1041.0);
+        tableView.setStyle("-fx-font-size: 20;");
 
         ItemID.setMaxWidth(0.0);
         ItemID.setMinWidth(0.0);

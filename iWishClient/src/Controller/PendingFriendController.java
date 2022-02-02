@@ -43,6 +43,30 @@ public class PendingFriendController {
             }
         });
         
+        mainView.getBtn_profile().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                MainscreenController msc = new MainscreenController(stage);
+            }
+        });
+        
+        mainView.getBtn_signout().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                
+                LoginController lc = new LoginController(stage);
+            }
+        
+        });
+        
+         mainView.getBtn_notifications().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                
+                PendingFriendController pf=new PendingFriendController(stage);
+            }
+        
+        });
         Vector<User> pendingVector = ParentController.reurnapendingFriend();
         for (int i = 0; i < pendingVector.size(); i++) {
         mainView.getPendingTable().getItems().add(pendingVector.get(i));

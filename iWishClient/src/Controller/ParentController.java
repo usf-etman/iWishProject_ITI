@@ -388,11 +388,11 @@ public class ParentController {
                     ps.close();
                     socket.close();
                     JOptionPane.showMessageDialog(null, "Server is disconnected");
-                } catch (IOException ex1) {
-
+                } 
+                catch (IOException ex1) {
                 }
-
-            } catch (IOException ex) {
+            }
+            catch (IOException ex) {
                 Logger.getLogger(ParentController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (JSONException ex) {
                 Logger.getLogger(ParentController.class.getName()).log(Level.SEVERE, null, ex);
