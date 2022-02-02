@@ -62,7 +62,7 @@ public class FriendListController {
 
             @Override
             public void handle(ActionEvent event) {
-                if (rqust != null) {
+                if (selectedItm != null) {
 
                     int rqustStatus = ParentController.removeFriend(friendid);
                     if (rqustStatus != -1) {
