@@ -44,7 +44,6 @@ public class FriendListController {
         }
 
         Vector<User> userVector1 = ParentController.reurnallFriend();
-        //System.out.printlitmVector.size());
         for (int i = 0; i < userVector1.size(); i++) {
             mainView.getTableFriends().getItems().add(userVector1.get(i));
         }
@@ -59,38 +58,27 @@ public class FriendListController {
             }
 
         });
-        mainView.getBtn_notifications().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+       
+      
+        mainView.getBtn_Remove().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                if (rqust != null) {
+                    int rqustStatus = ParentController.removeFriend(rqust);
+                  if (rqustStatus != -1) {
+                        System.out.println("removed successfully");
+                        mainView.getTableFriends().getItems().remove(selectedItm);
+                    } else {
+
+                        System.out.println("try again");
+                    }
+               } else {
+                    System.out.println("try again");
+                }
 
             }
 
         });
-        mainView.getBtn_signout().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-            }
-
-        });
-        mainView.getBtn_friends().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-            }
-
-        });
-        mainView.getBtn_items().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-            }
-
-        });
-        mainView.getBtn_profile().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-            }
-
-        });
-
         mainView.getBtn_Add().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
