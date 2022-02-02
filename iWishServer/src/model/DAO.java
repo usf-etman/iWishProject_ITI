@@ -99,18 +99,20 @@ public class DAO {
     public static Vector<User> ReturnFriend(int uid) throws SQLException {
         Vector<User> res = new Vector<User>();
 
-        String sql = "SELECT USER_ID, USER_NAME \n"
-                + "FROM USER_INFO \n"
-                + "WHERE USER_ID  NOT IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID=?) \n"
-                + "AND USER_ID NOT IN (SELECT USER_ID FROM Pending_Request WHERE Sender_ID=?) \n"
-                + "AND USER_ID NOT IN (SELECT sender_id FROM Pending_Request WHERE user_id=?)\n"
-                + "AND USER_ID != ?";
+        String sql = "SELECT USER_ID, USER_NAME\n" +
+                     "FROM USER_INFO\n" +
+                     "WHERE USER_ID  NOT IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID=?)\n" +
+                     "AND USER_ID NOT IN (SELECT USER_ID FROM FRIEND_LIST WHERE FRIEND_ID=?)\n" +
+                     "AND USER_ID NOT IN (SELECT USER_ID FROM Pending_Request WHERE Sender_ID=?) \n" +
+                     "AND USER_ID NOT IN (SELECT sender_id FROM Pending_Request WHERE user_id=?)\n" +
+                     "AND USER_ID != ?";
 
         PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         pst.setInt(1, uid);
         pst.setInt(2, uid);
         pst.setInt(3, uid);
         pst.setInt(4, uid);
+        pst.setInt(5, uid);
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
             User selected_user = new User();
@@ -162,9 +164,12 @@ public class DAO {
 
     public static  int  DeleteUser(int friend_id, int user_id) throws SQLException {
          int result = -1;  
-        PreparedStatement pst = con.prepareStatement("delete from FRIEND_LIST where FRIEND_ID=? and user_id=? ", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        PreparedStatement pst = con.prepareStatement("delete from FRIEND_LIST where FRIEND_ID=? and user_id=? "
+                                                   + "OR (FRIEND_ID=? and user_id=?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         pst.setInt(1,friend_id);
-                pst.setInt(2,user_id);
+        pst.setInt(2,user_id);
+        pst.setInt(3,user_id);
+        pst.setInt(4,friend_id);
         result = pst.executeUpdate();
         pst.close();
              return result;
@@ -217,9 +222,9 @@ public class DAO {
     public static boolean selectuser(User user) throws SQLException {
         DriverManager.registerDriver(new OracleDriver());
 
-        PreparedStatement pst = con.prepareStatement("select User_Email,USER_SEQ_ANSWER from  User_Info where User_Email=? ", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        PreparedStatement pst = con.prepareStatement("select User_Email,USER_SEQ_ANSWER from  User_Info where User_Email=? AND user_seq_answer=? ", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         pst.setString(1, user.getEmail());
-        // pst.setString(2, user.getSecurityQuestion());
+        pst.setString(2, user.getSecurityQuestion());
         ResultSet rs = pst.executeQuery();
 
         if (rs.next()) {
@@ -254,9 +259,6 @@ public class DAO {
 
     public static User rechargeAmount(Recharge recharge) throws SQLException {
         int result = -1;
-
-        DriverManager.registerDriver(new OracleDriver());
-
         PreparedStatement pst = con.prepareStatement("update User_Info set User_Balance=User_Balance+?  where USER_ID=? ", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
         pst.setString(1, recharge.getAmount());
@@ -274,7 +276,6 @@ public class DAO {
 
     public static User updateUserAmount(int userId) throws SQLException { //user object
 
-        DriverManager.registerDriver(new OracleDriver());
         PreparedStatement pst = con.prepareStatement("select USER_ID, User_Name, User_Balance from User_Info where USER_ID = ?", ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY);
 
