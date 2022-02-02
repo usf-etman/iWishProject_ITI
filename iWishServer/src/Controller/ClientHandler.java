@@ -302,4 +302,13 @@ public class ClientHandler extends Thread {
     public static String getClientsNum() {
         return (String.valueOf(clientsVector.size()));
     }
+    
+    public static void closeConnections() throws IOException{
+        for(int i=0; i<clientsVector.size(); i++){
+            clientsVector.get(i).dis.close();
+            clientsVector.get(i).ps.close();
+            clientsVector.get(i).waiter.close();
+            clientsVector.get(i).stop();
+        }
+    }
 }

@@ -9,8 +9,6 @@ import View.ServerUI;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.SQLException;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -18,10 +16,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.DAO;
-import model.User;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  *
@@ -71,6 +65,9 @@ public class ServerController {
             } else if (serverFlag == 1) {
                 root.getTxtLog().appendText("Stoping...\n");
                 root.getTxtLog().appendText("Service stopped\n");
+                ClientHandler.closeConnections();
+                ClientHandler.clientsVector.clear();
+                root.getLblClients().setText("0");
                 th.stop();
                 server.close();
                 serverFlag = 0;

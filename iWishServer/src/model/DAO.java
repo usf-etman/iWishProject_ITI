@@ -80,13 +80,10 @@ public class DAO {
         return result;
     }
 
-
     //suggested friends
-
     public static Vector<User> ReturnFriend(int uid) throws SQLException {
         Vector<User> res = new Vector<User>();
 
- 
         String sql = "SELECT USER_ID, USER_NAME \n"
                 + "FROM USER_INFO \n"
                 + "WHERE USER_ID  NOT IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE USER_ID=?) \n"
@@ -126,7 +123,6 @@ public class DAO {
         }
         return pr;
     }
-
 
     public static Vector<User> ShowFriend(int uid1) throws SQLException {
         Vector<User> res1 = new Vector<User>();
@@ -298,9 +294,9 @@ public class DAO {
         String sq2 = "DELETE FROM Pending_Request WHERE Sender_ID =? AND User_ID=?";
         PreparedStatement pst2 = con.prepareStatement(sq2, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         pst2.setInt(1, frRqust.getUser_ID());
-         System.out.println(frRqust.getUser_ID()); 
+        System.out.println(frRqust.getUser_ID());
         pst2.setInt(2, frRqust.getSender_ID());
-          System.out.println(frRqust.getSender_ID()); 
+        System.out.println(frRqust.getSender_ID());
         int result2 = pst2.executeUpdate();
         System.out.println("result" + result2);
         pst2.close();
@@ -317,7 +313,7 @@ public class DAO {
         pst.setInt(1, delRqust.getUser_ID());
         pst.setInt(2, delRqust.getSender_ID());
         result = pst.executeUpdate();
-         System.out.println("result" + result);
+        System.out.println("result" + result);
         pst.close();
         return result;
     }
@@ -334,18 +330,19 @@ public class DAO {
         PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         pst.setInt(1, UID);
         ResultSet rs = pst.executeQuery();
-        rs.next();
-        keyID = rs.getInt(1);
-        itms.add(new Item(rs.getInt(1), rs.getString(2), String.valueOf(rs.getInt(3)), "k"));
-        do {
-            if (keyID != rs.getInt(1)) {
-                keyID = rs.getInt(1);
-                itms.add(new Item(rs.getInt(1), rs.getString(2), String.valueOf(rs.getInt(3)), "k"));
-                itms.add(new Item(rs.getInt(4), rs.getString(5), String.valueOf(rs.getInt(6)), "v"));
-            } else {
-                itms.add(new Item(rs.getInt(4), rs.getString(5), String.valueOf(rs.getInt(6)), "v"));
-            }
-        } while (rs.next());
+        if (rs.next()) {
+            keyID = rs.getInt(1);
+            itms.add(new Item(rs.getInt(1), rs.getString(2), String.valueOf(rs.getInt(3)), "k"));
+            do {
+                if (keyID != rs.getInt(1)) {
+                    keyID = rs.getInt(1);
+                    itms.add(new Item(rs.getInt(1), rs.getString(2), String.valueOf(rs.getInt(3)), "k"));
+                    itms.add(new Item(rs.getInt(4), rs.getString(5), String.valueOf(rs.getInt(6)), "v"));
+                } else {
+                    itms.add(new Item(rs.getInt(4), rs.getString(5), String.valueOf(rs.getInt(6)), "v"));
+                }
+            } while (rs.next());
+        }
         return itms;
 
     }
