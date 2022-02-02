@@ -156,6 +156,12 @@
                                  </font>
                               </Label>
                            </center>
+                           <left>
+                              <Button fx:id="btnRemove" mnemonicParsing="false" text="Remove Item" textAlignment="CENTER" BorderPane.alignment="CENTER" />
+                           </left>
+                           <right>
+                              <Label text="                      " BorderPane.alignment="CENTER" />
+                           </right>
                         </BorderPane>
                         <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                            <center>

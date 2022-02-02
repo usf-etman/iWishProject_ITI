@@ -3,11 +3,9 @@ package View;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -20,7 +18,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import model.Item;
-
 
 public class MainscreenUI extends BorderPane {
 
@@ -69,11 +66,12 @@ public class MainscreenUI extends BorderPane {
     protected final RowConstraints rowConstraints4;
     protected final BorderPane borderPane0;
     protected final Label label0;
+    protected final Button btnRemove;
+    protected final Label label1;
     protected final BorderPane borderPane1;
     protected final Label lblBalance;
     protected final BorderPane borderPane2;
     protected final Button btnRecharge;
-    protected final DropShadow dropShadow;
 
     public MainscreenUI() {
 
@@ -122,11 +120,12 @@ public class MainscreenUI extends BorderPane {
         rowConstraints4 = new RowConstraints();
         borderPane0 = new BorderPane();
         label0 = new Label();
+        btnRemove = new Button();
+        label1 = new Label();
         borderPane1 = new BorderPane();
         lblBalance = new Label();
         borderPane2 = new BorderPane();
         btnRecharge = new Button();
-        dropShadow = new DropShadow();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -321,7 +320,7 @@ public class MainscreenUI extends BorderPane {
         borderPane.setPrefWidth(200.0);
 
         BorderPane.setAlignment(lblName, javafx.geometry.Pos.CENTER);
-        lblName.setText("Youssef Etman");
+        lblName.setText("Loading ...");
         lblName.setFont(new Font("Lucida Bright Regular", 30.0));
         borderPane.setCenter(lblName);
 
@@ -386,6 +385,16 @@ public class MainscreenUI extends BorderPane {
         label0.setFont(new Font(14.0));
         borderPane0.setCenter(label0);
 
+        BorderPane.setAlignment(btnRemove, javafx.geometry.Pos.CENTER);
+        btnRemove.setMnemonicParsing(false);
+        btnRemove.setText("Remove Item");
+        btnRemove.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+        borderPane0.setLeft(btnRemove);
+
+        BorderPane.setAlignment(label1, javafx.geometry.Pos.CENTER);
+        label1.setText("                      ");
+        borderPane0.setRight(label1);
+
         GridPane.setRowIndex(borderPane1, 1);
         borderPane1.setPrefHeight(200.0);
         borderPane1.setPrefWidth(200.0);
@@ -398,13 +407,10 @@ public class MainscreenUI extends BorderPane {
         GridPane.setRowIndex(borderPane2, 2);
         borderPane2.setPrefHeight(200.0);
         borderPane2.setPrefWidth(200.0);
+
         BorderPane.setAlignment(btnRecharge, javafx.geometry.Pos.CENTER);
         btnRecharge.setMnemonicParsing(false);
-        btnRecharge.setStyle("-fx-background-color: #f1faee;");
         btnRecharge.setText("Recharge");
-
-        dropShadow.setBlurType(javafx.scene.effect.BlurType.ONE_PASS_BOX);
-        btnRecharge.setEffect(dropShadow);
         borderPane2.setCenter(btnRecharge);
         setCenter(stackPane1);
 
@@ -481,26 +487,17 @@ public class MainscreenUI extends BorderPane {
         return tblWishlist;
     }
 
-    public TreeTableColumn<Item, String> getColName() {
-        return colName;
-    }
-
-    public TreeTableColumn<Item, String> getColPrice() {
-        return colPrice;
-    }
-
-    public TreeTableColumn<Item, Integer> getColID() {
-        return colID;
+    public Button getBtnRemove() {
+        return btnRemove;
     }
 
     public Label getLblBalance() {
         return lblBalance;
     }
-    
+
     public Button getBtnRecharge() {
         return btnRecharge;
     }
     
     
 }
-
