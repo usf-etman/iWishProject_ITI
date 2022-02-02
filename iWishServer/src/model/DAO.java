@@ -321,12 +321,14 @@ public class DAO {
     public static Vector<Item> DisplayWishlist(int UID) throws SQLException {
         int keyID = -1;
         Vector<Item> itms = new Vector<>();
-        String sql = "SELECT wish_id, i.item_name, i.item_price, contributer_id, u.user_name, sum(amount)\n"
-                + "FROM contribution c NATURAL JOIN item i\n"
-                + "INNER JOIN user_info u ON U.USER_ID = C.CONTRIBUTER_ID\n"
-                + "WHERE wish_owner_id = ?\n"
-                + "GROUP BY (wish_id, i.item_name, i.item_price, contributer_id, u.user_name)\n"
-                + "ORDER BY wish_id";
+        String sql = "SELECT w.wish_id, i.item_name, i.item_price, contributer_id, u.user_name, sum(c.amount)\n" +
+                "FROM contribution c\n" +
+                "INNER JOIN user_info u ON U.USER_ID = C.CONTRIBUTER_ID\n" +
+                "RIGHT JOIN wish_list w ON c.wish_id = w.wish_id\n" +
+                "INNER JOIN item i ON w.item_id = i.item_id\n" +
+                "WHERE w.user_id = ?\n" +
+                "GROUP BY (w.wish_id, i.item_name, i.item_price, contributer_id, u.user_name)\n" +
+                "ORDER BY wish_id";
         PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         pst.setInt(1, UID);
         ResultSet rs = pst.executeQuery();
@@ -339,7 +341,9 @@ public class DAO {
                     itms.add(new Item(rs.getInt(1), rs.getString(2), String.valueOf(rs.getInt(3)), "k"));
                     itms.add(new Item(rs.getInt(4), rs.getString(5), String.valueOf(rs.getInt(6)), "v"));
                 } else {
+                    if(rs.getInt(4) != 0){
                     itms.add(new Item(rs.getInt(4), rs.getString(5), String.valueOf(rs.getInt(6)), "v"));
+                    }
                 }
             } while (rs.next());
         }
@@ -349,7 +353,7 @@ public class DAO {
 
     public static Vector<Item> SelectFriendwishlist(int uid) throws SQLException {
         Vector<Item> result = new Vector<Item>();
-        String sql = "select I.ITEM_ID,i.ITEM_NAME,w.ITEM_PRICE\n"
+        String sql = "select w.WISH_ID,i.ITEM_NAME,w.ITEM_PRICE\n"
                 + "from item i, wish_list w\n"
                 + "where I.ITEM_ID=W.ITEM_ID\n"
                 + "and w.USER_ID=?";
@@ -357,7 +361,7 @@ public class DAO {
         pst.setInt(1, uid);
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
-            result.add(new Item(rs.getInt("Item_ID"), rs.getString("Item_Name"), rs.getString("Item_Price")));
+            result.add(new Item(rs.getInt("WISH_ID"), rs.getString("Item_Name"), rs.getString("Item_Price")));
         }
         return result;
     }
@@ -366,7 +370,7 @@ public class DAO {
         int result = -1;
         String sql = "  update wish_list\n"
                 + "  set  ITEM_PRICE = (ITEM_PRICE-?)\n"
-                + "  where ITEM_ID = ? \n"
+                + "  where WISH_ID = ? \n"
                 + "  and USER_ID = ?";
         PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         pst.setInt(1, contribution.getAmount());
@@ -375,7 +379,7 @@ public class DAO {
         result = pst.executeUpdate();
         pst.close();
 
-        String sql2 = "insert into contribution (CONTRIBUTION_ID , CONTRIBUTER_ID , WISH_OWNER_ID , ITEM_ID,AMOUNT )\n"
+        String sql2 = "insert into contribution (CONTRIBUTION_ID , CONTRIBUTER_ID , WISH_OWNER_ID , WISH_ID,AMOUNT )\n"
                 + "  values ( Countribution_SEQ.nextval ,? ,? ,? ,?)";
         PreparedStatement pst2 = con.prepareStatement(sql2, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         pst2.setInt(1, contribution.getContributer_ID());
