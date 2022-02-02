@@ -7,6 +7,7 @@ package Controller;
 
 import View.itemsUI;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,7 +89,18 @@ public class itemsController {
                     AmazonController ac = new AmazonController(stage);
                 }
             });
-        } catch (SQLException ex) {
+            
+            iUI.getBtnback().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    ServerController s=new ServerController(stage);
+                }
+            
+            
+            });
+            
+        }
+        catch (SQLException ex) {
             Logger.getLogger(itemsController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

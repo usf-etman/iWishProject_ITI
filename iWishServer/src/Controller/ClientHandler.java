@@ -174,6 +174,12 @@ public class ClientHandler extends Thread {
                             ps.println(jmsg);
                         }
                         break;
+                    case "removeFriend":
+
+                        int userid = jmsg.getInt("Value");
+                        int friendid = jmsg.getInt("friend");
+                        int deletedvector = DAO.DeleteUser(friendid, userid);
+                        break;
                     case "pendingfriends":
                         int UIDP = jmsg.getInt("Value");
                         Vector<User> userpending = DAO.PendingFriend(UIDP);

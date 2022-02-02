@@ -10,7 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public  class AdditmManuallyUI extends AnchorPane {
+public class AdditmManuallyUI extends AnchorPane {
 
     protected final ImageView imageView;
     protected final ImageView imageView0;
@@ -19,11 +19,36 @@ public  class AdditmManuallyUI extends AnchorPane {
     protected final TextField priceTXT;
     protected final TextField descTXT;
     protected final Text text0;
+
+    public TextField getNameTXT() {
+        return nameTXT;
+    }
+
+    public TextField getPriceTXT() {
+        return priceTXT;
+    }
+
+    public TextField getDescTXT() {
+        return descTXT;
+    }
+
+    public Label getRsltLBL() {
+        return rsltLBL;
+    }
+
+    public Button getAdditmBTN() {
+        return additmBTN;
+    }
+
+    public Button getBtnback() {
+        return btnback;
+    }
     protected final Text text1;
     protected final Text text2;
     protected final Button additmBTN;
     protected final Pane pane;
     protected final Label rsltLBL;
+    protected final Button btnback;
 
     public AdditmManuallyUI() {
 
@@ -39,6 +64,7 @@ public  class AdditmManuallyUI extends AnchorPane {
         additmBTN = new Button();
         pane = new Pane();
         rsltLBL = new Label();
+        btnback = new Button();
 
         setId("AnchorPane");
         setPrefHeight(508.0);
@@ -111,8 +137,8 @@ public  class AdditmManuallyUI extends AnchorPane {
         text2.setWrappingWidth(152.6708984375);
         text2.setFont(new Font("Chiller", 38.0));
 
-        additmBTN.setLayoutX(313.0);
-        additmBTN.setLayoutY(429.0);
+        additmBTN.setLayoutX(76.0);
+        additmBTN.setLayoutY(448.0);
         additmBTN.setMnemonicParsing(false);
         additmBTN.setPrefHeight(43.0);
         additmBTN.setPrefWidth(153.0);
@@ -130,6 +156,14 @@ public  class AdditmManuallyUI extends AnchorPane {
         rsltLBL.setPrefWidth(220.0);
         rsltLBL.setTextFill(javafx.scene.paint.Color.valueOf("#245582"));
 
+        btnback.setLayoutX(520.0);
+        btnback.setLayoutY(449.0);
+        btnback.setMnemonicParsing(false);
+        btnback.setPrefHeight(36.0);
+        btnback.setPrefWidth(133.0);
+        btnback.setText("Back");
+        btnback.setTextFill(javafx.scene.paint.Color.valueOf("#114e86"));
+
         getChildren().add(imageView);
         getChildren().add(imageView0);
         getChildren().add(text);
@@ -142,27 +176,7 @@ public  class AdditmManuallyUI extends AnchorPane {
         getChildren().add(additmBTN);
         getChildren().add(pane);
         getChildren().add(rsltLBL);
+        getChildren().add(btnback);
 
     }
-
-    public TextField getNameTXT() {
-        return nameTXT;
-    }
-
-    public TextField getPriceTXT() {
-        return priceTXT;
-    }
-
-    public TextField getDescTXT() {
-        return descTXT;
-    }
-
-    public Button getAdditmBTN() {
-        return additmBTN;
-    }
-
-    public Label getRsltLBL() {
-        return rsltLBL;
-    }
-    
 }

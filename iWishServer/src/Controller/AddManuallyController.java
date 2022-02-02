@@ -28,7 +28,14 @@ public class AddManuallyController {
             Scene scene = new Scene(manualUI);
             stage.setScene(scene);
             stage.show();
-           
+            manualUI.getBtnback().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+            ServerController s=new ServerController(stage);
+        }
+            
+            
+            });
             manualUI.getAdditmBTN().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {

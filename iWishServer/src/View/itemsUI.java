@@ -4,7 +4,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
 import model.Item;
 
 public  class itemsUI extends AnchorPane {
@@ -18,74 +21,128 @@ protected final TableView<Item> tableItems;
     protected final Button btnAmazon;
     protected final Button btnDelete;
     protected final Button btnInsert;
+    protected final Rectangle rectangle;
+    protected final ImageView imageView;
+    protected final ImageView imageView0;
+    protected final Button btnback;
 
     public itemsUI() {
-        tableItems = new TableView<Item>();
+  tableItems = new TableView<Item>();
         colName = new TableColumn<Item, String>();
         colPrice = new TableColumn<Item, String>();
         colDesc = new TableColumn<Item, String>();
      
         colID = new TableColumn<Item,Integer>();
         
+    
         btnAmazon = new Button();
         btnDelete = new Button();
         btnInsert = new Button();
+        rectangle = new Rectangle();
+        imageView = new ImageView();
+        imageView0 = new ImageView();
+        btnback = new Button();
 
         setId("AnchorPane");
-        setPrefHeight(892.0);
-        setPrefWidth(1266.0);
+        setPrefHeight(813.0);
+        setPrefWidth(979.0);
 
-        tableItems.setLayoutX(18.0);
+        tableItems.setLayoutX(257.0);
         tableItems.setLayoutY(70.0);
-        tableItems.setPrefHeight(676.0);
-        tableItems.setPrefWidth(900.0);
+        tableItems.setPrefHeight(758.0);
+        tableItems.setPrefWidth(916.0);
 
-        colID.setMaxWidth(0.0);
+        colID.setMaxWidth(65.0);
         colID.setMinWidth(0.0);
         colID.setPrefWidth(0.0);
         colID.setText("ID");
+        colName.setCellValueFactory(new PropertyValueFactory("ID"));
 
         colName.setMaxWidth(90.0);
         colName.setMinWidth(0.0);
-        colName.setPrefWidth(90.0);
+        colName.setPrefWidth(89.99996948242188);
         colName.setText("Name");
         colName.setCellValueFactory(new PropertyValueFactory("name"));
-
-        colPrice.setMaxWidth(410.0);
-        colPrice.setPrefWidth(410.0);
-        colPrice.setText("Price");
-        colPrice.setCellValueFactory(new PropertyValueFactory("price"));
 
         colDesc.setMaxWidth(410.0);
         colDesc.setPrefWidth(410.0);
         colDesc.setText("Description");
         colDesc.setCellValueFactory(new PropertyValueFactory("desc"));
 
-        btnAmazon.setLayoutX(986.0);
-        btnAmazon.setLayoutY(564.0);
-        btnAmazon.setMnemonicParsing(false);
-        btnAmazon.setPrefWidth(183.0);
-        btnAmazon.setText("Add items from Amazon Egypt");
+        colPrice.setMaxWidth(410.0);
+        colPrice.setPrefWidth(399.0);
+        colPrice.setText("Price");
+        colPrice.setCellValueFactory(new PropertyValueFactory("price"));
 
-        btnDelete.setLayoutX(964.0);
-        btnDelete.setLayoutY(408.0);
+        btnAmazon.setLayoutX(14.0);
+        btnAmazon.setLayoutY(544.0);
+        btnAmazon.setMnemonicParsing(false);
+        btnAmazon.setPrefHeight(31.0);
+        btnAmazon.setPrefWidth(241.0);
+        btnAmazon.setText("Add items from Amazon Egypt");
+        btnAmazon.setTextFill(javafx.scene.paint.Color.valueOf("#114e86"));
+
+        btnDelete.setLayoutX(34.0);
+        btnDelete.setLayoutY(371.0);
         btnDelete.setMnemonicParsing(false);
         btnDelete.setText("Remove");
+        btnDelete.setTextFill(javafx.scene.paint.Color.valueOf("#114e86"));
 
-        btnInsert.setLayoutX(1124.0);
-        btnInsert.setLayoutY(408.0);
+        btnInsert.setLayoutX(162.0);
+        btnInsert.setLayoutY(371.0);
         btnInsert.setMnemonicParsing(false);
         btnInsert.setText("Insert");
+        btnInsert.setTextFill(javafx.scene.paint.Color.valueOf("#114e86"));
+
+        rectangle.setArcHeight(5.0);
+        rectangle.setArcWidth(5.0);
+        rectangle.setFill(javafx.scene.paint.Color.valueOf("#114e86"));
+        rectangle.setHeight(76.0);
+        rectangle.setLayoutX(252.0);
+        rectangle.setLayoutY(-5.0);
+        rectangle.setStroke(javafx.scene.paint.Color.BLACK);
+        rectangle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
+        rectangle.setWidth(925.0);
+
+        imageView.setFitHeight(70.0);
+        imageView.setFitWidth(108.0);
+        imageView.setLayoutX(17.0);
+        imageView.setLayoutY(14.0);
+        imageView.setPickOnBounds(true);
+        imageView.setPreserveRatio(true);
+        imageView.setImage(new Image(getClass().getResource("images/Logo.png").toExternalForm()));
+
+        imageView0.setFitHeight(97.0);
+        imageView0.setFitWidth(167.0);
+        imageView0.setLayoutX(79.0);
+        imageView0.setLayoutY(8.0);
+        imageView0.setPickOnBounds(true);
+        imageView0.setPreserveRatio(true);
+        imageView0.setImage(new Image(getClass().getResource("images/iwishh.png").toExternalForm()));
+
+        btnback.setLayoutX(102.0);
+        btnback.setLayoutY(688.0);
+        btnback.setMnemonicParsing(false);
+        btnback.setText("BACK");
+        btnback.setTextFill(javafx.scene.paint.Color.valueOf("#114e86"));
 
         tableItems.getColumns().add(colID);
         tableItems.getColumns().add(colName);
-        tableItems.getColumns().add(colPrice);
         tableItems.getColumns().add(colDesc);
+        tableItems.getColumns().add(colPrice);
         getChildren().add(tableItems);
         getChildren().add(btnAmazon);
         getChildren().add(btnDelete);
         getChildren().add(btnInsert);
+        getChildren().add(rectangle);
+        getChildren().add(imageView);
+        getChildren().add(imageView0);
+        getChildren().add(btnback);
 
+    }
+
+    public TableView<Item> getTableItems() {
+        return tableItems;
     }
 
     public TableColumn<Item, String> getColName() {
@@ -104,10 +161,6 @@ protected final TableView<Item> tableItems;
         return colID;
     }
 
-    public TableView<Item> getTableItems() {
-        return tableItems;
-    }
-
     public Button getBtnAmazon() {
         return btnAmazon;
     }
@@ -118,5 +171,9 @@ protected final TableView<Item> tableItems;
 
     public Button getBtnInsert() {
         return btnInsert;
+    }
+
+    public Button getBtnback() {
+        return btnback;
     }
 }

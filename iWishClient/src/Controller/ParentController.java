@@ -16,6 +16,7 @@ import java.net.SocketException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javax.swing.JOptionPane;
 import model.Countribution;
 import model.Item;
@@ -39,7 +40,12 @@ public class ParentController {
     static String status;
     static User friend_info;
     static User friend_info1;
+
+    static User deleted_friend;
+
+
     static User friend_info2;
+
     private static User my_info;
     static String responseString;
     static boolean blockingFlag = true;
@@ -50,11 +56,14 @@ public class ParentController {
     static Vector<Item> itmVector;
     static Vector<User> uservector;
     static Vector<User> uservector1;
+    static Vector<User> deleted_friend_vector;
     static Vector<User> uservector2;
     static int vectorSize;
     static int blokingCounter;
     static int wshlstStatus;
     static int pendingStatus;
+static int deletedfriend;
+
     static int pendingStatus2;
     static int friendStatus;
     static int countributionStatus;
@@ -88,9 +97,11 @@ public class ParentController {
     }
 
     public static User getRechargeInfo(Recharge recharge, String key) {  //reset password + register + forget password
+
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         String json = gson.toJson(recharge); // serializes target to Json
         System.out.println("Reg" + json);
+
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", key);
         msg.addProperty("Value", json);
@@ -99,6 +110,9 @@ public class ParentController {
             System.out.println("");
         }
         blockingFlag = true;
+
+
+
         User userjava = gson.fromJson(responseString, User.class);
         return userjava;
 
@@ -107,6 +121,8 @@ public class ParentController {
     public static User login(User user) {
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         String json = gson.toJson(user); // serializes target to Json
+
+
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "login");
         msg.addProperty("Value", json);
@@ -147,6 +163,15 @@ public class ParentController {
         return pendingStatus;
     }
 
+    public static int removeFriend(int u) {
+        //  Gson gson = new Gson(); //a Or use new GsonBuilder().create();
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "removeFriend");
+         msg.addProperty("friend", u);
+        msg.addProperty("Value", my_info.getUID());
+        ps.println(msg);
+        return deletedfriend;
+    }
     public static int delPndingRequest(PendingRequest delqust) {
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         String json = gson.toJson(delqust); // serializes target to Json
@@ -275,6 +300,7 @@ public class ParentController {
         return uservector1;
     }
 
+
     public static Vector<User> reurnapendingFriend() {
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "pendingfriends");
@@ -292,6 +318,7 @@ public class ParentController {
         }
         return uservector2;
     }
+
     
     public static void removeWish(int wishID){
         JsonObject msg = new JsonObject();
@@ -326,11 +353,13 @@ public class ParentController {
                         case "Recharge":
                             responseString = jmsg.getString("Value");
                             blockingFlag = false;
-                            break;
+    
                         case "VectorSize":
                             itmVector = new Vector<Item>();
                             uservector = new Vector<User>();
                             uservector1 = new Vector<User>();
+                            deleted_friend_vector = new Vector<User>();
+
                             uservector2 = new Vector<User>();
                             vectorSize = jmsg.getInt("size");
                             blokingCounter = 0;
@@ -382,6 +411,7 @@ public class ParentController {
                             pendingStatus = jmsg.getInt("Value");
                             blockingFlag = false;
                             break;
+
                         case "AddToflist":
                             friendStatus = jmsg.getInt("Value");
                             blockingFlag = false;
@@ -406,9 +436,13 @@ public class ParentController {
                     dis.close();
                     ps.close();
                     socket.close();
+                    Platform.exit();
                     JOptionPane.showMessageDialog(null, "Server is disconnected");
-                } catch (IOException ex1) {
 
+                } catch (IOException ex1) {
+                    Logger.getLogger(ParentController.class.getName()).log(Level.SEVERE, null, ex1);
+
+                    Platform.exit();
                 }
 
             } catch (IOException ex) {
