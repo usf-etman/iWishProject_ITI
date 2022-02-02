@@ -395,6 +395,8 @@ public class DAO {
         PreparedStatement pst3 = con.prepareStatement(sql3, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         pst3.setInt(1, contribution.getAmount());
         pst3.setInt(2, contribution.getContributer_ID());
+        int result3 = pst3.executeUpdate();
+        pst3.close();
 
         return result;
 
