@@ -48,7 +48,7 @@ public class FriendWishlistController {
             @Override
             public void changed(ObservableValue<? extends Integer> arg0, Integer arg1, Integer arg2) {
                 currentValue = friendWishlistUI.getSpinAmount().getValue();
-                System.out.println("currin " + currentValue);
+                
             }
 
         });
@@ -83,7 +83,7 @@ public class FriendWishlistController {
 
                     if (countributionStatus != -1) {
                         System.out.println("Thank you for sharing");
-                        System.out.println("currinM " + currentValue);
+                        friendWishlistUI.getLblResult().setText("Thank you for contribution!");
                         
                         friendWishlistUI.getTableView().getItems().removeAll(itmVector);
                         
@@ -96,6 +96,8 @@ public class FriendWishlistController {
                     } else {
 
                         System.out.println("try again");
+                        friendWishlistUI.getLblResult().setText("OOOOOPS..! there are an issue");
+                        
                     }
                 } else {
                     System.out.println("no item selected");

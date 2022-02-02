@@ -4,7 +4,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -75,6 +74,7 @@ public  class FriendWishlistUI extends BorderPane {
     protected final BorderPane borderPane2;
     protected final Button btnContribute;
     protected final DropShadow dropShadow;
+    protected final Label lblResult;
 
     public FriendWishlistUI() {
 
@@ -129,6 +129,7 @@ public  class FriendWishlistUI extends BorderPane {
         borderPane2 = new BorderPane();
         btnContribute = new Button();
         dropShadow = new DropShadow();
+        lblResult = new Label();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -356,12 +357,12 @@ public  class FriendWishlistUI extends BorderPane {
         colWishname.setPrefWidth(330.0);
         colWishname.setText("Wish Name");
         colWishname.setCellValueFactory(new PropertyValueFactory("name"));
-        
+
         colWishprice.setMinWidth(0.0);
         colWishprice.setPrefWidth(201.0);
         colWishprice.setText("Wish Price");
         colWishprice.setCellValueFactory(new PropertyValueFactory("price"));
-        
+
         GridPane.setColumnIndex(gridPane0, 1);
         GridPane.setRowIndex(gridPane0, 2);
 
@@ -412,7 +413,7 @@ public  class FriendWishlistUI extends BorderPane {
 
         BorderPane.setAlignment(btnContribute, javafx.geometry.Pos.CENTER);
         btnContribute.setMnemonicParsing(false);
-        btnContribute.setPrefHeight(39.0);
+        btnContribute.setPrefHeight(46.0);
         btnContribute.setPrefWidth(129.0);
         btnContribute.setStyle("-fx-background-color: #f1faee;");
         btnContribute.setText("Contribute");
@@ -422,11 +423,13 @@ public  class FriendWishlistUI extends BorderPane {
         btnContribute.setEffect(dropShadow);
         btnContribute.setFont(new Font("Forte", 20.0));
         borderPane2.setCenter(btnContribute);
+
+        BorderPane.setAlignment(lblResult, javafx.geometry.Pos.CENTER);
+        lblResult.setTextFill(javafx.scene.paint.Color.valueOf("#2883b8"));
+        lblResult.setFont(new Font("Edwardian Script ITC", 25.0));
+        borderPane2.setRight(lblResult);
         setCenter(stackPane1);
-        
-        
- 
-       
+
         stackPane.getChildren().add(rectangle);
         anchorPane.getChildren().add(btnProfile);
         anchorPane.getChildren().add(btnFriends);
@@ -500,24 +503,16 @@ public  class FriendWishlistUI extends BorderPane {
         return tableView;
     }
 
-    public TableColumn<Item, Integer> getColWishID() {
-        return colWishID;
-    }
-
-    public TableColumn<Item, String> getColWishname() {
-        return colWishname;
-    }
-
-    public TableColumn<Item, String> getColWishprice() {
-        return colWishprice;
-    }
-
     public Spinner<Integer> getSpinAmount() {
         return spinAmount;
     }
 
     public Button getBtnContribute() {
         return btnContribute;
+    }
+
+    public Label getLblResult() {
+        return lblResult;
     }
     
 }
