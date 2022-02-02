@@ -292,6 +292,18 @@ public class ClientHandler extends Thread {
                         gson = new Gson();
                         int wishID = jmsg.getInt("Value");
                         DAO.removeWish(wishID);
+                        break;
+                    case "getBalance":
+                        int idUser = jmsg.getInt("Value");
+                        User usr = DAO.updateUserAmount(idUser);
+                        gson = new Gson(); // Or use new GsonBuilder().create();
+                        String json = gson.toJson(usr); // serializes target to Json
+                        jmsg = new JSONObject();
+                        System.out.println(usr.getUsername());
+                        jmsg.put("Key", "login");
+                        jmsg.put("Value", json);
+                        ps.println(jmsg);
+                        break;
                 }
                 //root.getTxtLog().appendText(msg + "\n");
             } catch (SocketException ex) {
@@ -323,9 +335,9 @@ public class ClientHandler extends Thread {
     public static String getClientsNum() {
         return (String.valueOf(clientsVector.size()));
     }
-    
-    public static void closeConnections() throws IOException{
-        for(int i=0; i<clientsVector.size(); i++){
+
+    public static void closeConnections() throws IOException {
+        for (int i = 0; i < clientsVector.size(); i++) {
             clientsVector.get(i).dis.close();
             clientsVector.get(i).ps.close();
             clientsVector.get(i).waiter.close();

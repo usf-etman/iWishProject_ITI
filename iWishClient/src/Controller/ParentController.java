@@ -121,8 +121,6 @@ static int deletedfriend;
     public static User login(User user) {
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         String json = gson.toJson(user); // serializes target to Json
-
-
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "login");
         msg.addProperty("Value", json);
@@ -135,6 +133,20 @@ static int deletedfriend;
         return userjava;
     }
 
+    public static int getMyBalance(int uid){
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "getBalance");
+        msg.addProperty("Value", uid);
+        ps.println(msg);
+        while (blockingFlag) {
+            System.out.println("inside loop");
+        }
+        blockingFlag = true;
+        Gson gson = new Gson();
+        User userjava = gson.fromJson(responseString, User.class);
+        return userjava.getBalance();
+    }
+    
     public static int addWishList(WishList wshlist) {
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         String json = gson.toJson(wshlist); // serializes target to Json
@@ -353,7 +365,7 @@ static int deletedfriend;
                         case "Recharge":
                             responseString = jmsg.getString("Value");
                             blockingFlag = false;
-    
+                            break;
                         case "VectorSize":
                             itmVector = new Vector<Item>();
                             uservector = new Vector<User>();
