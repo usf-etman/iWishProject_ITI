@@ -31,10 +31,7 @@ public class FriendListController {
     FriendListController(Stage stage) {
 
         FriendsListUI mainView = new FriendsListUI();
-// FriendsListUI mainView2 = new FriendsListUI();
-
         Scene scene = new Scene(mainView);
-
         stage.setScene(scene);
         stage.show();
 
@@ -113,25 +110,36 @@ public class FriendListController {
         mainView.getBtn_signout().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                 LoginController lc = new LoginController(stage);
             }
 
         });
         mainView.getBtn_friends().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+              FriendListController flc=new FriendListController(stage);
             }
 
         });
         mainView.getBtn_items().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                AddItemController AIC = new AddItemController(stage);
             }
 
         });
         mainView.getBtn_profile().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                MainscreenController MC = new MainscreenController(stage);
+            }
 
+        });
+        mainView.getBtn_notifications().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                PendingFriendController pf = new PendingFriendController(stage);
             }
 
         });

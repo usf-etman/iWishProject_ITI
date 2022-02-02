@@ -27,7 +27,6 @@ public class MainscreenController {
 
         MainscreenUI mainView = new MainscreenUI();
         Scene scene = new Scene(mainView);
-
         stage.setScene(scene);
         stage.show();
 
@@ -76,17 +75,20 @@ public class MainscreenController {
 
         });
 
-        mainView.getBtnRecharge().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+          mainView.getBtnSignout().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event) {
+                
+                LoginController lc = new LoginController(stage);
+            }
+        
+        });
+        
+        mainView.getBtnRecharge().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
 
-                RechargeUI rechargeView = new RechargeUI();
-                Scene scene = new Scene(rechargeView);
-
-                stage.setScene(scene);
-                stage.show();
-
-                RechargeController rc = new RechargeController(stage, rechargeView);
+            @Override
+            public void handle(ActionEvent event) {
+                RechargeController rc = new RechargeController(stage);
             }
         });
 
