@@ -22,6 +22,7 @@ import model.Item;
 public class MainscreenController {
 
     Item selectedItm;
+    TreeItem treeRoot;
 
     MainscreenController(Stage stage) {
 
@@ -36,7 +37,7 @@ public class MainscreenController {
         mainView.getLblBalance().setText(String.valueOf(mybalance));
         
         Vector<Item> itms = ParentController.displayWishlist();
-        TreeItem treeRoot = new TreeItem(new Item(0, "Wishlist & Contributors", "...", ""));
+        treeRoot = new TreeItem(new Item(0, "Wishlist & Contributors", "...", ""));
         TreeItem itm = null;
         System.out.println(itms);
         for (int i = 0; i < itms.size(); i++) {
@@ -98,9 +99,9 @@ public class MainscreenController {
             @Override
             public void handle(ActionEvent event) {
                 ParentController.removeWish(selectedItm.getId());
-
+                
                 Vector<Item> itms = ParentController.displayWishlist();
-                TreeItem treeRoot = new TreeItem(new Item(0, "Wishlist & Contributors", "...", ""));
+                treeRoot = new TreeItem(new Item(0, "Wishlist & Contributors", "...", ""));
                 TreeItem itm = null;
                 System.out.println(itms);
                 for (int i = 0; i < itms.size(); i++) {

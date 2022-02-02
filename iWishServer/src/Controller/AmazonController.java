@@ -33,13 +33,13 @@ import model.DAO;
 public class AmazonController {
 
     Item selectedItem;
-    
-    AmazonController(Stage stage) {
+
+    AmazonController(Stage stage, Scene scene) {
         AmazonUI amznUI = new AmazonUI();
-        Scene scene = new Scene(amznUI);
-        stage.setScene(scene);
+        Scene scene1 = new Scene(amznUI);
+        stage.setScene(scene1);
         stage.show();
-        
+
         amznUI.getBtnElectronics().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             String searchUrl = "https://www.amazon.eg/-/en/gp/new-releases/electronics/ref=zg_bsnr_nav_0";
 
@@ -69,11 +69,11 @@ public class AmazonController {
                 amznUI.getLblAdded().setText("");
             }
         });
-        
+
         amznUI.getBtnAdd().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(selectedItem != null){
+                if (selectedItem != null) {
                     try {
                         DAO.AddItem(selectedItem);
                         amznUI.getLblAdded().setText("Added successfuly");
@@ -83,14 +83,15 @@ public class AmazonController {
                 }
             }
         });
-         amznUI.getBtnback().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+        amznUI.getBtnback().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-          ServerController n= new ServerController(stage);
+                stage.setScene(scene);
+                stage.show();
+                //ServerController n= new ServerController(stage);
             }
-         
-         
-         });
+
+        });
     }
 
     class ItemThread extends Thread {
