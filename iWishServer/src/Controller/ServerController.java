@@ -35,11 +35,11 @@ public class ServerController {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
+        
         root.getBtnAdd().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                itemsController ic = new itemsController(stage);
+                itemsController ic = new itemsController(stage, scene);
             }
         });
 

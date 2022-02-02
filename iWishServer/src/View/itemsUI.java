@@ -58,9 +58,9 @@ protected final TableView<Item> tableItems;
         colID.setText("ID");
         colName.setCellValueFactory(new PropertyValueFactory("ID"));
 
-        colName.setMaxWidth(90.0);
+        colName.setMaxWidth(410.0);
         colName.setMinWidth(0.0);
-        colName.setPrefWidth(89.99996948242188);
+        colName.setPrefWidth(409.99996948242188);
         colName.setText("Name");
         colName.setCellValueFactory(new PropertyValueFactory("name"));
 
@@ -69,8 +69,8 @@ protected final TableView<Item> tableItems;
         colDesc.setText("Description");
         colDesc.setCellValueFactory(new PropertyValueFactory("desc"));
 
-        colPrice.setMaxWidth(410.0);
-        colPrice.setPrefWidth(399.0);
+        colPrice.setMaxWidth(90.0);
+        colPrice.setPrefWidth(90.0);
         colPrice.setText("Price");
         colPrice.setCellValueFactory(new PropertyValueFactory("price"));
 

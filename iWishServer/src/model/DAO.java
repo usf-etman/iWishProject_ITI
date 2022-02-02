@@ -76,7 +76,7 @@ public class DAO {
         } catch (SQLIntegrityConstraintViolationException ex) {
             System.out.println("try again");
             JOptionPane.showMessageDialog(null, "items is already in wishlist , you can't remove this from items");
-
+            return -2;
         }
 
 

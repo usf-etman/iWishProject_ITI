@@ -28,11 +28,11 @@ public class itemsController {
     Item selectedItm;
     Item rqust;
 
-    itemsController(Stage stage) {
+    itemsController(Stage stage, Scene scene) {
         try {
             itemsUI iUI = new itemsUI();
-            Scene scene = new Scene(iUI);
-            stage.setScene(scene);
+            Scene scene1 = new Scene(iUI);
+            stage.setScene(scene1);
             stage.show();
             Vector<Item> itmVector = DAO.SelectItems();
             for (int i = 0; i < itmVector.size(); i++) {
@@ -50,7 +50,7 @@ public class itemsController {
             iUI.getTableItems().setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    selectedItm=iUI.getTableItems().getSelectionModel().getSelectedItem();
+                    selectedItm = iUI.getTableItems().getSelectionModel().getSelectedItem();
                     rqust = new Item(selectedItm.getId());
                     System.out.println(rqust);
                 }
@@ -59,48 +59,47 @@ public class itemsController {
             iUI.getBtnDelete().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                        int  rqustStatus = 0;
+                    int rqustStatus = 0;
                     if (rqust != null) {
-                  
-                            try {
-                                rqustStatus = DAO.DeleteItem(rqust);
-                            } catch (SQLException ex) {
-                                Logger.getLogger(itemsController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                              
-                    if (rqustStatus != -1) {
-                        System.out.println("removed successfully");
-                      iUI.getTableItems().getItems().remove(selectedItm);
-                    } else {
 
+                        try {
+                            rqustStatus = DAO.DeleteItem(rqust);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(itemsController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                        if (rqustStatus == 1) {
+                            System.out.println("removed successfully");
+                            iUI.getTableItems().getItems().remove(selectedItm);
+                        } else {
+
+                            System.out.println("try again");
+                        }
+                    } else {
                         System.out.println("try again");
                     }
-                } else {
-                    System.out.println("try again");
                 }
-                }
-            
-            
+
             });
-            
+
             iUI.getBtnAmazon().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    AmazonController ac = new AmazonController(stage);
+                    AmazonController ac = new AmazonController(stage, scene);
                 }
             });
-            
+
             iUI.getBtnback().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    ServerController s=new ServerController(stage);
+                    stage.setScene(scene);
+                    stage.show();
+                    //ServerController s = new ServerController(stage);
                 }
-            
-            
+
             });
-            
-        }
-        catch (SQLException ex) {
+
+        } catch (SQLException ex) {
             Logger.getLogger(itemsController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
