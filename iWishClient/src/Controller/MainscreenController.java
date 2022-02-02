@@ -6,14 +6,10 @@
 package Controller;
 
 import View.RechargeUI;
-import View.FriendsListUI;
 import View.MainscreenUI;
-import View.ResetPasswordUI;
-import java.util.HashMap;
 import java.util.Vector;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.Scene;
 import javafx.scene.control.TreeItem;
 import javafx.stage.Stage;
@@ -51,6 +47,7 @@ public class MainscreenController {
             }
         }
         treeRoot.getChildren().add(itm);
+        treeRoot.setExpanded(true);
         mainView.getTblWishlist().setRoot(treeRoot);
         
         mainView.getBtnItems().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {

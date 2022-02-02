@@ -5,7 +5,6 @@
  */
 package Controller;
 
-import View.LoginUI;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.io.DataInputStream;
@@ -14,7 +13,6 @@ import java.io.PrintStream;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.HashMap;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +23,6 @@ import model.PendingRequest;
 import model.User;
 import model.Recharge;
 import model.WishList;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,13 +37,9 @@ public class ParentController {
     static PrintStream ps;
     static String loginStatus;
     static String status;
-
-    //private static int UID;
-    //static User my_info;
     static User friend_info;
     static User friend_info1;
     static User friend_info2;
-
     private static User my_info;
     static String responseString;
     static boolean blockingFlag = true;
@@ -58,9 +51,7 @@ public class ParentController {
     static Vector<User> uservector;
     static Vector<User> uservector1;
     static Vector<User> uservector2;
-
     static int vectorSize;
-    static int mapSize;
     static int blokingCounter;
     static int wshlstStatus;
     static int pendingStatus;
@@ -97,11 +88,9 @@ public class ParentController {
     }
 
     public static User getRechargeInfo(Recharge recharge, String key) {  //reset password + register + forget password
-
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         String json = gson.toJson(recharge); // serializes target to Json
         System.out.println("Reg" + json);
-
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", key);
         msg.addProperty("Value", json);
@@ -110,7 +99,6 @@ public class ParentController {
             System.out.println("");
         }
         blockingFlag = true;
-
         User userjava = gson.fromJson(responseString, User.class);
         return userjava;
 
@@ -119,7 +107,6 @@ public class ParentController {
     public static User login(User user) {
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         String json = gson.toJson(user); // serializes target to Json
-
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "login");
         msg.addProperty("Value", json);
@@ -208,10 +195,8 @@ public class ParentController {
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "ShowItems");
         ps.println(msg);
-
         while (blockingFlag) {
             System.out.println(" ");
-
         }
         blockingFlag = true;
         while (blokingCounter < vectorSize) {
@@ -226,7 +211,6 @@ public class ParentController {
         msg.addProperty("Key", "Friendwishlist");
         msg.addProperty("Value", FID);
         ps.println(msg);
-
         while (blockingFlag) {
             System.out.println(" ");
         }
@@ -244,10 +228,8 @@ public class ParentController {
         msg.addProperty("Key", "DisplayWishlist");
         msg.addProperty("Value", my_info.getUID());
         ps.println(msg);
-
         while (blockingFlag) {
             System.out.println(" ");
-
         }
         blockingFlag = true;
         while (blokingCounter < vectorSize) {
@@ -258,7 +240,6 @@ public class ParentController {
     }
 
     public static Vector<User> reurnSuggestFriend() {
-
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "DisplayFriend");
         msg.addProperty("Value", my_info.getUID());
@@ -266,7 +247,6 @@ public class ParentController {
 //blocking untill recieve vector size
         while (blockingFlag) {
             System.out.println(" ");
-
         }
         blockingFlag = true;
         ///untill equal vector size
@@ -278,7 +258,6 @@ public class ParentController {
     }
 
     public static Vector<User> reurnallFriend() {
-
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "showFriend");
         msg.addProperty("Value", my_info.getUID());
@@ -286,7 +265,6 @@ public class ParentController {
         //blocking untill recieve vector size
         while (blockingFlag) {
             System.out.println(blockingFlag);
-
         }
         blockingFlag = true;
         ///untill equal vector size
@@ -295,12 +273,9 @@ public class ParentController {
             System.out.println(vectorSize);
         }
         return uservector1;
-
-
     }
 
     public static Vector<User> reurnapendingFriend() {
-
         JsonObject msg = new JsonObject();
         msg.addProperty("Key", "pendingfriends");
         msg.addProperty("Value", my_info.getUID());
@@ -308,7 +283,6 @@ public class ParentController {
 //blocking untill recieve vector size
         while (blockingFlag) {
             System.out.println(" ");
-
         }
         blockingFlag = true;
         ///untill equal vector size
@@ -317,8 +291,6 @@ public class ParentController {
             //System.out.println(vectorSize);
         }
         return uservector2;
-
-
     }
 
     public static User getMy_info() {
@@ -348,13 +320,11 @@ public class ParentController {
                             responseString = jmsg.getString("Value");
                             blockingFlag = false;
                             break;
-
                         case "VectorSize":
                             itmVector = new Vector<Item>();
                             uservector = new Vector<User>();
                             uservector1 = new Vector<User>();
                             uservector2 = new Vector<User>();
-                              uservector1 = new Vector<User>();
                             vectorSize = jmsg.getInt("size");
                             blokingCounter = 0;
                             blockingFlag = false;
