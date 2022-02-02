@@ -149,7 +149,7 @@ public class FriendListController {
             public void handle(ActionEvent event) {
 
 //int id = rqust.getUser_ID();
-                FriendWishlistController fwc = new FriendWishlistController(stage, friendid);
+                FriendWishlistController fwc = new FriendWishlistController(stage, selectedItm);
             }
         });
 

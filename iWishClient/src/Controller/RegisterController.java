@@ -5,19 +5,10 @@
  */
 package Controller;
 
-import View.MainscreenUI;
-import Controller.LoginController;
-import View.LoginUI;
 import View.RegisterUI;
 import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.User;
 
@@ -28,36 +19,28 @@ public class RegisterController {
             @Override
             public void handle(ActionEvent event) {
                 // checking for null values
-                root.getUsernameError().setText("username must not be null!");
                 if (root.getTxt_user_name().getText().length() < 1) {
-                    root.getUsernameError().setText("username must not be null!");
+                    root.getUsernameError().setText("Enter a username");
                 } else {
                     root.getUsernameError().setText("");
                 }
 
                 if (root.getTxt_password().getText().length() < 1) {
-                    root.getPasswordError().setText("password must not be null!");
+                    root.getPasswordError().setText("Enter a password");
                 } else {
                     root.getPasswordError().setText("");
                 }
 
                 if (root.getTxt_email().getText().length() < 1) {
-                    root.getEmailError().setText("email must not be null!");
+                    root.getEmailError().setText("Enter an email");
                 } else {
                     root.getEmailError().setText("");
                 }
 
                 if (root.getTxt_security().getText().length() < 1) {
-                    root.getSecurityError().setText("security text must not be null!");
+                    root.getSecurityError().setText("Answer security question");
                 } else {
                     root.getSecurityError().setText("");
-                }
-
-                if (root.getUsernameError().getText().length() > 0
-                        || root.getPasswordError().getText().length() > 0
-                        || root.getEmailError().getText().length() > 0
-                        || root.getSecurityError().getText().length() > 0) {
-                    return;
                 }
 
                 // checking for email format
@@ -67,7 +50,9 @@ public class RegisterController {
                         .matches();
 
                 if (!emailMatch) {
-                    root.getSignupError().setText("Sorry, you have to enter the email in the right format");
+                    if(root.getTxt_email().getText().length() > 1){
+                    root.getEmailError().setText("Enter the email in the right format");
+                    }
                     return;
                 } else {
                     root.getSignupError().setText("");

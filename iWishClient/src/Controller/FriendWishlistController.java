@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.Countribution;
 import model.Item;
+import model.User;
 
 /**
  *
@@ -28,15 +29,15 @@ public class FriendWishlistController {
     Countribution countribution;
     int currentValue;
 
-    FriendWishlistController(Stage stage, int FID) {
+    FriendWishlistController(Stage stage, User frnd) {
         FriendWishlistUI friendWishlistUI = new FriendWishlistUI();
         Scene scene = new Scene(friendWishlistUI);
         stage.setScene(scene);
         stage.show();
 
-        friendWishlistUI.getLblName().setText(ParentController.getMy_info().getUsername());
+        friendWishlistUI.getLblName().setText(frnd.getUsername());
 
-        Vector<Item> itmVector = ParentController.getFriendwishlist(FID);
+        Vector<Item> itmVector = ParentController.getFriendwishlist(frnd.getUID());
         System.out.println(itmVector.size());
         //System.out.println(itmVector.size());
         for (int i = 0; i < itmVector.size(); i++) {
@@ -48,7 +49,7 @@ public class FriendWishlistController {
             @Override
             public void changed(ObservableValue<? extends Integer> arg0, Integer arg1, Integer arg2) {
                 currentValue = friendWishlistUI.getSpinAmount().getValue();
-                
+
             }
 
         });
@@ -75,7 +76,7 @@ public class FriendWishlistController {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("currout " + currentValue);
-                countribution = new Countribution(ParentController.getMy_info().getUID(), FID, selectedwish.getId(), currentValue);
+                countribution = new Countribution(ParentController.getMy_info().getUID(), frnd.getUID(), selectedwish.getId(), currentValue);
                 if (countribution != null) {
                     System.out.println(countribution.getAmount());
 
@@ -84,10 +85,10 @@ public class FriendWishlistController {
                     if (countributionStatus != -1) {
                         System.out.println("Thank you for sharing");
                         friendWishlistUI.getLblResult().setText("Thank you for contribution!");
-                        
+
                         friendWishlistUI.getTableView().getItems().removeAll(itmVector);
-                        
-                        Vector<Item> itmVector = ParentController.getFriendwishlist(FID);
+
+                        Vector<Item> itmVector = ParentController.getFriendwishlist(frnd.getUID());
                         System.out.println(itmVector.size());
                         for (int i = 0; i < itmVector.size(); i++) {
                             friendWishlistUI.getTableView().getItems().add(itmVector.get(i));
@@ -97,7 +98,7 @@ public class FriendWishlistController {
 
                         System.out.println("try again");
                         friendWishlistUI.getLblResult().setText("OOOOOPS..! there are an issue");
-                        
+
                     }
                 } else {
                     System.out.println("no item selected");
@@ -105,5 +106,44 @@ public class FriendWishlistController {
             }
         });
 
+        friendWishlistUI.getBtnProfile().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                MainscreenController MC = new MainscreenController(stage);
+            }
+
+        });
+        friendWishlistUI.getBtnItems().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                AddItemController AIC = new AddItemController(stage);
+            }
+
+        });
+        friendWishlistUI.getBtnFriends().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                FriendListController flc = new FriendListController(stage);
+            }
+        });
+
+        friendWishlistUI.getBtnNotifications().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                PendingFriendController pf = new PendingFriendController(stage);
+            }
+
+        });
+
+        friendWishlistUI.getBtnSignout().addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                LoginController lc = new LoginController(stage);
+            }
+
+        });
     }
 }

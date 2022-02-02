@@ -31,8 +31,10 @@ public class MainscreenController {
         stage.show();
 
         mainView.getLblName().setText(ParentController.getMy_info().getUsername());
-        mainView.getLblBalance().setText(String.valueOf(ParentController.getMy_info().getBalance()));
-
+        //mainView.getLblBalance().setText(String.valueOf(ParentController.getMy_info().getBalance()));
+        int mybalance = ParentController.getMyBalance(ParentController.getMy_info().getUID());
+        mainView.getLblBalance().setText(String.valueOf(mybalance));
+        
         Vector<Item> itms = ParentController.displayWishlist();
         TreeItem treeRoot = new TreeItem(new Item(0, "Wishlist & Contributors", "...", ""));
         TreeItem itm = null;
