@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -400,6 +401,14 @@ public class DAO {
 
         return result;
 
+    }
+    
+    public static void removeWish(int wishID) throws SQLException{
+        String sql = "{call removeWish(?)}";
+        CallableStatement cst = con.prepareCall(sql);
+        cst.setInt(1, wishID);
+        cst.execute();
+        cst.close();
     }
 
 }

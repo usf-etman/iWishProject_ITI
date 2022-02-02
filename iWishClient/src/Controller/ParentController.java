@@ -292,6 +292,13 @@ public class ParentController {
         }
         return uservector2;
     }
+    
+    public static void removeWish(int wishID){
+        JsonObject msg = new JsonObject();
+        msg.addProperty("Key", "removeWish");
+        msg.addProperty("Value", wishID);
+        ps.println(msg);
+    }
 
     public static User getMy_info() {
         return my_info;

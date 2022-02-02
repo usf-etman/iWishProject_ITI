@@ -282,6 +282,10 @@ public class ClientHandler extends Thread {
                         jmsg.put("Value", countributionrslt);
                         ps.println(jmsg);
                         break;
+                    case "removeWish":
+                        gson = new Gson();
+                        int wishID = jmsg.getInt("Value");
+                        DAO.removeWish(wishID);
                 }
                 //root.getTxtLog().appendText(msg + "\n");
             } catch (SocketException ex) {
